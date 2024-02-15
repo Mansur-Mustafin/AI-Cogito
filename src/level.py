@@ -1,5 +1,4 @@
 import yaml
-from position import Position
 
 class Level:
 
@@ -20,34 +19,40 @@ class Level:
         self.target_pattern = level_data['target_pattern']
         self.current_block = level_data['initial_block']
         self.score = 0
-        self.cur_pos = Position(0, 0)
+        self.cur_pos = (0, 0)
     
-    def isWin(self):
+    def getPosition(self):
+        return self.cur_pos
+    
+    def isWinCondition(self):
         return self.current_block == self.target_pattern
-    
-    def __isValidMove(self, x , y):
-        return 0 <= self.cur_pos.getX() + x < self.dimension and \
-               0 <= self.cur_pos.getY() + y < self.dimension
-    
+
+    def countMismatchedTiles(self):
+        return sum(
+        self.current_block[i][j] != self.target_pattern[i][j]
+        for i in range(self.dimension)
+        for j in range(self.dimension)
+    )
+
     def move(self, direction):
 
-        if direction in Level.DIRECTIONS and self.__isValidMove(Level.DIRECTIONS[direction]):
-            self.__move(Level.DIRECTIONS[direction])
+        if direction in self.DIRECTIONS and self.__isValidMove(self.DIRECTIONS[direction]):
+            d_x, d_y = self.DIRECTIONS[direction]
+            x, y = self.cur_pos
+            new_x, new_y = x + d_x, y + d_y
 
-        return 
-     
-    def __move(self, d_x, d_y):
-        
-        self.cur_pos.updatePosition(d_x, d_y)
+            orig_color = self.current_block[x][y]
+            dest_color = self.current_block[new_x][new_y]
 
-        x, y = self.cur_pos.getCoordinates()
-        orig_color = self.current_block[x][y]
-        dest_color = self.current_block[x + d_x][y + d_y]
+            third_color = (self.COLORS - {orig_color, dest_color}).pop()
+            
+            self.current_block[new_x][new_y] = third_color
+            self.cur_pos = (new_x, new_y)
+            self.score += 1
 
-        third_color = Level.COLORS.difference({orig_color, dest_color})
-        
-        self.current_block[x + d_x][y + d_y] = third_color
-    
-
-
-
+    def __isValidMove(self, d_x, d_y):
+        new_x = self.cur_pos[0] + d_x
+        new_y = self.cur_pos[1] + d_y
+        return 0 <= new_x < self.dimension and \
+               0 <= new_y < self.dimension and \
+               self.current_block[new_x][new_y] in self.COLORS
