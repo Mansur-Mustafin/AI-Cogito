@@ -1,0 +1,11 @@
+dimension: 4
+initial_block:
+ - ['y', 'b', 'r', 'r']
+ - ['b', 'r', 'y', 'r']
+ - ['y', 'y', 'y', 'y']
+ - ['b', 'r', 'r', 'b']
+target_pattern:
+ - ['b', 'y', 'y', 'r']
+ - ['r', 'r', 'y', 'b']
+ - ['r', 'b', 'r', 'b']
+ - ['r', 'r', 'y', 'r']
