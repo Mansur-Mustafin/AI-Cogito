@@ -7,9 +7,6 @@ class Menu(ABC):
         self.mouse_pos = (WIDTH/2, HEIGHT/2)
         self.buttons = []
         
-    def __createButtons(self):
-        self.buttons = []
-
     def getButtons(self):
         return self.buttons
     

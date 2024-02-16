@@ -8,8 +8,9 @@ class ViewLevelMenu(View):
 
     def draw_screen(self, menu):
         x = 25
-        y = 50
-        n_buttons_column = int ((HEIGHT - 50) / (H_BUTTON + 60))
+        y = 150
+        n_buttons_column = int ((HEIGHT - y - 25) / (H_BUTTON + 10))
+        print(n_buttons_column)
         buttons = menu.getButtons()
 
         self.draw_rectangle(0, 0, WIDTH, HEIGHT, 0, BACKGROUND_COLOR)
@@ -22,7 +23,7 @@ class ViewLevelMenu(View):
                 else :
                     button.draw(self.screen, x, y)
                 y += 60
-            x += W_BUTTON
-            y = 50
+            x += W_BUTTON * 0.8
+            y = 150
             buttons = buttons[min(n_buttons_column, len(buttons)):]
 
