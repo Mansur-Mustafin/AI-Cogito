@@ -1,14 +1,9 @@
 from abc import ABC, abstractmethod
-from enum import Enum
+from enum import Enum, auto
 import pygame, sys
 
 
 class Controller(ABC):
-
-    EXIT = 0
-    CHANGE_MAIN = 1
-    CHANGE_GAME = 2
-    CHANGE_LEVEL = 3
 
     KEY_DIRECTIONS = {
         pygame.K_UP :   (0, -1),
@@ -31,3 +26,9 @@ class Controller(ABC):
     def getState(self):
         return self.state
     
+
+class Command(Enum):
+    EXIT = auto()
+    CHANGE_GAME = auto()
+    CHANGE_MAIN = auto()
+    CHANGE_LEVEL = auto()

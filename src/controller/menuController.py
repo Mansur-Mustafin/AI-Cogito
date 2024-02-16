@@ -1,6 +1,6 @@
 import pygame, sys
 
-from controller.controller import Controller
+from controller.controller import Controller, Command
 
 from view.viewGame import ViewGame
 from view.viewLevelMenu import ViewLevelMenu
@@ -21,7 +21,7 @@ class MenuController(Controller):
         for event in pygame.event.get():
             if event.type == pygame.QUIT or event.type == pygame.WINDOWCLOSE:
                 print("QUIT")
-                return self.EXIT
+                return Command.EXIT
             
             elif event.type == pygame.MOUSEMOTION:
                 self.state.update_mouse_position(event.pos)
@@ -48,7 +48,7 @@ class MainMenuController(MenuController):
         if str(button) == "Jogar":
             self.state = LevelMenu()
             self.view = ViewLevelMenu(self.view.getScreen())
-            return self.CHANGE_LEVEL
+            return Command.CHANGE_LEVEL
         else: 
             print("TODO: ", button)
             return False
@@ -65,4 +65,4 @@ class LevelMenuController(MenuController):
         lvl = str(button).split(' ')[1]
         self.state = Level(lvl)
         self.view = ViewGame(self.view.getScreen())
-        return self.CHANGE_GAME
+        return Command.CHANGE_GAME

@@ -1,6 +1,6 @@
 import pygame, sys
 
-from controller.controller import Controller
+from controller.controller import Controller, Command
 
 
 class GameController(Controller):
@@ -18,7 +18,7 @@ class GameController(Controller):
                 self.__handle_keydown(event.key)
                 if self.state.isWinCondition():
                     print("END GAME")
-                    return self.CHANGE_MAIN
+                    return Command.CHANGE_MAIN
                 return None
             
     def __handle_keydown(self, key):

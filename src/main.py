@@ -3,15 +3,10 @@ from settings import *
 
 from analitics import *
 
-from view.viewGame import ViewGame
-from view.viewLevelMenu import ViewLevelMenu
 from view.viewMainMenu import ViewMainMenu
-
 from model.mainMenu import MainMenu
-from model.levelMenu import LevelMenu
-from model.level import Level
 
-from controller.controller import Controller
+from controller.controller import Controller, Command
 from controller.gameController import GameController
 from controller.menuController import MainMenuController
 from controller.menuController import LevelMenuController
@@ -26,7 +21,16 @@ class Game:
         pygame.display.set_caption('Amado Game')
         self.clock = pygame.time.Clock()
         
+        # controller
         self.controller = MainMenuController(MainMenu(), ViewMainMenu(self.screen))
+
+        # actions to change controller
+        self.command_actions = {
+            Command.EXIT: lambda: False,
+            Command.CHANGE_GAME: lambda: self.change_controller(GameController),
+            Command.CHANGE_MAIN: lambda: self.change_controller(MainMenuController),
+            Command.CHANGE_LEVEL: lambda: self.change_controller(LevelMenuController),
+        }
 
 
     def run(self):
@@ -45,30 +49,16 @@ class Game:
 
 
     def handle_command(self, command):
-        if command is None:
-            return True
-        
-        if command == Controller.EXIT:
-            return False
-        
-        state = self.controller.getState()
-        view = self.controller.getView()
+        action = self.command_actions.get(command, lambda : True) # if not find just run = True
+        return action()
 
-        if command == Controller.CHANGE_GAME:
-            self.controller = GameController(state, view)
-        elif command == Controller.CHANGE_MAIN:
-            self.controller = MainMenuController(state, view)
-        elif command == Controller.CHANGE_LEVEL:
-            self.controller = LevelMenuController(state, view)
-        else:
-            print("TODO")
+    def change_controller(self, controller_class):
+        self.controller = controller_class(self.controller.getState(), self.controller.getView())
         return True
-
 
     def quit(self):
         pygame.quit()
         sys.exit()
-
 
 
 if __name__ == "__main__":
