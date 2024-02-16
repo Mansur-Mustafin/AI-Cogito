@@ -6,8 +6,11 @@ from view.viewLevelMenu import ViewLevelMenu
 from view.viewMainMenu import ViewMainMenu
 from model.mainMenu import MainMenu
 from model.levelMenu import LevelMenu
+from analitics import *
+from controller import Controller
 
 class Game:
+
     def __init__(self) -> None:
 
         #general setup
@@ -20,13 +23,12 @@ class Game:
         # self.view = ViewGame(self.screen)
         self.state = LevelMenu()
         self.view = ViewLevelMenu(self.screen)
+        self.controller = Controller(Level(1))
 
     def run(self):
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
+        run = True
+        while run:
+            run = not measureTime(self.controller.move)
             
             self.view.draw_screen(self.state)
 
