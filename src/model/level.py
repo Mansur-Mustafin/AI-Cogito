@@ -1,4 +1,5 @@
 import yaml
+from settings import *
 
 class Level:
 
@@ -12,7 +13,7 @@ class Level:
     COLORS = {'r', 'b', 'y'}
 
     def __init__(self, lvl):
-        with open("levels/level" + str(lvl) + ".yaml", 'r') as file:
+        with open(LEVELS_DIR + "level" + str(lvl) + ".yaml", 'r') as file:
             level_data = yaml.safe_load(file)
         
         self.dimension = level_data['dimension']

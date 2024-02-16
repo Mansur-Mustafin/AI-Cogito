@@ -2,6 +2,7 @@
 WIDTH = 1280
 HEIGHT = 720
 FPS = 60
+LEVELS_DIR = "levels/"
 
 # define used colors in game:
 BACKGROUND_COLOR = (184, 177, 177)
@@ -33,6 +34,6 @@ H_MISS = 42
 R_MISS = 6
 
 # define view MENU
-W_BUTTON = 300
-H_BUTTON = 100
+W_BUTTON = 250
+H_BUTTON = 50
 R_BUTTON = 20

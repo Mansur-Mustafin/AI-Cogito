@@ -2,8 +2,10 @@ import pygame, sys
 from settings import *
 from model.level import Level
 from view.viewGame import ViewGame
-from view.viewMenu import ViewMenu
-from model.menu import Menu
+from view.viewLevelMenu import ViewLevelMenu
+from view.viewMainMenu import ViewMainMenu
+from model.mainMenu import MainMenu
+from model.levelMenu import LevelMenu
 
 class Game:
     def __init__(self) -> None:
@@ -16,8 +18,8 @@ class Game:
         
         # self.state = Level(2)
         # self.view = ViewGame(self.screen)
-        self.state = Menu()
-        self.view = ViewMenu(self.screen)
+        self.state = LevelMenu()
+        self.view = ViewLevelMenu(self.screen)
 
     def run(self):
         while True:
