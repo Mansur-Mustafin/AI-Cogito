@@ -12,7 +12,7 @@ YELLOW_COLOR = (211, 200, 98)
 GREEN_COLOR = (74, 158, 73)
 
 
-# define view settings
+# define view GAME
 GAP = 3
 OFFSET = 25
 W_SQUARE = 35
@@ -31,3 +31,8 @@ Y_3COLORS = Y_LEFT_MENU + 20
 W_MISS = 15
 H_MISS = 42
 R_MISS = 6
+
+# define view MENU
+W_BUTTON = 300
+H_BUTTON = 100
+R_BUTTON = 20

@@ -1,11 +1,12 @@
 import pygame
+from view.view import View
 from settings import *
 
-class View:
+class ViewGame(View):
     def __init__(self, screen):
-        self.screen = screen
+        super().__init__(screen)
 
-    def drow_board(self, level):
+    def draw_screen(self, level):
         self.draw_rectangle(0, 0, WIDTH, HEIGHT, 0, BACKGROUND_COLOR)
         self.draw_right_menu(level)
         
@@ -83,6 +84,4 @@ class View:
                 self.draw_rectangle(x_start + j*x_gap, y_start + i*y_gap, scale*W_SQUARE, scale*H_SQUARE, R_SQUARE, tile_color)
         
 
-    def draw_rectangle(self, x, y, width, height, border_radius, color):
-        rect = pygame.Rect(x, y, width, height)
-        pygame.draw.rect(self.screen, color, rect, border_radius=border_radius)
+

@@ -1,7 +1,9 @@
 import pygame, sys
 from settings import *
-from level import Level
-from view import View
+from model.level import Level
+from view.viewGame import ViewGame
+from view.viewMenu import ViewMenu
+from model.menu import Menu
 
 class Game:
     def __init__(self) -> None:
@@ -11,8 +13,11 @@ class Game:
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption('Amado Game')
         self.clock = pygame.time.Clock()
-        self.level = Level(2)
-        self.view = View(self.screen)
+        
+        # self.state = Level(2)
+        # self.view = ViewGame(self.screen)
+        self.state = Menu()
+        self.view = ViewMenu(self.screen)
 
     def run(self):
         while True:
@@ -21,7 +26,7 @@ class Game:
                     pygame.quit()
                     sys.exit()
             
-            self.view.drow_board(self.level)
+            self.view.draw_screen(self.state)
 
             pygame.display.update()
             self.clock.tick(FPS)
