@@ -14,8 +14,6 @@ class Level:
         self.current_block = level_data['initial_block']
         self.score = 0
         self.cur_pos = (0, 0)
-
-        print(self.target_pattern)
     
     def getPosition(self):
         return self.cur_pos
@@ -39,7 +37,7 @@ class Level:
         for j in range(self.dimension)
     )
 
-    def movePlayer(self, move):
+    def processMove(self, move):
         d_x, d_y = move
         if self.__isValidMove(d_x,d_y):
             

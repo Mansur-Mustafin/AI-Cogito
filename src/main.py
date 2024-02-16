@@ -7,7 +7,10 @@ from view.viewMainMenu import ViewMainMenu
 from model.mainMenu import MainMenu
 from model.levelMenu import LevelMenu
 from analitics import *
-from controller import Controller
+from controller.controller import Controller
+from controller.gameController import GameController
+from controller.menuController import MainMenuController
+from controller.menuController import LevelMenuController
 
 class Game:
 
@@ -19,21 +22,29 @@ class Game:
         pygame.display.set_caption('Amado Game')
         self.clock = pygame.time.Clock()
         
-        # self.state = Level(2)
-        # self.view = ViewGame(self.screen)
-        self.state = Level(1)
-        self.view = ViewGame(self.screen)
-        self.controller = Controller(Level(1))
+        self.state = LevelMenu()
+        self.view = ViewLevelMenu(self.screen)
+
+        self.controller = LevelMenuController(self.state, self.view)
+
 
     def run(self):
         run = True
         while run:
-            run = not measureTime(self.controller.move)
+
+            run = not self.controller.handle_event()
             
             self.view.draw_screen(self.controller.getState())
 
             pygame.display.update()
             self.clock.tick(FPS)
+
+        self.quit()
+
+    def quit(self):
+        pygame.quit()
+        sys.exit()
+
 
 
 if __name__ == "__main__":

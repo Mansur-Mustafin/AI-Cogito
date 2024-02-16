@@ -15,11 +15,11 @@ class Button:
     def __str__(self) -> str:
         return self.text
 
-    def draw(self, screen, x_pos, y_pos, isOver = False):
+    def draw(self, screen, x_pos, y_pos, mouse_pos):
         self.x = x_pos
         self.y = y_pos
 
-        if isOver:
+        if self.is_over(mouse_pos):
             button_color = self.text_color
             text_color = self.color
         else :
