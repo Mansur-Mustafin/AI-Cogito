@@ -3,6 +3,7 @@ WIDTH = 1280
 HEIGHT = 720
 FPS = 60
 LEVELS_DIR = "levels/"
+FONT_PATH = "assets/Comfortaa-Regular.ttf"
 
 # define used colors in game:
 BACKGROUND_COLOR = (184, 177, 177)
@@ -11,7 +12,7 @@ RED_COLOR = (210, 99, 99)
 BLUE_COLOR = (100, 111, 216)
 YELLOW_COLOR = (211, 200, 98)
 GREEN_COLOR = (74, 158, 73)
-
+BLACK_COLOR = (0,0,0)
 
 # define view GAME
 GAP = 3

@@ -23,4 +23,6 @@ class ViewLevelMenu(View):
             x += W_BUTTON * 0.8
             y = 150
             buttons = buttons[min(n_buttons_column, len(buttons)):]
+        
+        self.draw_text("Choose level difficulty:", (2*OFFSET, 2*OFFSET), 50)
 

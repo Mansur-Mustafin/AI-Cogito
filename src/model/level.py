@@ -31,6 +31,9 @@ class Level:
     def getLevel(self):
         return self.level
     
+    def getScore(self):
+        return self.score
+    
     def isWinCondition(self):
         return self.current_block == self.target_pattern
 

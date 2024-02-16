@@ -22,6 +22,9 @@ class ViewGame(View):
         self.draw_rectangle(X_3COLORS + GAP + W_SQUARE, Y_3COLORS, W_SQUARE, H_SQUARE, R_SQUARE, BLUE_COLOR)
         self.draw_rectangle(X_3COLORS + 2*(GAP + W_SQUARE), Y_3COLORS, W_SQUARE, H_SQUARE, R_SQUARE, YELLOW_COLOR)
 
+        # score
+        self.draw_text(f"Score: {str(level.getScore())}", (X_3COLORS + 5*W_SQUARE, Y_3COLORS), H_SQUARE)
+
         # Missmatch ties
         number_in_line = int ((W_LEFT_MENU - 40) / (W_MISS + GAP))
         number_misses = level.countMismatchedTiles()
@@ -34,7 +37,11 @@ class ViewGame(View):
                 if number_misses == 0 : break
             y_start -= 2*GAP + H_MISS
         
+        #target board
         self.drow_target_board(level)
+
+        #instructions
+        self.draw_text(f"Use ← ↑ ↓ → to move", (X_LEFT_MENU + OFFSET, HEIGHT/2 + 2*OFFSET), 25)
         
 
     def drow_target_board(self, level):

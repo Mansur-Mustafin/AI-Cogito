@@ -12,7 +12,6 @@ class GameController(Controller):
         for event in pygame.event.get():
 
             if event.type == pygame.QUIT or event.type == pygame.WINDOWCLOSE:
-                print("QUIT")
                 return self.EXIT
             
             elif event.type == pygame.KEYDOWN:
