@@ -13,3 +13,6 @@ class View(ABC):
         rect = pygame.Rect(x, y, width, height)
         pygame.draw.rect(self.screen, color, rect, border_radius=border_radius)
 
+    def getScreen(self):
+        return self.screen
+

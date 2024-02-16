@@ -14,6 +14,7 @@ class Level:
         self.current_block = level_data['initial_block']
         self.score = 0
         self.cur_pos = (0, 0)
+        self.level = lvl
     
     def getPosition(self):
         return self.cur_pos
@@ -26,6 +27,9 @@ class Level:
     
     def getValueAtCur(self, x, y):
         return self.current_block[y][x]
+    
+    def getLevel(self):
+        return self.level
     
     def isWinCondition(self):
         return self.current_block == self.target_pattern

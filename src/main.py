@@ -1,12 +1,16 @@
 import pygame, sys
 from settings import *
-from model.level import Level
+
+from analitics import *
+
 from view.viewGame import ViewGame
 from view.viewLevelMenu import ViewLevelMenu
 from view.viewMainMenu import ViewMainMenu
+
 from model.mainMenu import MainMenu
 from model.levelMenu import LevelMenu
-from analitics import *
+from model.level import Level
+
 from controller.controller import Controller
 from controller.gameController import GameController
 from controller.menuController import MainMenuController
@@ -22,24 +26,44 @@ class Game:
         pygame.display.set_caption('Amado Game')
         self.clock = pygame.time.Clock()
         
-        self.state = LevelMenu()
-        self.view = ViewLevelMenu(self.screen)
-
-        self.controller = LevelMenuController(self.state, self.view)
+        self.controller = MainMenuController(MainMenu(), ViewMainMenu(self.screen))
 
 
     def run(self):
         run = True
         while run:
 
-            run = not self.controller.handle_event()
+            command = self.controller.handle_event()
+            run = self.handle_command(command)
             
-            self.view.draw_screen(self.controller.getState())
+            self.controller.getView().draw_screen(self.controller.getState())
 
             pygame.display.update()
             self.clock.tick(FPS)
 
         self.quit()
+
+
+    def handle_command(self, command):
+        if command is None:
+            return True
+        
+        if command == Controller.EXIT:
+            return False
+        
+        state = self.controller.getState()
+        view = self.controller.getView()
+
+        if command == Controller.CHANGE_GAME:
+            self.controller = GameController(state, view)
+        elif command == Controller.CHANGE_MAIN:
+            self.controller = MainMenuController(state, view)
+        elif command == Controller.CHANGE_LEVEL:
+            self.controller = LevelMenuController(state, view)
+        else:
+            print("TODO")
+        return True
+
 
     def quit(self):
         pygame.quit()

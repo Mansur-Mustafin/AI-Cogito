@@ -13,14 +13,15 @@ class GameController(Controller):
 
             if event.type == pygame.QUIT or event.type == pygame.WINDOWCLOSE:
                 print("QUIT")
-                return True
+                return self.EXIT
             
             elif event.type == pygame.KEYDOWN:
                 self.__handle_keydown(event.key)
-                return self.state.isWinCondition()
+                if self.state.isWinCondition():
+                    print("END GAME")
+                    return self.CHANGE_MAIN
+                return None
             
-            else: return False
-
     def __handle_keydown(self, key):
         if key in self.KEY_DIRECTIONS:
             self.state.processMove(self.KEY_DIRECTIONS[key])
