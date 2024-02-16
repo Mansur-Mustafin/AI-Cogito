@@ -20,9 +20,20 @@ class Level:
         self.current_block = level_data['initial_block']
         self.score = 0
         self.cur_pos = (0, 0)
+
+        print(self.target_pattern)
     
     def getPosition(self):
         return self.cur_pos
+    
+    def getDimension(self):
+        return self.dimension
+    
+    def getValueAtTarget(self, x, y):
+        return self.target_pattern[x][y]
+    
+    def getValueAtCur(self, x, y):
+        return self.current_block[x][y]
     
     def isWinCondition(self):
         return self.current_block == self.target_pattern
@@ -55,4 +66,4 @@ class Level:
         new_y = self.cur_pos[1] + d_y
         return 0 <= new_x < self.dimension and \
                0 <= new_y < self.dimension and \
-               self.current_block[new_x][new_y] in self.COLORS
+               self.current_block[new_x][new_y] != None
