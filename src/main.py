@@ -1,8 +1,12 @@
 import pygame, sys
 from settings import *
 from level import Level
+from controller import Controller
+from analitics import *
+
 
 class Game:
+
     def __init__(self) -> None:
 
         #general setup
@@ -10,14 +14,12 @@ class Game:
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption('Amado Game')
         self.clock = pygame.time.Clock()
-        self.level = Level(1)
+        self.controller = Controller(Level(1))
 
     def run(self):
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
+        run = True
+        while run:
+            run = not measureTime(self.controller.move)
             
             pygame.display.update()
             self.clock.tick(FPS)

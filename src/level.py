@@ -2,13 +2,6 @@ import yaml
 
 class Level:
 
-    DIRECTIONS = {
-        "up": (0, -1),
-        "down": (0, 1),
-        "left": (-1, 0),
-        "right": (1, 0)
-    }
-
     COLORS = {'r', 'b', 'y'}
 
     def __init__(self, lvl):
@@ -34,12 +27,13 @@ class Level:
         for j in range(self.dimension)
     )
 
-    def move(self, direction):
-
-        if direction in self.DIRECTIONS and self.__isValidMove(self.DIRECTIONS[direction]):
-            d_x, d_y = self.DIRECTIONS[direction]
+    def movePlayer(self, move):
+        d_x, d_y = move
+        if self.__isValidMove(d_x,d_y):
+            
             x, y = self.cur_pos
             new_x, new_y = x + d_x, y + d_y
+            print(f"Player was moved to {new_x} {new_y}")
 
             orig_color = self.current_block[x][y]
             dest_color = self.current_block[new_x][new_y]
