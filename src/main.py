@@ -5,11 +5,8 @@ from controller import Controller
 from analitics import *
 
 
-
-
 class Game:
 
-    
     def __init__(self) -> None:
 
         #general setup
@@ -23,11 +20,6 @@ class Game:
         run = True
         while run:
             run = not measureTime(self.controller.move)
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                
             
             pygame.display.update()
             self.clock.tick(FPS)

@@ -1,4 +1,4 @@
-import pygame
+import pygame, sys
 
 class Controller:
 
@@ -13,14 +13,24 @@ class Controller:
         self.level = level
 
     def getMove(self):
-        keys = pygame.key.get_pressed()
-        for key, direction in self.KEY_DIRECTIONS.items():
-            if keys[key]:
-                return direction
-        return (0, 0)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key in self.KEY_DIRECTIONS:
+                    return self.KEY_DIRECTIONS[event.key]
+                else: return None
+            
+    
+    def getLevel(self):
+        return self.level
 
     def move(self):
         move = self.getMove()
+
+        if move is None : return False
+
         self.level.movePlayer(move)
         print(self.level.cur_pos)
         return self.level.isWinCondition()

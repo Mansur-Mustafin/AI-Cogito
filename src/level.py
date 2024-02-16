@@ -33,6 +33,7 @@ class Level:
             
             x, y = self.cur_pos
             new_x, new_y = x + d_x, y + d_y
+            print(f"Player was moved to {new_x} {new_y}")
 
             orig_color = self.current_block[x][y]
             dest_color = self.current_block[new_x][new_y]
