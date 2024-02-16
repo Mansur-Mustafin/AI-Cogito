@@ -1,9 +1,13 @@
 import pygame, sys
 from settings import *
-from level import Level
-from controller import Controller
+from model.level import Level
+from view.viewGame import ViewGame
+from view.viewLevelMenu import ViewLevelMenu
+from view.viewMainMenu import ViewMainMenu
+from model.mainMenu import MainMenu
+from model.levelMenu import LevelMenu
 from analitics import *
-
+from controller import Controller
 
 class Game:
 
@@ -14,6 +18,11 @@ class Game:
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption('Amado Game')
         self.clock = pygame.time.Clock()
+        
+        # self.state = Level(2)
+        # self.view = ViewGame(self.screen)
+        self.state = LevelMenu()
+        self.view = ViewLevelMenu(self.screen)
         self.controller = Controller(Level(1))
 
     def run(self):
@@ -21,6 +30,8 @@ class Game:
         while run:
             run = not measureTime(self.controller.move)
             
+            self.view.draw_screen(self.state)
+
             pygame.display.update()
             self.clock.tick(FPS)
 

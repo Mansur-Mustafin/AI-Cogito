@@ -7,5 +7,5 @@ initial_block:
 target_pattern:
  - ['b', 'y', 'y', 'r']
  - ['r', 'r', 'y', 'b']
- - ['r', 'b', 'r', 'b']
+ - ['r', 'b', null, 'b']
  - ['r', 'r', 'y', 'r']
