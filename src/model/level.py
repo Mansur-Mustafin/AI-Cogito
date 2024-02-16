@@ -24,10 +24,10 @@ class Level:
         return self.dimension
     
     def getValueAtTarget(self, x, y):
-        return self.target_pattern[x][y]
+        return self.target_pattern[y][x]
     
     def getValueAtCur(self, x, y):
-        return self.current_block[x][y]
+        return self.current_block[y][x]
     
     def isWinCondition(self):
         return self.current_block == self.target_pattern
@@ -45,16 +45,17 @@ class Level:
             
             x, y = self.cur_pos
             new_x, new_y = x + d_x, y + d_y
-            print(f"Player was moved to {new_x} {new_y}")
 
-            orig_color = self.current_block[x][y]
-            dest_color = self.current_block[new_x][new_y]
-
-            third_color = (self.COLORS - {orig_color, dest_color}).pop()
-            
-            self.current_block[new_x][new_y] = third_color
             self.cur_pos = (new_x, new_y)
             self.score += 1
+            
+            orig_color = self.current_block[y][x]
+            dest_color = self.current_block[new_y][new_x]
+
+            if orig_color != dest_color:
+                third_color = (self.COLORS - {orig_color, dest_color}).pop()
+                self.current_block[new_y][new_x] = third_color
+            
 
     def __isValidMove(self, d_x, d_y):
         new_x = self.cur_pos[0] + d_x

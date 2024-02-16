@@ -21,8 +21,8 @@ class Game:
         
         # self.state = Level(2)
         # self.view = ViewGame(self.screen)
-        self.state = LevelMenu()
-        self.view = ViewLevelMenu(self.screen)
+        self.state = Level(1)
+        self.view = ViewGame(self.screen)
         self.controller = Controller(Level(1))
 
     def run(self):
@@ -30,7 +30,7 @@ class Game:
         while run:
             run = not measureTime(self.controller.move)
             
-            self.view.draw_screen(self.state)
+            self.view.draw_screen(self.controller.getState())
 
             pygame.display.update()
             self.clock.tick(FPS)

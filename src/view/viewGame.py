@@ -54,7 +54,7 @@ class ViewGame(View):
                 elif tile == 'y':
                     tile_color = YELLOW_COLOR
 
-                self.draw_rectangle(x_start + j*x_gap, y_start + i*y_gap, W_SQUARE, H_SQUARE, R_SQUARE, tile_color)
+                self.draw_rectangle(x_start + i*x_gap, y_start + j*y_gap, W_SQUARE, H_SQUARE, R_SQUARE, tile_color)
 
     def drow_current_board(self, level):
 
@@ -81,7 +81,7 @@ class ViewGame(View):
                 elif tile == 'y':
                     tile_color = YELLOW_COLOR
 
-                self.draw_rectangle(x_start + j*x_gap, y_start + i*y_gap, scale*W_SQUARE, scale*H_SQUARE, R_SQUARE, tile_color)
+                self.draw_rectangle(x_start + i*x_gap, y_start + j*y_gap, scale*W_SQUARE, scale*H_SQUARE, R_SQUARE, tile_color)
         
 
 
