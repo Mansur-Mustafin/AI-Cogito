@@ -22,6 +22,9 @@ class ViewGame(View):
         self.draw_rectangle(X_3COLORS + GAP + W_SQUARE, Y_3COLORS, W_SQUARE, H_SQUARE, R_SQUARE, BLUE_COLOR)
         self.draw_rectangle(X_3COLORS + 2*(GAP + W_SQUARE), Y_3COLORS, W_SQUARE, H_SQUARE, R_SQUARE, YELLOW_COLOR)
 
+        # score
+        self.draw_text(f"Score: {str(level.getScore())}", (X_3COLORS + 5*W_SQUARE, Y_3COLORS), H_SQUARE)
+
         # Missmatch ties
         number_in_line = int ((W_LEFT_MENU - 40) / (W_MISS + GAP))
         number_misses = level.countMismatchedTiles()
@@ -34,7 +37,11 @@ class ViewGame(View):
                 if number_misses == 0 : break
             y_start -= 2*GAP + H_MISS
         
+        #target board
         self.drow_target_board(level)
+
+        #instructions
+        self.draw_text(f"Use ← ↑ ↓ → to move", (X_LEFT_MENU + OFFSET, HEIGHT/2 + 2*OFFSET), 25)
         
 
     def drow_target_board(self, level):
@@ -42,19 +49,9 @@ class ViewGame(View):
         y_gap = H_SQUARE + GAP
         x_start = X_LEFT_MENU + (W_LEFT_MENU / 2 - level.getDimension() * x_gap / 2) + GAP / 2
         y_start = Y_LEFT_MENU + (H_LEFT_MENU / 2 + level.getDimension() * y_gap / 2) * 0.4
-        for i in range(level.getDimension()):
-            for j in range(level.getDimension()):
-                tile = level.getValueAtTarget(i, j)
-                if tile is None:
-                    continue
-                elif tile == 'r':
-                    tile_color = RED_COLOR
-                elif tile == 'b':
-                    tile_color = BLUE_COLOR
-                elif tile == 'y':
-                    tile_color = YELLOW_COLOR
 
-                self.draw_rectangle(x_start + i*x_gap, y_start + j*y_gap, W_SQUARE, H_SQUARE, R_SQUARE, tile_color)
+        self.draw_square_board(x_start, y_start, x_gap, y_gap, level.getTargetBoard())
+
 
     def drow_current_board(self, level):
 
@@ -69,19 +66,4 @@ class ViewGame(View):
         self.draw_rectangle(x_start + i*x_gap - 3, y_start + j*y_gap - 3, scale*W_SQUARE + 6, scale*H_SQUARE + 6, R_SQUARE, GREEN_COLOR)
 
         # draw the board
-        for i in range(level.getDimension()):
-            for j in range(level.getDimension()):
-                tile = level.getValueAtCur(i, j)
-                if tile is None:
-                    continue
-                elif tile == 'r':
-                    tile_color = RED_COLOR
-                elif tile == 'b':
-                    tile_color = BLUE_COLOR
-                elif tile == 'y':
-                    tile_color = YELLOW_COLOR
-
-                self.draw_rectangle(x_start + i*x_gap, y_start + j*y_gap, scale*W_SQUARE, scale*H_SQUARE, R_SQUARE, tile_color)
-        
-
-
+        self.draw_square_board(x_start, y_start, x_gap, y_gap, level.getCurrentBoard(), scale)

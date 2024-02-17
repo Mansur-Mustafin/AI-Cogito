@@ -14,20 +14,25 @@ class Level:
         self.current_block = level_data['initial_block']
         self.score = 0
         self.cur_pos = (0, 0)
-
-        print(self.target_pattern)
+        self.level = lvl
     
     def getPosition(self):
         return self.cur_pos
     
     def getDimension(self):
         return self.dimension
+        
+    def getLevel(self):
+        return self.level
     
-    def getValueAtTarget(self, x, y):
-        return self.target_pattern[y][x]
+    def getScore(self):
+        return self.score
     
-    def getValueAtCur(self, x, y):
-        return self.current_block[y][x]
+    def getCurrentBoard(self):
+        return self.current_block
+    
+    def getTargetBoard(self):
+        return self.target_pattern
     
     def isWinCondition(self):
         return self.current_block == self.target_pattern
@@ -39,7 +44,7 @@ class Level:
         for j in range(self.dimension)
     )
 
-    def movePlayer(self, move):
+    def processMove(self, move):
         d_x, d_y = move
         if self.__isValidMove(d_x,d_y):
             

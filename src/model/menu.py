@@ -15,9 +15,9 @@ class Menu(ABC):
         new_y = self.mouse_pos[1] + d_y
         self.update_mouse_position(new_x, new_y)
 
-    def update_mouse_position(self, new_x, new_y):
-        if self.__isValidPosition(new_x, new_y):
-            self.mouse_pos = (new_y, new_x)
+    def update_mouse_position(self, new_pos):
+        if self.__isValidPosition(new_pos[0], new_pos[1]):
+            self.mouse_pos = new_pos
 
     def getPressedButton(self):
         for button in self.buttons:

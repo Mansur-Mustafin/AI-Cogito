@@ -1,13 +1,15 @@
 import pygame, sys
 from settings import *
-from model.level import Level
-from view.viewGame import ViewGame
-from view.viewLevelMenu import ViewLevelMenu
+
+from analitics import *
+
 from view.viewMainMenu import ViewMainMenu
 from model.mainMenu import MainMenu
-from model.levelMenu import LevelMenu
-from analitics import *
-from controller import Controller
+
+from controller.controller import Controller, Command
+from controller.gameController import GameController
+from controller.menuController import MainMenuController
+from controller.menuController import LevelMenuController
 
 class Game:
 
@@ -19,21 +21,44 @@ class Game:
         pygame.display.set_caption('Amado Game')
         self.clock = pygame.time.Clock()
         
-        # self.state = Level(2)
-        # self.view = ViewGame(self.screen)
-        self.state = Level(1)
-        self.view = ViewGame(self.screen)
-        self.controller = Controller(Level(1))
+        # controller
+        self.controller = MainMenuController(MainMenu(), ViewMainMenu(self.screen))
+
+        # actions to change controller
+        self.command_actions = {
+            Command.EXIT: lambda: False,
+            Command.CHANGE_GAME: lambda: self.change_controller(GameController),
+            Command.CHANGE_MAIN: lambda: self.change_controller(MainMenuController),
+            Command.CHANGE_LEVEL: lambda: self.change_controller(LevelMenuController),
+        }
+
 
     def run(self):
         run = True
         while run:
-            run = not measureTime(self.controller.move)
+
+            command = self.controller.handle_event()
+            run = self.handle_command(command)
             
-            self.view.draw_screen(self.controller.getState())
+            self.controller.getView().draw_screen(self.controller.getState())
 
             pygame.display.update()
             self.clock.tick(FPS)
+
+        self.quit()
+
+
+    def handle_command(self, command):
+        action = self.command_actions.get(command, lambda : True) # if not find just run = True
+        return action()
+
+    def change_controller(self, controller_class):
+        self.controller = controller_class(self.controller.getState(), self.controller.getView())
+        return True
+
+    def quit(self):
+        pygame.quit()
+        sys.exit()
 
 
 if __name__ == "__main__":
