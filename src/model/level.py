@@ -21,18 +21,18 @@ class Level:
     
     def getDimension(self):
         return self.dimension
-    
-    def getValueAtTarget(self, x, y):
-        return self.target_pattern[y][x]
-    
-    def getValueAtCur(self, x, y):
-        return self.current_block[y][x]
-    
+        
     def getLevel(self):
         return self.level
     
     def getScore(self):
         return self.score
+    
+    def getCurrentBoard(self):
+        return self.current_block
+    
+    def getTargetBoard(self):
+        return self.target_pattern
     
     def isWinCondition(self):
         return self.current_block == self.target_pattern

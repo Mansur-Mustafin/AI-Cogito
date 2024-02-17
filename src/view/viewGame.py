@@ -49,19 +49,9 @@ class ViewGame(View):
         y_gap = H_SQUARE + GAP
         x_start = X_LEFT_MENU + (W_LEFT_MENU / 2 - level.getDimension() * x_gap / 2) + GAP / 2
         y_start = Y_LEFT_MENU + (H_LEFT_MENU / 2 + level.getDimension() * y_gap / 2) * 0.4
-        for i in range(level.getDimension()):
-            for j in range(level.getDimension()):
-                tile = level.getValueAtTarget(i, j)
-                if tile is None:
-                    continue
-                elif tile == 'r':
-                    tile_color = RED_COLOR
-                elif tile == 'b':
-                    tile_color = BLUE_COLOR
-                elif tile == 'y':
-                    tile_color = YELLOW_COLOR
 
-                self.draw_rectangle(x_start + i*x_gap, y_start + j*y_gap, W_SQUARE, H_SQUARE, R_SQUARE, tile_color)
+        self.draw_square_board(x_start, y_start, x_gap, y_gap, level.getTargetBoard())
+
 
     def drow_current_board(self, level):
 
@@ -76,19 +66,4 @@ class ViewGame(View):
         self.draw_rectangle(x_start + i*x_gap - 3, y_start + j*y_gap - 3, scale*W_SQUARE + 6, scale*H_SQUARE + 6, R_SQUARE, GREEN_COLOR)
 
         # draw the board
-        for i in range(level.getDimension()):
-            for j in range(level.getDimension()):
-                tile = level.getValueAtCur(i, j)
-                if tile is None:
-                    continue
-                elif tile == 'r':
-                    tile_color = RED_COLOR
-                elif tile == 'b':
-                    tile_color = BLUE_COLOR
-                elif tile == 'y':
-                    tile_color = YELLOW_COLOR
-
-                self.draw_rectangle(x_start + i*x_gap, y_start + j*y_gap, scale*W_SQUARE, scale*H_SQUARE, R_SQUARE, tile_color)
-        
-
-
+        self.draw_square_board(x_start, y_start, x_gap, y_gap, level.getCurrentBoard(), scale)
