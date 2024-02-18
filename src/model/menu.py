@@ -1,34 +1,22 @@
 from abc import ABC, abstractmethod
 import pygame
 from settings import *
-from .button import Button
+from model.button import Button
 from typing import Optional
+
 
 class Menu(ABC):
 
     def __init__(self):
-        self.mouse_pos = (WIDTH/2, HEIGHT/2)
-        self.buttons = []
+        self.mouse_pos = (WIDTH / 2, HEIGHT / 2)
+        self.buttons = []   # TODO check this
 
-    """
-    :return: Buttons of the menu
-    :rtype: list[Button]
-    """
-    def getButtons(self) -> list[Button]:
+    def get_buttons(self) -> list[Button]:
+        """
+        :return: Buttons of the menu
+        :rtype: list[Button]
+        """
         return self.buttons
-    
-    """
-    Moves the user mouse
-    :param d_x: horizontal movement
-    :type d_x: Int
-    :param d_y: vertical movement
-    :type d_y: Int
-    :return: None
-    """
-    def move_mouse(self, d_x:int, d_y:int)-> None:
-        new_x = self.mouse_pos[0] + d_x
-        new_y = self.mouse_pos[1] + d_y
-        self.update_mouse_position(new_x, new_y)
 
     """
     Updates the mouse position
@@ -36,25 +24,28 @@ class Menu(ABC):
     :type new_pos: Tuple[Int,Int]
     :return: None
     """
-    def update_mouse_position(self, new_pos: tuple[int,int])-> None:
-        if self.__isValidPosition(new_pos[0], new_pos[1]):
+
+    def update_mouse_position(self, new_pos: tuple[int, int]) -> None:
+        if self.__is_valid_position(new_pos[0], new_pos[1]):
             self.mouse_pos = new_pos
 
     """
     :return: The button that has been pressed
     :rtype: Option[Button]
     """
-    def getPressedButton(self) -> Optional[Button]:
+
+    def get_pressed_button(self) -> Optional[Button]:
         for button in self.buttons:
             if button.is_over(self.mouse_pos):
                 return button
         return None
-    
+
     """
     :return: The current mouse position
     :rtype: Tuple [Int,Int]
     """
-    def getMousePosition(self) -> tuple[int,int]:
+
+    def get_mouse_position(self) -> tuple[int, int]:
         return self.mouse_pos
 
     """
@@ -66,5 +57,7 @@ class Menu(ABC):
     :return: True if the position is valid, False otherwise
     :rtype: Bool
     """
-    def __isValidPosition(self, x:int, y:int) -> bool:
+
+    @staticmethod
+    def __is_valid_position(x: int, y: int) -> bool:
         return 0 <= x < WIDTH and 0 <= y < HEIGHT
