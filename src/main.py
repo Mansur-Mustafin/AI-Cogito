@@ -1,15 +1,15 @@
 import pygame, sys
 from settings import *
 
-from analitics import *
+from service.analitics import *
 
 from view.viewMainMenu import ViewMainMenu
 from model.mainMenu import MainMenu
 
-from controller.controller import Controller, Command
-from controller.gameController import GameController
-from controller.menuController import MainMenuController
-from controller.menuController import LevelMenuController
+from service.controller.controller import Controller, Command
+from service.controller.gameController import GameController
+from service.controller.menuController import MainMenuController
+from service.controller.menuController import LevelMenuController
 
 class Game:
 

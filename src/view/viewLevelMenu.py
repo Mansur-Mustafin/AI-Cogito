@@ -1,12 +1,19 @@
 import pygame
 from view.view import View
 from settings import *
+from model.levelMenu import *
 
 class ViewLevelMenu(View):
     def __init__(self, screen):
         super().__init__(screen)
 
-    def draw_screen(self, menu):
+    '''
+    Draws the level Menu
+    :param menu: Menu to draw
+    :type menu: LevelMenu
+    :return: None 
+    '''
+    def draw_screen(self, menu:LevelMenu) -> None:
         x = 25
         y = 150
         n_buttons_column = int ((HEIGHT - y - 25) / (H_BUTTON + 10))

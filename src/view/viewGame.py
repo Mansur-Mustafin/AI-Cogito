@@ -6,14 +6,25 @@ class ViewGame(View):
     def __init__(self, screen):
         super().__init__(screen)
 
-    def draw_screen(self, level):
+
+    '''
+    Draws the game screen
+    :param level: The level to draw
+    :type level: Level
+    :return: None 
+    '''
+    def draw_screen(self, level:int) -> None:
         self.draw_rectangle(0, 0, WIDTH, HEIGHT, 0, BACKGROUND_COLOR)
         self.draw_right_menu(level)
-        
         self.drow_current_board(level)
 
-    
-    def draw_right_menu(self, level):
+    '''
+    Draws the right menu of the game screen
+    :param level: The level to draw
+    :type level: Level
+    :return: None 
+    '''
+    def draw_right_menu(self, level:int) -> None:
         # background of right menu
         self.draw_rectangle(X_LEFT_MENU, Y_LEFT_MENU, W_LEFT_MENU, H_LEFT_MENU, R_LEFT_MENU, WHITE_COLOR)
 
@@ -43,8 +54,13 @@ class ViewGame(View):
         #instructions
         self.draw_text(f"Use ← ↑ ↓ → to move", (X_LEFT_MENU + OFFSET, HEIGHT/2 + 2*OFFSET), 25)
         
-
-    def drow_target_board(self, level):
+    '''
+    Draws the target board
+    :param level: The level to draw
+    :type level: Level
+    :return: None 
+    '''
+    def drow_target_board(self, level:int) -> None:
         x_gap = W_SQUARE + GAP
         y_gap = H_SQUARE + GAP
         x_start = X_LEFT_MENU + (W_LEFT_MENU / 2 - level.getDimension() * x_gap / 2) + GAP / 2
@@ -52,8 +68,13 @@ class ViewGame(View):
 
         self.draw_square_board(x_start, y_start, x_gap, y_gap, level.getTargetBoard())
 
-
-    def drow_current_board(self, level):
+    '''
+    Draws the current board
+    :param level: The level to draw
+    :type level: Level
+    :return: None 
+    '''
+    def drow_current_board(self, level:int) -> None:
 
         scale = int ((min(HEIGHT, WIDTH) - 2*OFFSET) / (H_SQUARE * level.getDimension()))
         x_gap = scale*W_SQUARE + GAP

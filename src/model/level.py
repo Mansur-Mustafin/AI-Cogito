@@ -16,35 +16,73 @@ class Level:
         self.cur_pos = (0, 0)
         self.level = lvl
     
-    def getPosition(self):
+    """
+    :return: The position of the player in the board
+    :rtype: Tuple[Int, Int]
+    """
+    def getPosition(self) -> tuple[int,int]:
         return self.cur_pos
     
-    def getDimension(self):
+    """
+    :return: The dimension of the board
+    :rtype: Int
+    """
+    def getDimension(self) -> int:
         return self.dimension
-        
-    def getLevel(self):
+    
+    """
+    :return: The level number
+    :rtype: Int
+    """
+    def getLevel(self) -> int:
         return self.level
     
-    def getScore(self):
+    """
+    :return: The current score
+    :rtype: Int
+    """
+    def getScore(self) -> int:
         return self.score
     
-    def getCurrentBoard(self):
+    """
+    :return: The current board
+    :rtype: List[List[String]]
+    """
+    def getCurrentBoard(self) -> list[list[str]]:
         return self.current_block
     
-    def getTargetBoard(self):
+    """
+    :return: The current board
+    :rtype: List[List[String]]
+    """
+    def getTargetBoard(self) -> list[list[str]]:
         return self.target_pattern
     
-    def isWinCondition(self):
+    """
+    :return: True if the current board is equal to the target board, false otherwise
+    :rtype: Bool
+    """
+    def isWinCondition(self) -> bool:
         return self.current_block == self.target_pattern
 
-    def countMismatchedTiles(self):
+    """
+    :return: The number of blocks that differ from the current board to the target board
+    :rtype: Int
+    """
+    def countMismatchedTiles(self) -> int:
         return sum(
         self.current_block[i][j] != self.target_pattern[i][j]
         for i in range(self.dimension)
         for j in range(self.dimension)
     )
 
-    def processMove(self, move):
+    """
+    Verifies if the player can execute a move and if so moves the player
+    :param move: the move to be executed
+    :type move: Tuple[Int,Int] 
+    :return: None
+    """
+    def processMove(self, move: tuple[int,int]) -> None:
         d_x, d_y = move
         if self.__isValidMove(d_x,d_y):
             
@@ -61,8 +99,16 @@ class Level:
                 third_color = (self.COLORS - {orig_color, dest_color}).pop()
                 self.current_block[new_y][new_x] = third_color
             
-
-    def __isValidMove(self, d_x, d_y):
+    """
+    Verifies if a move is valid
+    :param d_x: horizontal movement
+    :type d_x: int
+    :param d_y: vertical movement
+    :type d_y: int
+    :return: True if the move is valid, false otherwise
+    :rtype: Bool
+    """
+    def __isValidMove(self, d_x:int, d_y:int) -> bool:
         new_x = self.cur_pos[0] + d_x
         new_y = self.cur_pos[1] + d_y
         return 0 <= new_x < self.dimension and \

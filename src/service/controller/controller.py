@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from enum import Enum, auto
 import pygame, sys
-
+from view.view import View
 
 class Controller(ABC):
 
@@ -20,10 +20,10 @@ class Controller(ABC):
     def handle_event(self):
         pass
     
-    def getView(self):
+    def getView(self) -> View:
         return self.view
 
-    def getState(self):
+    def getState(self) -> any:
         return self.state
     
 

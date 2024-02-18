@@ -1,12 +1,19 @@
 import pygame
 from view.view import View
 from settings import *
+from model.mainMenu import MainMenu
 
 class ViewMainMenu(View):
     def __init__(self, screen):
         super().__init__(screen)
-
-    def draw_screen(self, menu):
+    
+    '''
+    Draws the Main Menu
+    :param menu: Menu to draw
+    :type menu: MainMenu
+    :return: None 
+    '''
+    def draw_screen(self, menu:MainMenu) -> None:
         center_x = (WIDTH - W_BUTTON) / 2 - 400 # 400 - offset
         y = 150
         mouse_pos = menu.getMousePosition()
