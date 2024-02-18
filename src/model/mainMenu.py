@@ -7,14 +7,13 @@ class MainMenu(Menu):
 
     def __init__(self):
         super().__init__()
-        self.__create_buttons()
 
     """
     Creates the buttons for the level menu
     :return: None
     """
 
-    def __create_buttons(self) -> None:
+    def _create_buttons(self) -> None:
         self.buttons = [
             Button(W_BUTTON, H_BUTTON, "Play", WHITE_COLOR, BLUE_COLOR, 20),
             Button(W_BUTTON, H_BUTTON, "Run AI (DFS)", WHITE_COLOR, BLUE_COLOR, 20),

@@ -9,7 +9,12 @@ class Menu(ABC):
 
     def __init__(self):
         self.mouse_pos = (WIDTH / 2, HEIGHT / 2)
-        self.buttons = []   # TODO check this
+        self.buttons = []
+        self._create_buttons()
+        
+    @abstractmethod
+    def _create_buttons(self):
+        pass
 
     def get_buttons(self) -> list[Button]:
         """
