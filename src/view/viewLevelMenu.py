@@ -1,8 +1,9 @@
-from view.view import View
+from view.viewMenu import ViewMenu
 from model.levelMenu import *
+from theme import *
+from  .consts import *
 
-
-class ViewLevelMenu(View):
+class ViewLevelMenu(ViewMenu):
     def __init__(self, screen):
         super().__init__(screen)
 
@@ -13,21 +14,14 @@ class ViewLevelMenu(View):
         :type menu: LevelMenu
         :return: None
         """
-        x = 25
-        y = 150
-        n_buttons_column = int((HEIGHT - y - 25) / (H_BUTTON + 10))
-        buttons = menu.get_buttons()
 
+        #n_buttons_column = int((HEIGHT - y - 25) / (H_BUTTON + 10))
+        buttons = menu.get_buttons()
+        mouse_pos = menu.get_mouse_position()
         self.draw_rectangle(0, 0, WIDTH, HEIGHT, 0, BACKGROUND_COLOR)
 
-        while buttons:
-            for i in range(min(n_buttons_column, len(buttons))):
-                button = buttons[i]
-                button.draw(self.screen, x, y, menu.get_mouse_position())
-                y += 60
+        for button in buttons:
+            self.draw_button( button, mouse_pos)
 
-            x += W_BUTTON * 0.8
-            y = 150
-            buttons = buttons[min(n_buttons_column, len(buttons)):]
-
+ 
         self.draw_text("Choose level difficulty:", (2 * OFFSET, 2 * OFFSET), 50)

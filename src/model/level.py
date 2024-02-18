@@ -1,5 +1,5 @@
 import yaml
-from settings import *
+from config import *
 
 
 class Level:

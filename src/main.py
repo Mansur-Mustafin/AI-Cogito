@@ -1,7 +1,6 @@
 import pygame
 import sys
-
-from settings import *
+from config import WIDTH, HEIGHT, FPS
 from model.mainMenu import MainMenu
 from service.controller.controller import Command
 from service.controller.gameController import GameController

@@ -1,6 +1,6 @@
 from view.view import View
-from settings import *
-
+from theme import *
+from  .consts import *
 
 class ViewGame(View):
     def __init__(self, screen):

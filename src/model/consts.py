@@ -1,0 +1,13 @@
+from config import WIDTH, LEVELS_DIR as RELATIVE_LEVELS_DIR
+
+
+# define view MENU
+W_BUTTON = 250
+H_BUTTON = 50
+
+BUTTON_OFFSET = 60
+
+CENTER_X = (WIDTH - W_BUTTON) / 2 - 400  # 400 - offset
+X_BUTTON = 25
+Y_BUTTON = 150
+
