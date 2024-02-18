@@ -8,14 +8,13 @@ class LevelMenu(Menu):
 
     def __init__(self):
         super().__init__()
-        self.__create_buttons()
+        self._create_buttons()
 
     """
     Creates the buttons for the level menu
     :return: None
     """
-
-    def __create_buttons(self) -> None:
+    def _create_buttons(self) -> None:
         i = 0
         for filename in os.listdir('levels/'):
             if filename.startswith("level") and filename.endswith(".yaml"):
