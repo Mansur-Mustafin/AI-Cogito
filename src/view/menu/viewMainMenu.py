@@ -1,13 +1,13 @@
-from view.viewMenu import ViewMenu
-from model.mainMenu import MainMenu
+from view.menu.viewMenu import ViewMenu
+from model.menu.menu import Menu
 from theme import *
-from  .consts import *
+from  ..consts import *
 
 class ViewMainMenu(ViewMenu):
     def __init__(self, screen):
         super().__init__(screen)
 
-    def draw_screen(self, menu: MainMenu) -> None:
+    def draw_screen(self, menu: Menu) -> None:
         """
         Draws the Main Menu
         :param menu: Menu to draw

@@ -1,12 +1,12 @@
 import pygame
 import sys
 from config import WIDTH, HEIGHT, FPS
-from model.mainMenu import MainMenu
+from model.menu.menu import Menu, MAIN_MENU_BUTTONS
 from service.controller.controller import Command
 from service.controller.gameController import GameController
 from service.controller.menuController import LevelMenuController
 from service.controller.menuController import MainMenuController
-from view.viewMainMenu import ViewMainMenu
+from view.menu.viewMainMenu import ViewMainMenu
 
 
 class Game:
@@ -19,7 +19,7 @@ class Game:
         self.clock = pygame.time.Clock()
 
         # controller
-        self.controller = MainMenuController(MainMenu(), ViewMainMenu(self.screen))
+        self.controller = MainMenuController(Menu(MAIN_MENU_BUTTONS()), ViewMainMenu(self.screen))
 
         # actions to change controller
         self.command_actions = {

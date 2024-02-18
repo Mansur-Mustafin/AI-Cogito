@@ -3,11 +3,11 @@ from typing import Optional
 
 import pygame
 
-from model.button import Button
+from model.menu.button import Button
 from model.level import Level
-from model.levelMenu import LevelMenu
+from model.menu.menu import *
 from view.viewGame import ViewGame
-from view.viewLevelMenu import ViewLevelMenu
+from view.menu.viewLevelMenu import ViewLevelMenu
 from .controller import Controller, Command
 
 
@@ -59,7 +59,7 @@ class MainMenuController(MenuController):
         :rtype: Optional[Command]
         """
         if str(button) == "Play":
-            self.state = LevelMenu()
+            self.state = Menu(LEVEL_MENU_BUTTONS())
             self.view = ViewLevelMenu(self.view.get_screen())
             return Command.CHANGE_LEVEL
         else:

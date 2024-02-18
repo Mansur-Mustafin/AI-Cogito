@@ -1,8 +1,8 @@
 import pygame
 from view.view import View
-from model.levelMenu import *
+from model.menu.button import Button
 from theme import *
-from  .consts import *
+from  ..consts import *
 
 class ViewMenu(View):
     def __init__(self, screen):

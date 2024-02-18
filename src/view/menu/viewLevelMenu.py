@@ -1,13 +1,13 @@
-from view.viewMenu import ViewMenu
-from model.levelMenu import *
+from view.menu.viewMenu import ViewMenu
+from model.menu.menu import *
 from theme import *
-from  .consts import *
+from  ..consts import *
 
 class ViewLevelMenu(ViewMenu):
     def __init__(self, screen):
         super().__init__(screen)
 
-    def draw_screen(self, menu: LevelMenu) -> None:
+    def draw_screen(self, menu: Menu) -> None:
         """
         Draws the level Menu
         :param menu: Menu to draw
