@@ -1,17 +1,17 @@
 from abc import ABC, abstractmethod
 from enum import Enum, auto
-from .consts import *
+
 import pygame
 
 from view.view import View
 
 
 class Controller(ABC):
-    
     KEY_DIRECTIONS = {
-        key: direction
-        for direction_set, direction in zip([UP, LEFT, RIGHT, DOWN], [DIRECTION_UP, DIRECTION_LEFT, DIRECTION_RIGHT, DIRECTION_DOWN])
-        for key in direction_set
+        pygame.K_UP: (0, -1),
+        pygame.K_LEFT: (-1, 0),
+        pygame.K_RIGHT: (1, 0),
+        pygame.K_DOWN: (0, 1),
     }
 
     def __init__(self, state, view):

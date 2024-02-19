@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 import pygame
-from theme import *
-from  .consts import *
-from config import FONT_PATH
+
+from settings import *
+
 
 class View(ABC):
     map_Color = {

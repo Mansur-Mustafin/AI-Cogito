@@ -1,26 +1,33 @@
-from view.menu.viewMenu import ViewMenu
-from model.menu.menu import Menu
-from theme import *
-from  ..consts import *
+from view.view import View
+from settings import *
+from model.mainMenu import MainMenu
 
-class ViewMainMenu(ViewMenu):
+
+class ViewMainMenu(View):
     def __init__(self, screen):
         super().__init__(screen)
 
-    def draw_screen(self, menu: Menu) -> None:
+    def draw_screen(self, menu: MainMenu) -> None:
         """
         Draws the Main Menu
         :param menu: Menu to draw
         :type menu: MainMenu
         :return: None
         """
+        center_x = (WIDTH - W_BUTTON) / 2 - 400  # 400 - offset
+        y = 150
         mouse_pos = menu.get_mouse_position()
         buttons = menu.get_buttons()
 
         self.draw_rectangle(0, 0, WIDTH, HEIGHT, 0, BACKGROUND_COLOR)
 
-        for button in buttons:
-            self.draw_button( button, mouse_pos)
+        buttons[0].draw(self.screen, center_x, y, mouse_pos)  # Jogar button
+
+        y += 200
+
+        for button in buttons[1:]:
+            button.draw(self.screen, center_x, y, mouse_pos)
+            y += 60
 
         self.draw_text("Amado Game", (WIDTH * 0.55, 2 * OFFSET), 50)
 
