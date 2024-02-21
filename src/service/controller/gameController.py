@@ -13,8 +13,10 @@ class GameController(Controller):
     def handle_pressed_button(self, button: Button) -> Optional[Command]:
         print(button.get_action())
         self.process_move(button.get_action())
-
-
+        if self.state.is_win_condition():
+            print("End Game")
+            return Command.CHANGE_END   # TODO
+        return None
 
 
     def process_move(self, move: str) -> None:

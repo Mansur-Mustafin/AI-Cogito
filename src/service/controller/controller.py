@@ -12,6 +12,7 @@ class Command(Enum):
     CHANGE_GAME = auto()
     CHANGE_MAIN = auto()
     CHANGE_LEVEL = auto()
+    CHANGE_END = auto()
 
 
 class Controller(ABC):
