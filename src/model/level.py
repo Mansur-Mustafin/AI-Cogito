@@ -1,9 +1,9 @@
 import yaml
 from settings import *
-from model.menu import Menu
+from model.state import State
 from model.button import Button
 
-class Level(Menu):
+class Level(State):
     COLORS = {'r', 'b', 'y'}
 
     def __init__(self, lvl):
@@ -88,6 +88,9 @@ class Level(Menu):
 
     def get_score(self) -> int:
         return self.score
+
+    def increment_score(self):
+        self.score += 1
 
     """
     :return: The current board

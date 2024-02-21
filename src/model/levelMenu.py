@@ -1,10 +1,10 @@
 import os
 from model.button import Button
 from settings import *
-from model.menu import Menu
+from model.state import State
 
 
-class LevelMenu(Menu):
+class LevelMenu(State):
 
     def __init__(self):
         super().__init__()

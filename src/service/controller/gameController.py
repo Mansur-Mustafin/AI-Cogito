@@ -23,6 +23,7 @@ class GameController(Controller):
 
         if self.__is_valid_move(dir, indx):
             print("Valid move")
+            self.state.increment_score()
             
             if dir == "right":
                 return self.state.move_right(indx)
