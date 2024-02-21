@@ -16,7 +16,7 @@ class Game:
         # general setup
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption('Amado Game')
+        pygame.display.set_caption('Cogito Game')
         self.clock = pygame.time.Clock()
 
         # controller

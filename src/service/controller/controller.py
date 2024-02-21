@@ -1,25 +1,45 @@
 from abc import ABC, abstractmethod
 from enum import Enum, auto
+from typing import Optional
 
 import pygame
 
 from view.view import View
 
 
+class Command(Enum):
+    EXIT = auto()
+    CHANGE_GAME = auto()
+    CHANGE_MAIN = auto()
+    CHANGE_LEVEL = auto()
+
+
 class Controller(ABC):
-    KEY_DIRECTIONS = {
-        pygame.K_UP: (0, -1),
-        pygame.K_LEFT: (-1, 0),
-        pygame.K_RIGHT: (1, 0),
-        pygame.K_DOWN: (0, 1),
-    }
 
     def __init__(self, state, view):
         self.state = state
         self.view = view
 
+    def handle_event(self) -> Optional[Command]:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT or event.type == pygame.WINDOWCLOSE:
+                print("QUIT")
+                return Command.EXIT
+
+            elif event.type == pygame.MOUSEMOTION:
+                self.state.update_mouse_position(event.pos)
+                return None
+
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                button = self.state.get_pressed_button()
+
+                if button is None:
+                    return None
+                else:
+                    return self.handle_pressed_button(button)
+
     @abstractmethod
-    def handle_event(self):
+    def handle_pressed_button(self, button):
         pass
 
     def get_view(self) -> View:
@@ -33,8 +53,4 @@ class Controller(ABC):
         pygame.display.update()
 
 
-class Command(Enum):
-    EXIT = auto()
-    CHANGE_GAME = auto()
-    CHANGE_MAIN = auto()
-    CHANGE_LEVEL = auto()
+

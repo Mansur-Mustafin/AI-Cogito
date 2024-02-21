@@ -16,6 +16,8 @@ class ViewGame(View):
         self.draw_rectangle(0, 0, WIDTH, HEIGHT, 0, BACKGROUND_COLOR)
         self.draw_right_menu(level)
         self.draw_current_board(level)
+        self.draw_buttons(level)
+
 
     def draw_right_menu(self, level: int) -> None:
         """
@@ -27,11 +29,6 @@ class ViewGame(View):
 
         # background of right menu
         self.draw_rectangle(X_LEFT_MENU, Y_LEFT_MENU, W_LEFT_MENU, H_LEFT_MENU, R_LEFT_MENU, WHITE_COLOR)
-
-        # 3 examples colors
-        self.draw_rectangle(X_3COLORS, Y_3COLORS, W_SQUARE, H_SQUARE, R_SQUARE, RED_COLOR)
-        self.draw_rectangle(X_3COLORS + GAP + W_SQUARE, Y_3COLORS, W_SQUARE, H_SQUARE, R_SQUARE, BLUE_COLOR)
-        self.draw_rectangle(X_3COLORS + 2 * (GAP + W_SQUARE), Y_3COLORS, W_SQUARE, H_SQUARE, R_SQUARE, YELLOW_COLOR)
 
         # score
         self.draw_text(f"Score: {str(level.get_score())}", (X_3COLORS + 5 * W_SQUARE, Y_3COLORS), H_SQUARE)
@@ -51,8 +48,6 @@ class ViewGame(View):
         # target board
         self.draw_target_board(level)
 
-        # instructions
-        self.draw_text(f"Use ← ↑ ↓ → to move", (X_LEFT_MENU + OFFSET, HEIGHT / 2 + 2 * OFFSET), 25)
 
     def draw_target_board(self, level: int) -> None:
         """
@@ -68,6 +63,7 @@ class ViewGame(View):
 
         self.draw_square_board(x_start, y_start, level.get_target_board())
 
+
     def draw_current_board(self, level: int) -> None:
         """
         Draws the current board
@@ -75,16 +71,16 @@ class ViewGame(View):
         :type level: Level
         :return: None
         """
-        scale = ((min(HEIGHT, WIDTH) - 2 * OFFSET) / ((H_SQUARE + GAP) * level.get_dimension()))
+        scale = ((min(HEIGHT, WIDTH) - 5 * OFFSET) / ((H_SQUARE + GAP) * level.get_dimension()))
         x_gap = scale * W_SQUARE + GAP
         y_gap = scale * H_SQUARE + GAP
         x_start = (WIDTH - W_LEFT_MENU - 2 * OFFSET) / 2 - (level.get_dimension() * x_gap) / 2
         y_start = HEIGHT / 2 - (level.get_dimension() * y_gap) / 2
 
-        # draw selected square
-        i, j = level.get_position()
-        self.draw_rectangle(x_start + i * x_gap - 3, y_start + j * y_gap - 3, scale * W_SQUARE + 6,
-                            scale * H_SQUARE + 6, R_SQUARE, GREEN_COLOR)
-
         # draw the board
         self.draw_square_board(x_start, y_start, level.get_current_board(), scale)
+
+        
+    def draw_buttons(self, level):
+        for button in level.get_buttons():
+            button.draw(self.screen, None, None, level.get_mouse_position())

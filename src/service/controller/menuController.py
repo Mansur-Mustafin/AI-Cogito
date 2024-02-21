@@ -1,8 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 
-import pygame
-
 from model.button import Button
 from model.level import Level
 from model.levelMenu import LevelMenu
@@ -11,40 +9,7 @@ from view.viewLevelMenu import ViewLevelMenu
 from .controller import Controller, Command
 
 
-class MenuController(Controller, ABC):
-
-    def __init__(self, state, view):
-        super().__init__(state, view)
-
-    def handle_event(self) -> Optional[Command]:
-        """
-        Handles user events while in the menu such as quitting, mouse motion, and mouse button clicks
-        :return: a command to be executed or None if no significant event has occur
-        :rtype: Optional[Command]
-        """
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT or event.type == pygame.WINDOWCLOSE:
-                print("QUIT")
-                return Command.EXIT
-
-            elif event.type == pygame.MOUSEMOTION:
-                self.state.update_mouse_position(event.pos)
-                return None
-
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                button = self.state.get_pressed_button()
-
-                if button is None:
-                    return None
-                else:
-                    return self.handle_pressed_button(button)
-
-    @abstractmethod
-    def handle_pressed_button(self, button):
-        pass
-
-
-class MainMenuController(MenuController):
+class MainMenuController(Controller):
 
     def __init__(self, state, view):
         super().__init__(state, view)
@@ -58,7 +23,7 @@ class MainMenuController(MenuController):
         :return: a command to be executed
         :rtype: Optional[Command]
         """
-        if str(button) == "Play":
+        if button.get_action() == "Play":
             self.state = LevelMenu()
             self.view = ViewLevelMenu(self.view.get_screen())
             return Command.CHANGE_LEVEL
@@ -67,7 +32,7 @@ class MainMenuController(MenuController):
             return None
 
 
-class LevelMenuController(MenuController):
+class LevelMenuController(Controller):
 
     def __init__(self, state, view):
         super().__init__(state, view)
