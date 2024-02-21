@@ -122,11 +122,12 @@ class Level(State):
     """
 
     def count_mismatched_tiles(self) -> int:
-        return sum(
-            self.current_block[i][j] != self.target_pattern[i][j]
-            for i in range(self.dimension)
-            for j in range(self.dimension)
-        )
+        total = 0
+        for i in range(self.dimension):
+            for j in range(self.dimension):
+                if self.current_block[i][j] != self.target_pattern[i][j] and self.target_pattern[i][j] == self.main_color:
+                    total += 1
+        return total
 
     def set_current_board(self, board):
         self.current_block = board        

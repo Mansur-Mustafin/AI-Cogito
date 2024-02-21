@@ -36,6 +36,7 @@ class ViewGame(View):
         # Missmatch ties
         number_in_line = int((W_LEFT_MENU - 40) / (W_MISS + GAP))
         number_misses = level.count_mismatched_tiles()
+        print(number_misses)
         x_start = X_LEFT_MENU + OFFSET
         y_start = Y_LEFT_MENU + H_LEFT_MENU - OFFSET - H_MISS
         while number_misses > 0:
