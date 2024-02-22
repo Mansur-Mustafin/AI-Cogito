@@ -8,12 +8,11 @@ class MainMenu(State):
     def __init__(self):
         super().__init__()
 
-    """
-    Creates the buttons for the level menu
-    :return: None
-    """
-
     def _create_buttons(self) -> None:
+        """
+        Creates the buttons for the level menu
+        :return: None
+        """
         self.buttons = [
             Button(None, None, W_BUTTON, H_BUTTON, "Play", WHITE_COLOR, BLUE_COLOR, 20),
             Button(None, None, W_BUTTON, H_BUTTON, "DFS", WHITE_COLOR, BLUE_COLOR, 20),

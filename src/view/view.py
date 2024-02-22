@@ -58,7 +58,7 @@ class View(ABC):
         try:
             font = pygame.font.Font(font_path, font_size)
         except Exception as e:
-            print(f"Error loading font: {e}")
+            print(f"[ERROR] loading font: {e}")
             font = pygame.font.SysFont('Arial', font_size)
 
         text_surface = font.render(text, True, color)
@@ -86,7 +86,8 @@ class View(ABC):
 
                 tile = square[j][i]
 
-                if tile is None: continue
+                if tile is None:
+                    continue
 
                 tile_color = self.map_Color.get(tile, BLACK_COLOR)
 

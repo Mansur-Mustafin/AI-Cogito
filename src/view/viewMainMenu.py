@@ -21,7 +21,7 @@ class ViewMainMenu(View):
 
         self.draw_rectangle(0, 0, WIDTH, HEIGHT, 0, BACKGROUND_COLOR)
 
-        buttons[0].draw(self.screen, center_x, y, mouse_pos)  # Jogar button
+        buttons[0].draw(self.screen, center_x, y, mouse_pos)  # Play button
 
         y += 200
 
@@ -29,7 +29,7 @@ class ViewMainMenu(View):
             button.draw(self.screen, center_x, y, mouse_pos)
             y += 60
 
-        self.draw_text("Cagado Game", (WIDTH * 0.55, 2 * OFFSET), 50)
+        self.draw_text("Cogito Game", (WIDTH * 0.55, 2 * OFFSET), 50)
 
         w_square = 150
         # super mal

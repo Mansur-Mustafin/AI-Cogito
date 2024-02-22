@@ -24,7 +24,6 @@ class Controller(ABC):
     def handle_event(self) -> Optional[Command]:
         for event in pygame.event.get():
             if event.type == pygame.QUIT or event.type == pygame.WINDOWCLOSE:
-                print("QUIT")
                 return Command.EXIT
 
             elif event.type == pygame.MOUSEMOTION:
@@ -52,6 +51,3 @@ class Controller(ABC):
     def update_screen(self):
         self.view.draw_screen(self.state)
         pygame.display.update()
-
-
-

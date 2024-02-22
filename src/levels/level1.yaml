@@ -1,6 +1,6 @@
 dimension: 9
-main_color: 'r'
-blanck_color : 'y'
+main_color: ['r']
+blank_color : 'y'
 initial_block:
  - ['y', 'r', 'y', 'y', 'y', 'y', 'y', 'y', 'y']
  - ['y', 'y', 'y', 'y', 'y', 'y', 'y', 'r', 'y']

@@ -1,12 +1,13 @@
 from view.view import View
 from settings import *
+from model.level import Level
 
 
 class ViewGame(View):
     def __init__(self, screen):
         super().__init__(screen)
 
-    def draw_screen(self, level: int) -> None:
+    def draw_screen(self, level: Level) -> None:
         """
         Draws the game screen
         :param level: The level to draw
@@ -18,8 +19,7 @@ class ViewGame(View):
         self.draw_current_board(level)
         self.draw_buttons(level)
 
-
-    def draw_right_menu(self, level: int) -> None:
+    def draw_right_menu(self, level: Level) -> None:
         """
         Draws the right menu of the game screen
         :param level: The level to draw
@@ -48,8 +48,7 @@ class ViewGame(View):
         # target board
         self.draw_target_board(level)
 
-
-    def draw_target_board(self, level: int) -> None:
+    def draw_target_board(self, level: Level) -> None:
         """
         Draws the target board
         :param level: The level to draw
@@ -63,8 +62,7 @@ class ViewGame(View):
 
         self.draw_square_board(x_start, y_start, level.get_target_board())
 
-
-    def draw_current_board(self, level: int) -> None:
+    def draw_current_board(self, level: Level) -> None:
         """
         Draws the current board
         :param level: The level to draw
@@ -80,7 +78,6 @@ class ViewGame(View):
         # draw the board
         self.draw_square_board(x_start, y_start, level.get_current_board(), scale)
 
-        
-    def draw_buttons(self, level):
+    def draw_buttons(self, level: Level):
         for button in level.get_buttons():
             button.draw(self.screen, None, None, level.get_mouse_position())
