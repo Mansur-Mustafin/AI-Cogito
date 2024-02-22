@@ -1,12 +1,11 @@
 import pygame
 import sys
-
 from settings import *
 from model.mainMenu import MainMenu
 from service.controller.controller import Command
 from service.controller.gameController import GameController
 from service.controller.menuController import LevelMenuController
-from service.controller.menuController import MainMenuController
+from service.controller.menuController import MainMenuController, EndMenuController
 from view.viewMainMenu import ViewMainMenu
 
 
@@ -28,6 +27,7 @@ class Game:
             Command.CHANGE_GAME: lambda: self.change_controller(GameController),
             Command.CHANGE_MAIN: lambda: self.change_controller(MainMenuController),
             Command.CHANGE_LEVEL: lambda: self.change_controller(LevelMenuController),
+            Command.CHANGE_END: lambda: self.change_controller( EndMenuController)
         }
 
     def run(self):

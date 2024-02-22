@@ -1,9 +1,10 @@
 from typing import Optional
 
 import pygame
-
+from model.endMenu import EndMenu
 from .controller import Controller, Command
 from model.button import Button
+from view.viewEndMenu import ViewEndMenu
 
 class GameController(Controller):
 
@@ -15,6 +16,8 @@ class GameController(Controller):
         self.process_move(button.get_action())
         if self.state.is_win_condition():
             print("End Game")
+            self.state = EndMenu(self.get_state())
+            self.view = ViewEndMenu(self.view.get_screen())
             return Command.CHANGE_END   # TODO
         return None
 

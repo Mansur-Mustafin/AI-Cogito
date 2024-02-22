@@ -16,6 +16,7 @@ class Level(State):
         self.main_color = level_data['main_color']
         self.blanck_color = level_data['blanck_color']
         self.score = 0
+        self.time = 0
         self.cur_pos = (0, 0)
         self.level = lvl
 
