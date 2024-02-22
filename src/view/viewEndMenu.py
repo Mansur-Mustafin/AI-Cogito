@@ -8,13 +8,11 @@ class ViewEndMenu(View):
 
     def draw_screen(self, menu: EndMenu) -> None:
         """
-        Draws the level Menu
+        Draws the End Menu
         :param menu: Menu to draw
-        :type menu: LevelMenu
+        :type menu: EndMenu
         :return: None
         """
-
-
         x = (WIDTH - W_BUTTON)/2
         y = 450
         n_buttons_column = int((HEIGHT - y - 25) / (H_BUTTON + 10))
@@ -33,9 +31,9 @@ class ViewEndMenu(View):
             buttons = buttons[min(n_buttons_column, len(buttons)):]
 
         score = "Score: "+str(menu.level.score)
-        time = "Time: " + str(menu.level.time)
+        time = "Time: " + str(menu.level.time)[0:7]
         self.draw_text("You have won the game", ( (WIDTH -21*30) /2, 2 * OFFSET), 50)
-        self.draw_text(score, ((WIDTH - W_BUTTON/2)/2, 300), 30)
-        self.draw_text(time, ((WIDTH - W_BUTTON/2)/2, 350), 30)
+        self.draw_text(score, ((WIDTH - W_BUTTON)/2, 300), 30)
+        self.draw_text(time, ((WIDTH - W_BUTTON)/2, 350), 30)
 
         

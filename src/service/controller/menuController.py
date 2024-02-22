@@ -1,4 +1,3 @@
-from abc import ABC, abstractmethod
 from typing import Optional
 from model.mainMenu import MainMenu
 from model.button import Button

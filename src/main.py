@@ -35,7 +35,6 @@ class Game:
         while run:
             command = self.controller.handle_event()
             run = self.handle_command(command)
-
             self.controller.update_screen()
             self.clock.tick(FPS)
 

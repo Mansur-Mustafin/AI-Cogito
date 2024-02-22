@@ -1,7 +1,5 @@
 import time
 from typing import Callable, Any
-global totalTime
-totalTime = 0
 
 """
     Measures the execution time of a function and updates the total execution time.
@@ -20,5 +18,5 @@ def measureTime(fn:Callable[...,Any], *args:Any, **kwargs:Any) -> Any:
     startTime = time.time()
     response = fn(*args, **kwargs)
     endTime = time.time()
-    totalTime += (endTime - startTime)
-    return response
+    totalTime = (endTime - startTime)
+    return(response, totalTime)

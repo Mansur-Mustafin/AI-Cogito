@@ -1,6 +1,5 @@
 from typing import Optional
-
-import pygame
+import time
 from model.endMenu import EndMenu
 from .controller import Controller, Command
 from model.button import Button
@@ -10,15 +9,16 @@ class GameController(Controller):
 
     def __init__(self, state, view):
         super().__init__(state, view)
+        self.state.time = time.time()
 
     def handle_pressed_button(self, button: Button) -> Optional[Command]:
         print(button.get_action())
-        self.process_move(button.get_action())
+        self.process_move( button.get_action())
         if self.state.is_win_condition():
-            print("End Game")
+            self.state.time = time.time() - self.state.time
             self.state = EndMenu(self.get_state())
             self.view = ViewEndMenu(self.view.get_screen())
-            return Command.CHANGE_END   # TODO
+            return Command.CHANGE_END
         return None
 
 
