@@ -29,7 +29,7 @@ class ViewMainMenu(View):
             button.draw(self.screen, center_x, y, mouse_pos)
             y += 60
 
-        self.draw_text("Amado Game", (WIDTH * 0.55, 2 * OFFSET), 50)
+        self.draw_text("Cagado Game", (WIDTH * 0.55, 2 * OFFSET), 50)
 
         w_square = 150
         # super mal

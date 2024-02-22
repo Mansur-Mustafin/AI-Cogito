@@ -5,7 +5,7 @@ from model.button import Button
 from typing import Optional
 
 
-class Menu(ABC):
+class State(ABC):
 
     def __init__(self):
         self.mouse_pos = (WIDTH / 2, HEIGHT / 2)

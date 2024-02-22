@@ -1,10 +1,10 @@
 import os
 from model.button import Button
 from settings import *
-from model.menu import Menu
+from model.state import State
 
 
-class LevelMenu(Menu):
+class LevelMenu(State):
 
     def __init__(self):
         super().__init__()
@@ -19,4 +19,4 @@ class LevelMenu(Menu):
             if filename.startswith("level") and filename.endswith(".yaml"):
                 level_number = filename[5:-5]
                 button_text = f"Level {level_number}"
-                self.buttons.append(Button(W_BUTTON * 0.6, H_BUTTON, button_text, WHITE_COLOR, BLUE_COLOR, 20))
+                self.buttons.append(Button(None, None, W_BUTTON * 0.6, H_BUTTON, button_text, WHITE_COLOR, BLUE_COLOR, 20))

@@ -3,37 +3,54 @@ from typing import Optional
 import pygame
 
 from .controller import Controller, Command
-
+from model.button import Button
 
 class GameController(Controller):
 
     def __init__(self, state, view):
         super().__init__(state, view)
 
-    def handle_event(self) -> Optional[Command]:
-        """
-        Handles users events while in game such as quitting and key pressing
-        :return: a command to be executed or None if the game is yet to end
-        :rtype: Optional[Command]
-        """
-        for event in pygame.event.get():
+    def handle_pressed_button(self, button: Button) -> Optional[Command]:
+        print(button.get_action())
+        self.process_move(button.get_action())
+        if self.state.is_win_condition():
+            print("End Game")
+            return Command.CHANGE_END   # TODO
+        return None
 
-            if event.type == pygame.QUIT or event.type == pygame.WINDOWCLOSE:
-                return Command.EXIT
 
-            elif event.type == pygame.KEYDOWN:
-                self.__handle_keydown(event.key)
-                if self.state.is_win_condition():
-                    print("END GAME")
-                    return Command.CHANGE_MAIN
-                return None
+    def process_move(self, move: str) -> None:
+        dir = move.split()[0]
+        indx = int(move.split()[1])
 
-    def __handle_keydown(self, key: any) -> None:
-        """
-        Handles the key pressing, moves the player depending on the pressed key
-        :param key: the key that has been pressed
-        :type key: Any
-        :return: None
-        """
-        if key in self.KEY_DIRECTIONS:
-            self.state.process_move(self.KEY_DIRECTIONS[key])
+        if self.__is_valid_move(dir, indx):
+            print("Valid move")
+            self.state.increment_score()
+            
+            if dir == "right":
+                return self.state.move_right(indx)
+            elif dir == "left":
+                return self.state.move_left(indx)
+            elif dir == "up":
+                return self.state.move_up(indx)
+            elif dir == "down":
+                return self.state.move_down(indx)
+            else:
+                print("[ERROR] Invalid move")
+                return False
+        else:
+            print("Invalid move")
+
+
+    def __is_valid_move(self, dir : str, indx : int) -> bool:
+        if dir == "right":
+            return self.state.get_value_at(indx, -1) != self.state.get_main_color()
+        elif dir == "left":
+            return self.state.get_value_at(indx, 0) != self.state.get_main_color()
+        elif dir == "up":
+            return self.state.get_value_at(0, indx) != self.state.get_main_color()
+        elif dir == "down":
+            return self.state.get_value_at(-1, indx) != self.state.get_main_color()
+        else:
+            print("[ERROR] Invalid move")
+            return False
