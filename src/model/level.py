@@ -163,6 +163,7 @@ class Level(State):
         :return:
         """
         self.current_block[indx] = [self.blank_color] + self.current_block[indx][:-1]
+        return self
 
     def move_left(self, indx):
         """
@@ -170,6 +171,7 @@ class Level(State):
         :return:
         """
         self.current_block[indx] = self.current_block[indx][1:] + [self.blank_color]
+        return self
 
     def move_down(self, indx):
         """
@@ -180,6 +182,7 @@ class Level(State):
         shifted_column = [self.blank_color] + column[:-1]
         for i, row in enumerate(self.current_block):
             row[indx] = shifted_column[i]
+        return self
 
     def move_up(self, indx):
         """
@@ -190,3 +193,17 @@ class Level(State):
         shifted_column = column[1:] + [self.blank_color]
         for i, row in enumerate(self.current_block):
             row[indx] = shifted_column[i]
+        return self
+
+    def is_valid_move(self, dir: str, indx: int) -> bool:
+        if dir == "right":
+            return not self.get_value_at(indx, -1) in self.get_main_colors()
+        elif dir == "left":
+            return not self.get_value_at(indx, 0) in self.get_main_colors()
+        elif dir == "up":
+            return not self.get_value_at(0, indx) in self.get_main_colors()
+        elif dir == "down":
+            return not self.get_value_at(-1, indx) in self.get_main_colors()
+        else:
+            print("[ERROR] Invalid move")
+            return False

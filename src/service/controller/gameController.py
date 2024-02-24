@@ -32,7 +32,7 @@ class GameController(Controller):
         dir = move.split()[0]
         indx = int(move.split()[1])
 
-        if self.__is_valid_move(dir, indx):
+        if self.state.is_valid_move(dir, indx):
             self.state.increment_score()
 
             if dir == "right":
@@ -44,16 +44,3 @@ class GameController(Controller):
             elif dir == "down":
                 self.state.move_down(indx)
 
-
-    def __is_valid_move(self, dir: str, indx: int) -> bool:
-        if dir == "right":
-            return not self.state.get_value_at(indx, -1) in self.state.get_main_colors()
-        elif dir == "left":
-            return not self.state.get_value_at(indx, 0) in self.state.get_main_colors()
-        elif dir == "up":
-            return not self.state.get_value_at(0, indx) in self.state.get_main_colors()
-        elif dir == "down":
-            return not self.state.get_value_at(-1, indx) in self.state.get_main_colors()
-        else:
-            print("[ERROR] Invalid move")
-            return False

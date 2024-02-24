@@ -13,7 +13,7 @@ class Command(Enum):
     CHANGE_MAIN = auto()
     CHANGE_LEVEL = auto()
     CHANGE_END = auto()
-
+    # AQUI
 
 class Controller(ABC):
 

@@ -8,6 +8,8 @@ from service.controller.menuController import LevelMenuController
 from service.controller.menuController import MainMenuController, EndMenuController
 from view.viewMainMenu import ViewMainMenu
 
+from AI.aiAlgorithms import *
+from AI.ai import AI
 
 class Game:
 
@@ -50,6 +52,13 @@ class Game:
         return True
 
 
+# if __name__ == "__main__":
+#     game = Game()
+#     game.run()
+
+
 if __name__ == "__main__":
-    game = Game()
-    game.run()
+    level = 4
+    ai = AI(level, breadth_first_search)
+
+    print(ai.moves)

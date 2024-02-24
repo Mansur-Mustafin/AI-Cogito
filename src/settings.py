@@ -5,6 +5,9 @@ FPS = 60
 LEVELS_DIR = "levels/"
 FONT_PATH = "assets/Comfortaa-Regular.ttf"
 
+# define ai settings
+WAITTING_TIME = 1
+
 # define used colors in game:
 BACKGROUND_COLOR = (255, 255, 255)
 WHITE_COLOR = (230, 230, 230)
