@@ -5,7 +5,7 @@ from model.button import Button
 
 
 class Level(State):
-    COLORS = {'r', 'b', 'y'}
+    COLORS = {'r', 'b'}
 
     def __init__(self, lvl):
         with open(LEVELS_DIR + "level" + str(lvl) + ".yaml", 'r') as file:
@@ -18,10 +18,19 @@ class Level(State):
         self.blank_color = level_data['blank_color']
         self.score = 0
         self.time = 0
-        self.cur_pos = (0, 0)
         self.level = lvl
 
         super().__init__()
+
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.current_block == other.current_block and self.level == other.level
+        else:
+            return False
+
+    def __hash__(self):
+        current_block_tuple = tuple(tuple(row) for row in self.current_block)
+        return hash((current_block_tuple , self.level)) 
 
     def _create_buttons(self) -> None:
         # copy from view
@@ -136,6 +145,8 @@ class Level(State):
                     total += 1
         return total
 
+    
+
     def set_current_board(self, board) -> None:
         """
         :param board: New board
@@ -207,3 +218,6 @@ class Level(State):
         else:
             print("[ERROR] Invalid move")
             return False
+
+
+        
