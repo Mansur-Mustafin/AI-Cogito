@@ -9,7 +9,7 @@ from service.controller.menuController import MainMenuController, EndMenuControl
 from view.viewMainMenu import ViewMainMenu
 
 from AI.aiAlgorithms import *
-from AI.ai import AI
+from AI.ai import *
 
 class Game:
 
@@ -58,7 +58,10 @@ class Game:
 
 
 if __name__ == "__main__":
-    level = 4
-    ai = AI(level, breadth_first_search)
+    sys.setrecursionlimit(3000)
+
+    level = 6
+    ai = AI(level, AIS.ASTAR)
 
     print(ai.moves)
+    print(ai.state.time)

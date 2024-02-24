@@ -2,14 +2,31 @@ from model.level import Level
 from AI.treeNode import TreeNode
 from service.analitics import measureTime
 import copy
+from .aiAlgorithms import *
+from .heuristics import *
+from enum import Enum, auto
 
+class AIS(Enum):
+    BFS = auto()
+    DFS = auto()
+    IDS = auto()
+    GREDDY = auto()
+    ASTAR = auto()
 
 class AI:
+
+    ALGORITHMS = {
+        AIS.BFS : lambda self :[breadth_first_search, self.state, self.goal_state_func, self.child_states],
+        AIS.DFS: lambda self: [depth_first_search, self.state, self.goal_state_func, self.child_states],
+        AIS.IDS: lambda self: [iterative_deepening_search, self.state, self.goal_state_func, self.child_states, 1000],
+        AIS.GREDDY : lambda self : [ greedy_search, self.state, self.goal_state_func, self.child_states, miss_match_heuristic],
+        AIS.ASTAR : lambda self : [ a_star_search, self.state, self.goal_state_func, self.child_states, miss_match_heuristic]
+    }
     
     def __init__(self, lvl: int, algorithm) -> None:
 
         self.state = Level(lvl)
-        node, self.state.time = measureTime(algorithm, self.state, self.goal_state_func, self.child_states )
+        node, self.state.time = measureTime( *self.ALGORITHMS[algorithm](self) )
         self.moves = node.build_path(node)
 
 
