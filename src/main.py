@@ -52,16 +52,16 @@ class Game:
         return True
 
 
-# if __name__ == "__main__":
-#     game = Game()
-#     game.run()
-
-
 if __name__ == "__main__":
-    sys.setrecursionlimit(3000)
+     game = Game()
+     game.run()
 
-    level = 6
-    ai = AI(level, AIS.ASTAR)
 
-    print(ai.moves)
-    print(ai.state.time)
+#if __name__ == "__main__":
+#    sys.setrecursionlimit(3000)
+#
+#    level = 6
+#    ai = AI(level, AIS.ASTAR)
+
+    #print(ai.moves)
+    #print(ai.state.time)
