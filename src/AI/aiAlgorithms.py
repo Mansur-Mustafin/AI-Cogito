@@ -6,35 +6,8 @@ import heapq
 visited = set()
 depth = 0
 
-# BFS
-
-def breadth_first_search(initial_state, goal_state_func, operators_func):
-    global visited
-    visited.add(initial_state)
-    visited = set()
-    root = TreeNode(initial_state)  
-    queue = deque([root])   
-    while queue:
-        node = queue.popleft() 
-        visited.add(node.state)
-        if goal_state_func(node.state):   
-            return node
-
-        for state, move in operators_func(node.state):
-            if not state in visited:
-
-                child_node = TreeNode(state, move)
-            
-                node.add_child(child_node)
-
-                queue.append(child_node)
-
-    return None
-
 
 # DFS
-
-
 
 def depth_first_search(initial_state, goal_state_func, operators_func):
 
@@ -53,13 +26,11 @@ def depth_first_search(initial_state, goal_state_func, operators_func):
 
 
 def dfs(v, goal_state_func, operators_func, curr_depth):
+
+    if goal_state_func(v.state): return v
+    
     visited.add(v.state)
 
-    if goal_state_func(v.state):
-        global depth 
-        depth = curr_depth
-        return v
-    
     for state, move in operators_func(v.state):
         if not state in visited:
             child_node = TreeNode(state, move)
@@ -94,21 +65,16 @@ def depth_limited_search(initial_state, goal_state_func, operators_func, depth_l
     root = TreeNode(initial_state)
 
     if goal_state_func(initial_state):
-        return initial_state
+        return root # TODO check this
 
-    node = dfs_depth(root, goal_state_func, operators_func, 0, depth_limit)
+    return dfs_depth(root, goal_state_func, operators_func, 0, depth_limit)
 
-    return node
-    
 
 def dfs_depth(v, goal_state_func, operators_func, curr_depth, depth_limit):
 
-    if goal_state_func(v.state) and curr_depth <= depth_limit:
-        global depth 
-        depth = curr_depth
-        return v
-    
     if curr_depth > depth_limit: return None
+
+    if goal_state_func(v.state): return v
     
     for state, move in operators_func(v.state):
         child_node = TreeNode(state, move)
@@ -119,12 +85,17 @@ def dfs_depth(v, goal_state_func, operators_func, curr_depth, depth_limit):
 
         if not node is None : return node
 
+    return None
 
-### Greedy
 
-def greedy_search(initial_state, goal_state_func, operators_func, heuristic):
 
-    setattr(TreeNode, "__lt__", lambda self, other: heuristic(self.state) < heuristic(other.state))
+# Greedy
+
+def search(initial_state, goal_state_func, operators_func, h = lambda _ : 0, W = 1, g = lambda node : node.depth):
+
+    f = lambda n: g(n) + h(n.state) * W
+
+    setattr(TreeNode, "__lt__", lambda self, other: f(self) < f(other))
 
     root = TreeNode(initial_state, depth=0)
 
@@ -154,10 +125,21 @@ def greedy_search(initial_state, goal_state_func, operators_func, heuristic):
 
 
 
-### A*
+def breadth_first_search(initial_state, goal_state_func, operators_func):
+
+    return search(initial_state, goal_state_func, operators_func)
+
+
+def greedy_search(initial_state, goal_state_func, operators_func, heuristic):
+
+    return search(initial_state, goal_state_func, operators_func, h = heuristic, g = lambda _ : 0)
+
 
 def a_star_search(initial_state, goal_state_func, operators_func, heuristic):
 
-    g_func = lambda node : heuristic(node.state) + node.depth
+    return search(initial_state, goal_state_func, operators_func, h = heuristic)
 
-    return greedy_search(initial_state, goal_state_func, operators_func, g_func)
+
+def weighted_a_star_search(initial_state, goal_state_func, operators_func, heuristic, weight):
+
+    return search(initial_state, goal_state_func, operators_func, h = heuristic, W = weight)
