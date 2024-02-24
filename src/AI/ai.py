@@ -22,7 +22,7 @@ class AI:
         AIS.GREDDY : lambda self : [ greedy_search, self.state, self.goal_state_func, self.child_states, miss_match_heuristic],
         AIS.ASTAR : lambda self : [ a_star_search, self.state, self.goal_state_func, self.child_states, miss_match_heuristic]
     }
-    
+
     def __init__(self, lvl: int, algorithm) -> None:
 
         self.state = Level(lvl)
