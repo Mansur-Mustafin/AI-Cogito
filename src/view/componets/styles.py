@@ -15,12 +15,12 @@ class ALIGNS_TYPES(Enum):
     HORIZONTAL_END = auto()
 
 ALIGNS = {
-    ALIGNS_TYPES.VERTICAL_CENTER: lambda height: (HEIGHT- height)/2,
-    ALIGNS_TYPES.VERTICAL_START: lambda _: 0,
-    ALIGNS_TYPES.VERTICAL_END:lambda height: HEIGHT- height,
-    ALIGNS_TYPES.HORIZONTAL_CENTER: lambda width: (WIDTH- width)/2,
-    ALIGNS_TYPES.HORIZONTAL_START : lambda _: 0,
-    ALIGNS_TYPES.HORIZONTAL_END : lambda width: WIDTH -width,
+    ALIGNS_TYPES.VERTICAL_CENTER: lambda self: (self.y == None) if  (HEIGHT- self.height)/2 else self.y,
+    ALIGNS_TYPES.VERTICAL_START: lambda self: (self.y == None) if 0 else self.y,
+    ALIGNS_TYPES.VERTICAL_END:lambda self: (self.y == None) if HEIGHT- self.height else self.y,
+    ALIGNS_TYPES.HORIZONTAL_CENTER: lambda self:  (self.x == None) if (WIDTH- self.width)/2 else self.x,
+    ALIGNS_TYPES.HORIZONTAL_START : lambda self: (self.x == None) if 0 else self.x,
+    ALIGNS_TYPES.HORIZONTAL_END : lambda self: (self.x == None) if WIDTH - self.width else self.x,
 }
 
 class FLOATS_TYPES(Enum):
@@ -30,10 +30,10 @@ class FLOATS_TYPES(Enum):
     BOTTOM = auto()
 
 FLOATS = {
-    FLOATS_TYPES.TOP : lambda y, vy: y+vy, 
-    FLOATS_TYPES.LEFT : lambda x, vx: x-vx,
-    FLOATS_TYPES.RIGHT : lambda x, vx: x+vx,
-    FLOATS_TYPES.BOTTOM : lambda y, vy: y+vy,
+    FLOATS_TYPES.TOP : lambda self, vy: self.y+vy, 
+    FLOATS_TYPES.LEFT : lambda self, vx: self.x-vx,
+    FLOATS_TYPES.RIGHT : lambda self, vx: self.x+vx,
+    FLOATS_TYPES.BOTTOM : lambda self, vy: self.y+vy,
 }
 
 class STYLES(Enum):
