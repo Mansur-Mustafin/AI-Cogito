@@ -24,7 +24,9 @@ class MainMenuController(Controller):
         :return: a command to be executed
         :rtype: Optional[Command]
         """
+        print("a")
         if button.get_action() == "Play":
+            print("b")
             self.state = LevelMenu()
             self.view = ViewLevelMenu(self.view.get_screen())
             return Command.CHANGE_LEVEL

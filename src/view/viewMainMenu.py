@@ -1,7 +1,7 @@
 from view.view import View
 from settings import *
 from model.mainMenu import MainMenu
-
+from .componets.buttons import *
 
 class ViewMainMenu(View):
     def __init__(self, screen):
@@ -20,13 +20,14 @@ class ViewMainMenu(View):
         buttons = menu.get_buttons()
 
         self.draw_rectangle(0, 0, WIDTH, HEIGHT, 0, BACKGROUND_COLOR)
-
-        buttons[0].draw(self.screen, center_x, y, mouse_pos)  # Play button
+        draw_button(buttons[0], self.screen, mouse_pos, center_x, y )
+    
 
         y += 200
 
         for button in buttons[1:]:
-            button.draw(self.screen, center_x, y, mouse_pos)
+            draw_button(button, self.screen,mouse_pos, center_x, y )
+            #button.draw(self.screen, center_x, y, mouse_pos)
             y += 60
 
         self.draw_text("Cogito Game", (WIDTH * 0.55, 2 * OFFSET), 50)

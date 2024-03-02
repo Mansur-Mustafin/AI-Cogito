@@ -19,5 +19,5 @@ class LevelMenu(State):
                 level_number = filename[5:-5]
                 button_text = f"Level {level_number}"
                 self.buttons.append(
-                    Button(None, None, W_BUTTON * 0.6, H_BUTTON, button_text, WHITE_COLOR, BLUE_COLOR, 20))
+                    Button(button_text))
         self.buttons.sort(key=lambda button: int(button.text[6:]))

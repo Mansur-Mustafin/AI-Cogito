@@ -1,7 +1,7 @@
 from model.button import Button
 from settings import *
 from model.state import State
-
+from view.componets.buttons import buttonComponent
 
 class MainMenu(State):
 
@@ -14,10 +14,10 @@ class MainMenu(State):
         :return: None
         """
         self.buttons = [
-            Button(None, None, W_BUTTON, H_BUTTON, "Play", WHITE_COLOR, BLUE_COLOR, 20),
-            Button(None, None, W_BUTTON, H_BUTTON, "DFS", WHITE_COLOR, BLUE_COLOR, 20),
-            Button(None, None, W_BUTTON, H_BUTTON, "BFS", WHITE_COLOR, BLUE_COLOR, 20),
-            Button(None, None, W_BUTTON, H_BUTTON, "Greedy", WHITE_COLOR, BLUE_COLOR, 20),
-            Button(None, None, W_BUTTON, H_BUTTON, "A* Algorithm", WHITE_COLOR, BLUE_COLOR, 20),
-            Button(None, None, W_BUTTON, H_BUTTON, "Weighted A* Algorithm", WHITE_COLOR, BLUE_COLOR, 20),
+            Button("Play"),
+            Button("DFS"),
+            Button("BFS"),
+            Button("Greedy"),
+            Button("A* Algorithm"),
+            Button("Weighted A* Algorithm"),
         ]

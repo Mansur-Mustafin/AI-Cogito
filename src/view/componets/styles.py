@@ -42,15 +42,20 @@ class STYLES(Enum):
     BACKGROUND = auto()
     TEXT_COLOR = auto()
     FONT_SIZE = auto()
+    BORDER = auto()
+
+
+
 
 class Styles():
     def __init__(self, styles) -> None:
         self.defaul()
-        if(styles[STYLES.ALIGNS]): self.aligns = styles[STYLES.ALIGNS]
-        if(styles[STYLES.FLOATS]): self.floats = styles[STYLES.FLOATS]
-        if(styles[STYLES.BACKGROUND]): self.background = styles[STYLES.BACKGROUND]
-        if(styles[STYLES.TEXT_COLOR]): self.textColor = styles[STYLES.TEXT_COLOR]
-        if(styles[STYLES.FONT_SIZE]): self.fontSize = styles[STYLES.FONT_SIZE]
+        if(STYLES.ALIGNS in styles): self.aligns = styles[STYLES.ALIGNS]
+        if(STYLES.FLOATS in styles): self.floats = styles[STYLES.FLOATS]
+        if(STYLES.BACKGROUND in styles): self.background = styles[STYLES.BACKGROUND]
+        if(STYLES.TEXT_COLOR in styles): self.textColor = styles[STYLES.TEXT_COLOR]
+        if(STYLES.FONT_SIZE in styles): self.fontSize = styles[STYLES.FONT_SIZE]
+        if(STYLES.BORDER in styles): self.border = styles[STYLES.BORDER]
 
     def defaul(self):
         self.aligns = []
@@ -58,6 +63,7 @@ class Styles():
         self.background = BACKGROUND_COLOR
         self.textColor = BLACK_COLOR
         self.fontSize = 13
+        self.border = 6
 
 
 

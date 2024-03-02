@@ -1,6 +1,6 @@
 from view.view import View
 from model.levelMenu import *
-
+from .componets.buttons import *
 
 class ViewLevelMenu(View):
     def __init__(self, screen):
@@ -23,7 +23,7 @@ class ViewLevelMenu(View):
         while buttons:
             for i in range(min(n_buttons_column, len(buttons))):
                 button = buttons[i]
-                button.draw(self.screen, x, y, menu.get_mouse_position())
+                draw_button(button, self.screen,menu.get_mouse_position(), x, y )
                 y += 60
 
             x += W_BUTTON * 0.8
