@@ -64,7 +64,7 @@ class View(ABC):
         text_surface = font.render(text, True, color)
         self.screen.blit(text_surface, position)
 
-    def draw_square_board(self, x: int, y: int, square, scale: float = 1) -> None:
+    def draw_square_board(self, x: int, y: int, square, dimension: int, scale: float = 1) -> None:
         """
         Draws a square board
         :param x: Horizontal position in the screen
@@ -77,7 +77,6 @@ class View(ABC):
         :type scale: Float
         :return: void
         """
-        dimension = len(square)
         x_gap = scale * W_SQUARE + GAP
         y_gap = scale * H_SQUARE + GAP
 
