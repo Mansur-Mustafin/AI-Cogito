@@ -181,18 +181,18 @@ class Level(State):
 
     def get_board_row(self, row, is_curr_board=True):
         res = []
-        board = self.current_block.items() if is_curr_board else self.target_pattern.items()
-        for (x, y), piece in board:
-            if x == row:
-                res.append(((x, y), piece))
+        board = self.current_block if is_curr_board else self.target_pattern
+        for y in range(self.dimension):
+            if (row, y) in board:
+                res.append(((row, y), board[(row, y)]))
         return res
 
     def get_board_col(self, col, is_curr_board=True):
         res = []
-        board = self.current_block.items() if is_curr_board else self.target_pattern.items()
-        for (x, y), piece in board:
-            if y == col:
-                res.append(((x, y), piece))
+        board = self.current_block if is_curr_board else self.target_pattern
+        for x in range(self.dimension):
+            if (x, col) in board:
+                res.append(((x, col), board[(x, col)]))
         return res
 
     def move_right(self, idx):
@@ -250,16 +250,13 @@ class Level(State):
     # Pode-se apagar isto porque todos os moves são válidos
     def is_valid_move(self, dir: str, indx: int) -> bool:
         if dir == "right":
-            return not self.get_value_at(indx, -1) in self.get_main_colors()
+            return not self.get_value_at(indx, self.dimension - 1) in self.get_main_colors()
         elif dir == "left":
             return not self.get_value_at(indx, 0) in self.get_main_colors()
         elif dir == "up":
             return not self.get_value_at(0, indx) in self.get_main_colors()
         elif dir == "down":
-            return not self.get_value_at(-1, indx) in self.get_main_colors()
+            return not self.get_value_at(self.dimension - 1, indx) in self.get_main_colors()
         else:
             print("[ERROR] Invalid move")
             return False
-
-
-        
