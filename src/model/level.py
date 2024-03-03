@@ -16,6 +16,8 @@ class Level(State):
         self.current_block = level_data['initial_block']
         self.main_colors = level_data['main_color']
         self.blank_color = level_data['blank_color']
+        self.max = level_data['max']
+        self.difficulty= level_data['difficulty']
         self.score = 0
         self.time = 0
         self.level = lvl
@@ -218,6 +220,8 @@ class Level(State):
         else:
             print("[ERROR] Invalid move")
             return False
-
+    
+    def lost(self):
+        return self.max - self.score <= 0
 
         
