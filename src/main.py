@@ -60,8 +60,8 @@ class Game:
 if __name__ == "__main__":
     sys.setrecursionlimit(3000)
 
-    level = 6
-    ai = AI(level, AIS.ASTAR)
+    level = 5
+    ai = AI(level, AIS.BFS)
 
     print(ai.moves)
     print(ai.state.time)

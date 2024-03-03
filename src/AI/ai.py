@@ -1,6 +1,6 @@
 from model.level import Level
 from AI.treeNode import TreeNode
-from service.analitics import measureTime
+from service.analitics import measure_performance
 import copy
 from .aiAlgorithms import *
 from .heuristics import *
@@ -26,7 +26,7 @@ class AI:
     def __init__(self, lvl: int, algorithm) -> None:
 
         self.state = Level(lvl)
-        node, self.state.time = measureTime( *self.ALGORITHMS[algorithm](self) )
+        node, self.state.time, self.memory = measure_performance( *self.ALGORITHMS[algorithm](self) )
         self.moves = node.build_path(node)
 
 
