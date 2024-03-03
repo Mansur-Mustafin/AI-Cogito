@@ -7,6 +7,7 @@ from service.controller.gameController import GameController
 from service.controller.menuController import LevelMenuController
 from service.controller.menuController import MainMenuController, EndMenuController
 from view.viewMainMenu import ViewMainMenu
+from AI.heuristics import *
 
 from AI.aiAlgorithms import *
 from AI.ai import *
@@ -42,7 +43,7 @@ class Game:
 
         pygame.quit()
         sys.exit()
-
+    
     def handle_command(self, command):
         action = self.command_actions.get(command, lambda: True)  # if not find: run = True
         return action()
@@ -52,11 +53,15 @@ class Game:
         return True
 
 
-# if __name__ == "__main__":
-#     game = Game()
-#     game.run()
+if __name__ == "__main__":
+    level = Level(1)
+    print(level.get_board_col(0))
+    print(get_col_pieces(level.get_main_colors(), level.get_board_col(0, False)))
 
+    #game = Game()
+    #game.run()
 
+'''
 if __name__ == "__main__":
     sys.setrecursionlimit(3000)
 
@@ -65,3 +70,4 @@ if __name__ == "__main__":
 
     print(ai.moves)
     print(ai.state.time)
+'''
