@@ -16,8 +16,6 @@ class Level(State):
         self.main_colors = level_data['main_color']
         self.current_block = self.__build_board(level_data['initial_block'])
         self.target_pattern = self.__build_board(level_data['target_pattern'])
-        print(self.current_block)
-        print(self.target_pattern)
         self.blank_color = level_data['blank_color']
         self.score = 0
         self.time = 0
@@ -128,14 +126,14 @@ class Level(State):
         """
         self.score += 1
 
-    def get_current_board(self) -> list[list[str]]:
+    def get_current_board(self):
         """
         :return: The current board
         :rtype: List[List[String]]
         """
         return self.current_block
 
-    def get_target_board(self) -> list[list[str]]:
+    def get_target_board(self):
         """
         :return: The current board
         :rtype: List[List[String]]

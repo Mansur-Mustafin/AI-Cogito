@@ -64,7 +64,7 @@ class View(ABC):
         text_surface = font.render(text, True, color)
         self.screen.blit(text_surface, position)
 
-    def draw_square_board(self, x: int, y: int, square: list[list[str]], scale: float = 1) -> None:
+    def draw_square_board(self, x: int, y: int, square, scale: float = 1) -> None:
         """
         Draws a square board
         :param x: Horizontal position in the screen
@@ -84,7 +84,7 @@ class View(ABC):
         for i in range(dimension):
             for j in range(dimension):
 
-                tile = square[j][i]
+                tile = square.get((j, i), 'y')
 
                 if tile is None:
                     continue
