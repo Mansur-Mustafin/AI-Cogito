@@ -18,6 +18,8 @@ global start_time
 global state
 global curr_level
 
+RESULST_DIR = 'analitics/'
+
 def write_to_csv(file_path, data, headers=None):
     """
     Write data to a CSV file.
@@ -50,7 +52,7 @@ def test_ai(algorithm , levels):
     global start_time
 
     global curr_level
-    headers = ['Level', 'Time', 'Memory', 'Moves']
+
 
     data = []
 
@@ -59,14 +61,17 @@ def test_ai(algorithm , levels):
         start_time = time.time()
         ai: AI = AI(level, algorithm)
         data.append( [level, round(ai.state.time, 4), ai.memory, len(ai.moves)])
-    write_to_csv('dfs.csv', data, headers)
+    return data
 
 
-def main():       
+def main():     
+
     global state
     easy_levels= []
     medium_levels= []
     hard_levels= []
+    headers = ['Level', 'Time', 'Memory', 'Moves']
+
     for filename in os.listdir('levels/'):
         if filename.startswith("level") and filename.endswith(".yaml"):
             level_number = filename[5:-5]
@@ -76,8 +81,8 @@ def main():
             else:  hard_levels.append(level_number)
 
     state = "BFS"
-    test_ai(AIS.BFS, easy_levels + medium_levels)
-
+    data = test_ai(AIS.BFS, easy_levels + medium_levels)
+    write_to_csv(RESULST_DIR +'bfs.csv', data, headers)
 
 state = ""
 start_time = time.time()
