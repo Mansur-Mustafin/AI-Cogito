@@ -1,12 +1,4 @@
-import pygame
-import sys
 from settings import *
-from model.mainMenu import MainMenu
-from service.controller.controller import Command
-from service.controller.gameController import GameController
-from service.controller.menuController import LevelMenuController
-from service.controller.menuController import MainMenuController, EndMenuController
-from view.viewMainMenu import ViewMainMenu
 import os
 from AI.aiAlgorithms import *
 from AI.ai import *
@@ -83,6 +75,7 @@ def main():
     state = "BFS"
     data = test_ai(AIS.BFS, easy_levels + medium_levels)
     write_to_csv(RESULST_DIR +'bfs.csv', data, headers)
+
 
 state = ""
 start_time = time.time()

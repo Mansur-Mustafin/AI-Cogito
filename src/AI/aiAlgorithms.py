@@ -49,7 +49,7 @@ def iterative_deepening_search(initial_state, goal_state_func, operators_func, d
     curr_limit_depth = 0 
     
 
-    while (node is None) and curr_limit_depth <= initial_state.max: 
+    while (node is None) and curr_limit_depth <= depth_limit: 
 
         print(f"curr_limit_depth = {curr_limit_depth}")
 
@@ -102,7 +102,7 @@ def search(initial_state, goal_state_func, operators_func, h = lambda _ : 0, W =
     states = [root]
     visited = set() 
     visited.add(initial_state)
-
+ 
     while states:
 
         node = heapq.heappop(states)
