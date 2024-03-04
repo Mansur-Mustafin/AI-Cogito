@@ -195,68 +195,58 @@ class Level(State):
                 res.append(((x, col), board[(x, col)]))
         return res
 
-    def move_right(self, idx):
+    def move_row(self, idx, shift, move_mirrored=False):
         """
         :param idx: Index of selected row
-        :return:
+        :param shift: Distance to shift each piece
+        :param move_mirrored: True if the mirrored row should be moved
+        :return: The updated level
         """
         row = self.get_board_row(idx)
         for (x, y), piece in row:
             del self.current_block[(x, y)]
 
         for (x, y), piece in row:
-            self.current_block[(x, (y + 1) % self.dimension)] = piece
+            self.current_block[(x, (y + shift) % self.dimension)] = piece
+
+        middle_row = (self.dimension - 1) / 2
+        if move_mirrored and idx != middle_row:
+            dist_to_middle_row = abs(middle_row - idx)
+            mirrored_idx = middle_row + dist_to_middle_row if idx < middle_row else middle_row - dist_to_middle_row
+            mirrored_row = self.get_board_row(mirrored_idx)
+
+            for (x, y), piece in mirrored_row:
+                del self.current_block[(x, y)]
+
+            for (x, y), piece in mirrored_row:
+                self.current_block[(x, (y + shift) % self.dimension)] = piece
+
         return self
 
-    def move_left(self, idx):
-        """
-        :param idx: Index of selected row
-        :return:
-        """
-        row = self.get_board_row(idx)
-        for (x, y), piece in row:
-            del self.current_block[(x, y)]
-
-        for (x, y), piece in row:
-            self.current_block[(x, (y - 1) % self.dimension)] = piece
-        return self
-
-    def move_down(self, idx):
+    def move_col(self, idx, shift, move_mirrored=False):
         """
         :param idx: Index of selected column
-        :return:
+        :param shift: Distance to shift each piece
+        :param move_mirrored: True if the mirrored row should be moved
+        :return: The updated level
         """
         col = self.get_board_col(idx)
         for (x, y), piece in col:
             del self.current_block[(x, y)]
 
         for (x, y), piece in col:
-            self.current_block[((x + 1) % self.dimension, y)] = piece
+            self.current_block[((x + shift) % self.dimension, y)] = piece
+
+        middle_col = (self.dimension - 1) / 2
+        if move_mirrored and idx != middle_col:
+            dist_to_middle_col = abs(middle_col - idx)
+            mirrored_idx = middle_col + dist_to_middle_col if idx < middle_col else middle_col - dist_to_middle_col
+            mirrored_col = self.get_board_col(mirrored_idx)
+
+            for (x, y), piece in mirrored_col:
+                del self.current_block[(x, y)]
+
+            for (x, y), piece in mirrored_col:
+                self.current_block[((x + shift) % self.dimension, y)] = piece
+
         return self
-
-    def move_up(self, idx):
-        """
-        :param idx: Index of selected column
-        :return:
-        """
-        col = self.get_board_col(idx)
-        for (x, y), piece in col:
-            del self.current_block[(x, y)]
-
-        for (x, y), piece in col:
-            self.current_block[((x - 1) % self.dimension, y)] = piece
-        return self
-
-    # Pode-se apagar isto porque todos os moves são válidos
-    def is_valid_move(self, dir: str, indx: int) -> bool:
-        if dir == "right":
-            return not self.get_value_at(indx, self.dimension - 1) in self.get_main_colors()
-        elif dir == "left":
-            return not self.get_value_at(indx, 0) in self.get_main_colors()
-        elif dir == "up":
-            return not self.get_value_at(0, indx) in self.get_main_colors()
-        elif dir == "down":
-            return not self.get_value_at(self.dimension - 1, indx) in self.get_main_colors()
-        else:
-            print("[ERROR] Invalid move")
-            return False
