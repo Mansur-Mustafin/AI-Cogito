@@ -266,6 +266,26 @@ class Level(State):
 
         return self
     
+    def get_row_pieces(self, idx, is_curr_board= True) -> dict:
+        row = self.get_board_row(idx, is_curr_board)
+        colors_freq = {color: 0 for color in self.COLORS}
+
+        for cell in row:
+            if cell[1][0] != 'y':
+                colors_freq[cell[1][0]] += 1
+        
+        return colors_freq
+
+    def get_col_pieces(self, idx, is_curr_board = True) -> dict:
+        col = self.get_board_col(idx, is_curr_board)
+        colors_freq = {color: 0 for color in self.COLORS}
+
+        for cell in col:
+            if cell[1][0] != 'y':
+                colors_freq[cell[1][0]] += 1
+
+        return colors_freq
+    
     def manhattan_distance(self,pieceA, pieceB ):
         x1, y1 = pieceA
         x2, y2 = pieceB

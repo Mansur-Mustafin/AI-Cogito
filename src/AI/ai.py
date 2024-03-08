@@ -30,23 +30,26 @@ class AI:
         self.moves = node.build_path(node)
 
 
-    def child_states(self,state) -> list[str]:
+    def child_states(self,state:Level) -> list[str]:
         child_states = []
 
         
         for idx in range(state.get_dimension()):
             # The repetition of the definition of the variable new_state is necessary!
-            new_state = copy.deepcopy(state)
-            child_states.append((new_state.move_col(idx, -1), f"up {idx}"))
 
-            new_state = copy.deepcopy(state)
-            child_states.append((new_state.move_row(idx, 1), f"right {idx}"))
+            if(sum(state.get_col_pieces(idx).values())>0):
+                new_state = copy.deepcopy(state)
+                child_states.append((new_state.move_col(idx, -1), f"up {idx}"))
+                new_state = copy.deepcopy(state)
+                child_states.append((new_state.move_col(idx, 1), f"down {idx}"))
 
-            new_state = copy.deepcopy(state)
-            child_states.append((new_state.move_col(idx, 1), f"down {idx}"))
+            if(sum(state.get_row_pieces(idx).values())>0):
+                new_state = copy.deepcopy(state)
+                child_states.append((new_state.move_row(idx, 1), f"right {idx}"))
 
-            new_state = copy.deepcopy(state)
-            child_states.append((new_state.move_row(idx, -1), f"left {idx}"))
+                new_state = copy.deepcopy(state)
+                child_states.append((new_state.move_row(idx, -1), f"left {idx}"))
+
             
         return child_states
     
