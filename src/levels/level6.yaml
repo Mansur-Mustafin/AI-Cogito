@@ -2,13 +2,13 @@ dimension: 4
 main_color: ['r']
 blank_color : 'y'
 initial_block:
- - ['y', 'y', 'y', 'y']
- - ['y', 'r', 'r', 'y']
  - ['y', 'y', 'r', 'r']
- - ['y', 'y', 'y', 'y']
+ - ['y', 'y', 'r', 'r']
+ - ['y', 'y', 'r', 'r']
+ - ['y', 'y', 'r', 'r']
 
 target_pattern:
- - ['y', 'y', 'y', 'y']
  - ['y', 'r', 'r', 'y']
  - ['y', 'r', 'r', 'y']
- - ['y', 'y', 'y', 'y']
+ - ['y', 'r', 'r', 'y']
+ - ['y', 'r', 'r', 'y']

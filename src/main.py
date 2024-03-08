@@ -67,3 +67,5 @@ if __name__ == "__main__":
 
     print(ai.moves)
     print(ai.state.time)
+
+

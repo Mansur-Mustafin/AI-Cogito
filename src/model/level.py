@@ -20,6 +20,8 @@ class Level(State):
         self.score = 0
         self.time = 0
         self.level = lvl
+        self.associated_pieces = self.associate_pieces()
+        print(self.associated_pieces)
 
         super().__init__()
 
@@ -40,11 +42,14 @@ class Level(State):
         :rtype: Dict[Tuple[Int, Int], Chr]
         """
         new_board = dict()
+        id = 0 
         for row in range(self.dimension):
             for col in range(self.dimension):
                 piece = board[row][col]
                 if piece in self.main_colors:
-                    new_board[(row, col)] = piece
+                    new_board[(row, col)] = (piece, id)
+                    id +=1
+
         return new_board
 
     def _create_buttons(self) -> None:
@@ -250,3 +255,30 @@ class Level(State):
                 self.current_block[((x + shift) % self.dimension, y)] = piece
 
         return self
+    
+    def manhattan_distance(self,pieceA, pieceB ):
+        x1, y1 = pieceA
+        x2, y2 = pieceB
+        dx = min (abs(x2-x1),abs(self.dimension - (x2-x1)))
+        dy = min (abs(y2-y1),abs(self.dimension - (y2-y1)))
+        return dx + dy
+
+
+    def associate_pieces(self):
+        i = 0 
+        associations = []
+        for cord1, (color, _) in self.current_block.items():
+            associations.append((0,0))
+            min_dist = 2* self.dimension
+            for cord2, (color2, _) in self.target_pattern.items():
+                if( color == color2 and not (cord2 in associations)):
+                    dist = self.manhattan_distance(cord1,cord2)
+                    if ( min_dist > dist):
+                        min_dist = dist
+                        associations[i]= cord2
+            i+=1
+                
+
+        return associations
+
+

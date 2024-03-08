@@ -36,11 +36,11 @@ class GameController(Controller):
         self.state.increment_score()
 
         if dir == "right":
-            self.state.move_row(indx, 2, True)
+            self.state.move_row(indx, 1, False)
         elif dir == "left":
-            self.state.move_row(indx, -2, True)
+            self.state.move_row(indx, -1, False)
         elif dir == "up":
-            self.state.move_col(indx, -2, True)
+            self.state.move_col(indx, -1, False)
         elif dir == "down":
-            self.state.move_col(indx, 2, True)
+            self.state.move_col(indx, 1, False)
 

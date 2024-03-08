@@ -83,8 +83,7 @@ class View(ABC):
         for i in range(dimension):
             for j in range(dimension):
 
-                tile = square.get((j, i), 'y')
-
+                (tile,_) = square.get((j, i), ('y',0))
                 if tile is None:
                     continue
 
