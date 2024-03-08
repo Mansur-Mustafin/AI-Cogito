@@ -7,6 +7,7 @@ from service.controller.gameController import GameController
 from service.controller.menuController import LevelMenuController
 from service.controller.menuController import MainMenuController, EndMenuController
 from view.viewMainMenu import ViewMainMenu
+from AI.heuristics import *
 
 from AI.aiAlgorithms import *
 from AI.ai import *
@@ -42,7 +43,7 @@ class Game:
 
         pygame.quit()
         sys.exit()
-
+    
     def handle_command(self, command):
         action = self.command_actions.get(command, lambda: True)  # if not find: run = True
         return action()
@@ -51,10 +52,11 @@ class Game:
         self.controller = controller_class(self.controller.get_state(), self.controller.get_view())
         return True
 
-
-# if __name__ == "__main__":
-#     game = Game()
-#     game.run()
+'''
+if __name__ == "__main__":
+    game = Game()
+    game.run()
+'''
 
 
 if __name__ == "__main__":

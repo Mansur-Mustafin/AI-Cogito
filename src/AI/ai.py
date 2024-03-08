@@ -20,7 +20,7 @@ class AI:
         AIS.DFS: lambda self: [depth_first_search, self.state, self.goal_state_func, self.child_states],
         AIS.IDS: lambda self: [iterative_deepening_search, self.state, self.goal_state_func, self.child_states, 1000],
         AIS.GREDDY : lambda self : [ greedy_search, self.state, self.goal_state_func, self.child_states, miss_match_heuristic],
-        AIS.ASTAR : lambda self : [ a_star_search, self.state, self.goal_state_func, self.child_states, miss_match_heuristic]
+        AIS.ASTAR : lambda self : [ a_star_search, self.state, self.goal_state_func, self.child_states, row_collum_miss_match_heuristic]
     }
 
     def __init__(self, lvl: int, algorithm) -> None:
@@ -35,21 +35,18 @@ class AI:
 
         
         for idx in range(state.get_dimension()):
-            if state.is_valid_move('up', idx):
-                new_state = copy.deepcopy(state)
-                child_states.append((new_state.move_up(idx), f"up {idx}"))
+            # The repetition of the definition of the variable new_state is necessary!
+            new_state = copy.deepcopy(state)
+            child_states.append((new_state.move_col(idx, -1), f"up {idx}"))
 
-            if state.is_valid_move('right', idx):
-                new_state = copy.deepcopy(state)
-                child_states.append((new_state.move_right(idx), f"right {idx}"))
+            new_state = copy.deepcopy(state)
+            child_states.append((new_state.move_row(idx, 1), f"right {idx}"))
 
-            if state.is_valid_move('down', idx):
-                new_state = copy.deepcopy(state)
-                child_states.append((new_state.move_down(idx), f"down {idx}"))
+            new_state = copy.deepcopy(state)
+            child_states.append((new_state.move_col(idx, 1), f"down {idx}"))
 
-            if state.is_valid_move('left', idx):
-                new_state = copy.deepcopy(state)
-                child_states.append((new_state.move_left(idx), f"left {idx}"))
+            new_state = copy.deepcopy(state)
+            child_states.append((new_state.move_row(idx, -1), f"left {idx}"))
             
         return child_states
     
