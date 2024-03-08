@@ -56,7 +56,13 @@ def manhattan_distance_v3(level:Level):
                         associations[i]= cord2
             i+=1
             res += min_dist
-            res +=  miss_match_heuristic(level)
+            res +=   miss_match_heuristic(level)
         return res
 
+def manhattan_distance_v4(level:Level):
+    dist = 0
+    for cord, (_, id) in level.current_block.items():
+        dist += level.manhattan_distance(cord, level.associated_pieces[id])
+    
+    return dist + miss_match_heuristic(level)
 

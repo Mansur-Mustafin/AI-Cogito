@@ -100,27 +100,22 @@ def search(initial_state, goal_state_func, operators_func, h = lambda _ : 0, W =
     states = [root]
     visited = set() 
     visited.add(initial_state)
-    i= 0
     while states:
-        i+=1
         node = heapq.heappop(states)
-        
-        if(node.depth < 15):
             #print(node.move, node.depth)
-            if goal_state_func(node.state):
-                print("boas",i)
-                return node
-            
-            for state, move in operators_func(node.state):
-                if not state in visited:
-                    child_node = TreeNode(state, move, node.depth + 1)
+        if goal_state_func(node.state):
+            return node
+        
+        for state, move in operators_func(node.state):
+            if not state in visited:
+                child_node = TreeNode(state, move, node.depth + 1)
 
-                    node.add_child(child_node)
+                node.add_child(child_node)
 
-                    heapq.heappush(states, child_node)
+                heapq.heappush(states, child_node)
 
-                    visited.add(state)
-                else : print("visited")
+                visited.add(state)
+            else : print("visited")
         
     return None
 

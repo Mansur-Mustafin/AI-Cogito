@@ -21,7 +21,6 @@ class Level(State):
         self.time = 0
         self.level = lvl
         self.associated_pieces = self.associate_pieces()
-        print(self.associated_pieces)
 
         super().__init__()
 
@@ -29,13 +28,9 @@ class Level(State):
         if isinstance(other, self.__class__):
             for key, (color,_) in self.current_block.items():
                 if( (not (key in self.target_pattern.keys())) or  color != self.target_pattern[key][0]): 
-                    #print("False", key)
                     return False
-
-            #print("true")
             return True
         else:
-            print("Not equal")
             return False
 
     def __hash__(self):
