@@ -41,7 +41,23 @@ def manhattan_distance_v2(level:Level):
             res += min_dist
         return res
     
-
+def manhattan_distance_v3(level:Level):
+        i = 0 
+        res = 0
+        associations = []
+        for cord1, (color, _) in level.current_block.items():
+            associations.append((0,0))
+            min_dist = 2* level.dimension
+            for cord2, (color2, _) in level.target_pattern.items():
+                if( color == color2 and not (cord2 in associations)):
+                    dist = level.manhattan_distance(cord1,cord2)
+                    if ( min_dist > dist):
+                        min_dist = dist
+                        associations[i]= cord2
+            i+=1
+            res += min_dist
+            res += row_collum_miss_match_heuristic(level)
+        return res
 
 def get_row_pieces(colors, row) -> dict:
     colors_freq = {color: 0 for color in colors}
