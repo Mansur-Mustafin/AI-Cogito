@@ -27,8 +27,15 @@ class Level(State):
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
-            return self.current_block == other.current_block and self.level == other.level
+            for key, (color,_) in self.current_block.items():
+                if( (not (key in self.target_pattern.keys())) or  color != self.target_pattern[key][0]): 
+                    #print("False", key)
+                    return False
+
+            #print("true")
+            return True
         else:
+            print("Not equal")
             return False
 
     def __hash__(self):
@@ -150,7 +157,10 @@ class Level(State):
         :return: True if the current board is equal to the target board, false otherwise
         :rtype: Bool
         """
-        return self.current_block == self.target_pattern
+        for key, (color,_) in self.current_block.items():
+                if( (not (key in self.target_pattern.keys())) or  color != self.target_pattern[key][0]): 
+                    return False
+        return True
 
     def count_mismatched_tiles(self) -> int:
         """

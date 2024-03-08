@@ -39,7 +39,7 @@ def manhattan_distance_v2(level:Level):
                         associations[i]= cord2
             i+=1
             res += min_dist
-        return min_dist
+        return res
     
 
 
