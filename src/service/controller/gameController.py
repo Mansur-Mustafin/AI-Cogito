@@ -33,15 +33,15 @@ class GameController(Controller):
         dir = move.split()[0]
         indx = int(move.split()[1])
 
-        if self.state.is_valid_move(dir, indx):
-            self.state.increment_score()
+        #if self.state.is_valid_move(dir, indx):
+        self.state.increment_score()
 
-            if dir == "right":
-                self.state.move_right(indx)
-            elif dir == "left":
-                self.state.move_left(indx)
-            elif dir == "up":
-                self.state.move_up(indx)
-            elif dir == "down":
-                self.state.move_down(indx)
+        if dir == "right":
+            self.state.move_row(indx, 2, True)
+        elif dir == "left":
+            self.state.move_row(indx, -2, True)
+        elif dir == "up":
+            self.state.move_col(indx, -2, True)
+        elif dir == "down":
+            self.state.move_col(indx, 2, True)
 

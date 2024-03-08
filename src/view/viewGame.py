@@ -60,7 +60,7 @@ class ViewGame(View):
         x_start = X_LEFT_MENU + (W_LEFT_MENU / 2 - level.get_dimension() * x_gap / 2) + GAP / 2
         y_start = Y_LEFT_MENU + (H_LEFT_MENU / 2 + level.get_dimension() * y_gap / 2) * 0.4
 
-        self.draw_square_board(x_start, y_start, level.get_target_board())
+        self.draw_square_board(x_start, y_start, level.get_target_board(), level.dimension)
 
     def draw_current_board(self, level: Level) -> None:
         """
@@ -76,7 +76,7 @@ class ViewGame(View):
         y_start = HEIGHT / 2 - (level.get_dimension() * y_gap) / 2
 
         # draw the board
-        self.draw_square_board(x_start, y_start, level.get_current_board(), scale)
+        self.draw_square_board(x_start, y_start, level.get_current_board(), level.dimension, scale)
 
     def draw_buttons(self, level: Level):
         for button in level.get_buttons():

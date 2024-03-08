@@ -5,6 +5,7 @@ from model.button import Button
 
 
 class Level(State):
+    # Para que temos isto se temos um field "main_color" no yaml?
     COLORS = {'r', 'b'}
 
     def __init__(self, lvl):
@@ -12,9 +13,9 @@ class Level(State):
             level_data = yaml.safe_load(file)
 
         self.dimension = level_data['dimension']
-        self.target_pattern = level_data['target_pattern']
-        self.current_block = level_data['initial_block']
         self.main_colors = level_data['main_color']
+        self.current_block = self.__build_board(level_data['initial_block'])
+        self.target_pattern = self.__build_board(level_data['target_pattern'])
         self.blank_color = level_data['blank_color']
         self.max = level_data['max']
         self.difficulty= level_data['difficulty']
@@ -33,6 +34,20 @@ class Level(State):
     def __hash__(self):
         current_block_tuple = tuple(tuple(row) for row in self.current_block)
         return hash((current_block_tuple , self.level)) 
+
+    def __build_board(self, board) -> dict[tuple[int, int], str]:
+        """
+        Builds a dictionary representing the board as a sparse matrix (the empty spaces aren't stored).
+        :return: The board representation in a dictionary
+        :rtype: Dict[Tuple[Int, Int], Chr]
+        """
+        new_board = dict()
+        for row in range(self.dimension):
+            for col in range(self.dimension):
+                piece = board[row][col]
+                if piece in self.main_colors:
+                    new_board[(row, col)] = piece
+        return new_board
 
     def _create_buttons(self) -> None:
         # copy from view
@@ -113,14 +128,14 @@ class Level(State):
         """
         self.score += 1
 
-    def get_current_board(self) -> list[list[str]]:
+    def get_current_board(self):
         """
         :return: The current board
         :rtype: List[List[String]]
         """
         return self.current_block
 
-    def get_target_board(self) -> list[list[str]]:
+    def get_target_board(self):
         """
         :return: The current board
         :rtype: List[List[String]]
@@ -140,14 +155,10 @@ class Level(State):
         :rtype: Int
         """
         total = 0
-        for i in range(self.dimension):
-            for j in range(self.dimension):
-                if (self.current_block[i][j] != self.target_pattern[i][j] and
-                        self.target_pattern[i][j] in self.main_colors):
-                    total += 1
+        for pos, piece in self.current_block.items():
+            if pos not in self.target_pattern or piece != self.target_pattern[pos]:
+                total += 1
         return total
-
-    
 
     def set_current_board(self, board) -> None:
         """
@@ -162,7 +173,7 @@ class Level(State):
         :param col:
         :return: Color value of the current block at the given row and column
         """
-        return self.current_block[row][col]
+        return self.current_block.get((row, col), self.blank_color)
 
     def get_main_colors(self) -> list[str]:
         """
@@ -170,20 +181,76 @@ class Level(State):
         """
         return self.main_colors
 
-    def move_right(self, indx) -> None:
+    def get_board_row(self, row, is_curr_board=True):
+        res = []
+        board = self.current_block if is_curr_board else self.target_pattern
+        for y in range(self.dimension):
+            if (row, y) in board:
+                res.append(((row, y), board[(row, y)]))
+        return res
+
+    def get_board_col(self, col, is_curr_board=True):
+        res = []
+        board = self.current_block if is_curr_board else self.target_pattern
+        for x in range(self.dimension):
+            if (x, col) in board:
+                res.append(((x, col), board[(x, col)]))
+        return res
+
+    def move_row(self, idx, shift, move_mirrored=False):
         """
-        :param indx: Index of selected row
-        :return:
+        :param idx: Index of selected row
+        :param shift: Distance to shift each piece
+        :param move_mirrored: True if the mirrored row should be moved
+        :return: The updated level
         """
-        self.current_block[indx] = [self.blank_color] + self.current_block[indx][:-1]
+        row = self.get_board_row(idx)
+        for (x, y), piece in row:
+            del self.current_block[(x, y)]
+
+        for (x, y), piece in row:
+            self.current_block[(x, (y + shift) % self.dimension)] = piece
+
+        middle_row = (self.dimension - 1) / 2
+        if move_mirrored and idx != middle_row:
+            dist_to_middle_row = abs(middle_row - idx)
+            mirrored_idx = middle_row + dist_to_middle_row if idx < middle_row else middle_row - dist_to_middle_row
+            mirrored_row = self.get_board_row(mirrored_idx)
+
+            for (x, y), piece in mirrored_row:
+                del self.current_block[(x, y)]
+
+            for (x, y), piece in mirrored_row:
+                self.current_block[(x, (y + shift) % self.dimension)] = piece
+
         return self
 
-    def move_left(self, indx):
+    def move_col(self, idx, shift, move_mirrored=False):
         """
-        :param indx: Index of selected row
-        :return:
+        :param idx: Index of selected column
+        :param shift: Distance to shift each piece
+        :param move_mirrored: True if the mirrored row should be moved
+        :return: The updated level
         """
-        self.current_block[indx] = self.current_block[indx][1:] + [self.blank_color]
+        col = self.get_board_col(idx)
+        for (x, y), piece in col:
+            del self.current_block[(x, y)]
+
+        for (x, y), piece in col:
+            self.current_block[((x + shift) % self.dimension, y)] = piece
+
+        middle_col = (self.dimension - 1) / 2
+        if move_mirrored and idx != middle_col:
+            dist_to_middle_col = abs(middle_col - idx)
+            mirrored_idx = middle_col + dist_to_middle_col if idx < middle_col else middle_col - dist_to_middle_col
+            mirrored_col = self.get_board_col(mirrored_idx)
+
+            for (x, y), piece in mirrored_col:
+                del self.current_block[(x, y)]
+
+            for (x, y), piece in mirrored_col:
+                self.current_block[((x + shift) % self.dimension, y)] = piece
+
         return self
 
     def move_down(self, indx):
