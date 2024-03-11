@@ -24,6 +24,9 @@ class GameController(Controller):
             return Command.CHANGE_MAIN
         
         if action == "Help":
+            if self.state.selected_button is not None:  # Caso se ele clockou no Help mas ja tinha clickado anted 
+                return None
+            
             level_copy = deepcopy(self.state)
             ai = AI(level_copy, AIS.ASTARW, 1, 2000)
             move = ai.moves[0]
@@ -43,7 +46,7 @@ class GameController(Controller):
         dir = move.split()[0]
         indx = int(move.split()[1])
 
-        self.state.unselect_button()
+        self.state.unselect_button()    # o bolinho deseparece
         self.state.increment_score()
 
         if dir == "right":
