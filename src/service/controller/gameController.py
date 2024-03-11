@@ -1,4 +1,5 @@
 from typing import Optional
+from copy import deepcopy
 import time
 from model.endMenu import EndMenu
 from model.mainMenu import MainMenu
@@ -6,7 +7,7 @@ from view.viewMainMenu import ViewMainMenu
 from .controller import Controller, Command
 from model.button import Button
 from view.viewEndMenu import ViewEndMenu
-
+from AI.ai import AI, AIS
 
 class GameController(Controller):
 
@@ -15,12 +16,20 @@ class GameController(Controller):
         self.state.time = time.time()
 
     def handle_pressed_button(self, button: Button) -> Optional[Command]:
-        if button.get_action() == "Quit":
+        action = button.get_action()
+
+        if action == "Quit":
             self.state = MainMenu()
             self.view = ViewMainMenu(self.view.get_screen())
             return Command.CHANGE_MAIN
+        
+        if action == "Help":
+            level_copy = deepcopy(self.state)
+            ai = AI(level_copy, AIS.ASTARW, 1, 2000)
+            print(ai.moves[0])
+            return None
 
-        self.process_move(button.get_action())
+        self.process_move(action)
         if self.state.is_win_condition() or self.state.lost():
             self.state.time = time.time() - self.state.time
             self.state = EndMenu(self.get_state())
@@ -33,15 +42,14 @@ class GameController(Controller):
         dir = move.split()[0]
         indx = int(move.split()[1])
 
-        #if self.state.is_valid_move(dir, indx):
         self.state.increment_score()
 
         if dir == "right":
-            self.state.move_row(indx, 2, True)
+            self.state.move_row(indx, 1, False)
         elif dir == "left":
-            self.state.move_row(indx, -2, True)
+            self.state.move_row(indx, -1, False)
         elif dir == "up":
-            self.state.move_col(indx, -2, True)
+            self.state.move_col(indx, -1, False)
         elif dir == "down":
-            self.state.move_col(indx, 2, True)
+            self.state.move_col(indx, 1, False)
 

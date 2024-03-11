@@ -1,3 +1,5 @@
+ASTAR_WEIGHT = 1
+
 # define display characteristics
 WIDTH = 1280
 HEIGHT = 720

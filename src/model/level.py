@@ -92,6 +92,7 @@ class Level(State):
                                        f"right {i}"))
 
         self.buttons.append(Button(QUIT_X, QUIT_Y, W_BUTTON * 0.6, H_BUTTON, "Quit", BACKGROUND_COLOR, RED_COLOR, 20))
+        self.buttons.append(Button(QUIT_X, QUIT_Y - H_BUTTON - GAP*2, W_BUTTON * 0.6, H_BUTTON, "Help", BACKGROUND_COLOR, BLUE_COLOR, 20))
 
     def get_position(self) -> tuple[int, int]:
         """
