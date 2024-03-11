@@ -23,6 +23,8 @@ class Level(State):
         self.time = 0
         self.level = lvl
 
+        self.selected_button = None # no inicio nao tem butao selecionada 
+
         super().__init__()
 
     def __eq__(self, other):
@@ -292,4 +294,24 @@ class Level(State):
     def lost(self):
         return self.max - self.score <= 0
 
-        
+    def select_button(self, move):
+        if move is None:
+            return None
+
+        shift = {
+            "down" : 0,
+            "left" : 1,
+            "up" : 2,
+            "right" : 3
+        }
+        dir, indx = move.split()
+
+        idx_button = shift[dir] * self.dimension + int(indx)
+        self.buttons[idx_button].selected = True
+        self.selected_button = idx_button
+
+    def unselect_button(self):
+        if self.selected_button is not None:
+            self.buttons[self.selected_button].selected = False
+            self.selected_button = None
+

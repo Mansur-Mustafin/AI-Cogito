@@ -26,7 +26,8 @@ class GameController(Controller):
         if action == "Help":
             level_copy = deepcopy(self.state)
             ai = AI(level_copy, AIS.ASTARW, 1, 2000)
-            print(ai.moves[0])
+            move = ai.moves[0]
+            self.state.select_button(move)
             return None
 
         self.process_move(action)
@@ -42,6 +43,7 @@ class GameController(Controller):
         dir = move.split()[0]
         indx = int(move.split()[1])
 
+        self.state.unselect_button()
         self.state.increment_score()
 
         if dir == "right":

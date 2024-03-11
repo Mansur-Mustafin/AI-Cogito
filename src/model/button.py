@@ -16,6 +16,8 @@ class Button:
         self.font_size = font_size
         self.action = action
 
+        self.selected = False
+
     def __str__(self) -> str:
         return self.text
 
@@ -49,6 +51,12 @@ class Button:
         rect = pygame.Rect(self.x, self.y, self.width, self.height)
         pygame.draw.rect(screen, button_color, rect, border_radius=self.border_radius)
 
+        if self.selected:
+            border_width = 3
+            border_rect = pygame.Rect(self.x - border_width, self.y - border_width,
+                                    self.width + 2 * border_width, self.height + 2 * border_width)
+            pygame.draw.rect(screen, RED_COLOR, border_rect, border_width, border_radius=self.border_radius)
+
         # Draw the text on the button
         if self.text != '':
             try:
@@ -59,7 +67,7 @@ class Button:
 
             text_surface = font.render(self.text, True, text_color)
             screen.blit(text_surface, (self.x + (self.width - text_surface.get_width()) / 2,
-                                       self.y + (self.height - text_surface.get_height()) / 2))
+                                       self.y + (self.height - text_surface.get_height()) / 2))            
 
     def is_over(self, mouse_pos: tuple[int, int]) -> bool:
         """
