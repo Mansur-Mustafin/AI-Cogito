@@ -21,11 +21,12 @@ class GameController(Controller):
             return Command.CHANGE_MAIN
 
         self.process_move(button.get_action())
-        if self.state.is_win_condition():
+        if self.state.is_win_condition() or self.state.lost():
             self.state.time = time.time() - self.state.time
             self.state = EndMenu(self.get_state())
             self.view = ViewEndMenu(self.view.get_screen())
             return Command.CHANGE_END
+
         return None
 
     def process_move(self, move: str) -> None:

@@ -35,6 +35,7 @@ class ViewEndMenu(View):
 
         score = "Score: " + str(menu.level.score)
         time = f"Time: {str(menu.level.time)[0:7]}s"
-        self.draw_text("You have won the game", ((WIDTH - 21 * 30) / 2, 2 * OFFSET), 50)
+        if(menu.level.is_win_condition()):self.draw_text("You have won the game", ((WIDTH - 21 * 30) / 2, 2 * OFFSET), 50)
+        else:self.draw_text("You have lost the game", ((WIDTH - 21 * 30) / 2, 2 * OFFSET), 50)
         self.draw_text(score, ((WIDTH - W_BUTTON) / 2, 300), 30)
         self.draw_text(time, ((WIDTH - W_BUTTON) / 2, 350), 30)

@@ -31,8 +31,8 @@ class ViewGame(View):
         self.draw_rectangle(X_LEFT_MENU, Y_LEFT_MENU, W_LEFT_MENU, H_LEFT_MENU, R_LEFT_MENU, WHITE_COLOR)
 
         # score
-        self.draw_text(f"Score: {str(level.get_score())}", (X_3COLORS + 5 * W_SQUARE, Y_3COLORS), H_SQUARE)
-
+        self.draw_text(f"Score: {str(level.get_score())}", (X_3COLORS , Y_3COLORS), H_SQUARE)
+        self.draw_text(f"Remaning moves: {str(level.max - level.get_score())}", (X_3COLORS , Y_3COLORS +50), H_SQUARE)
         # Missmatch ties
         number_in_line = int((W_LEFT_MENU - 40) / (W_MISS + GAP))
         number_misses = level.count_mismatched_tiles()

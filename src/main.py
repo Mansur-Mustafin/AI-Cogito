@@ -17,7 +17,7 @@ class Game:
     def __init__(self) -> None:
         # general setup
         pygame.init()
-        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
         pygame.display.set_caption('Cogito Game')
         self.clock = pygame.time.Clock()
 
@@ -52,20 +52,17 @@ class Game:
         self.controller = controller_class(self.controller.get_state(), self.controller.get_view())
         return True
 
-
-if __name__ == "__main__":
-    game = Game()
-    game.run()
-
-
 '''
+if __name__ == "__main__":
+     game = Game()
+     game.run()
+'''
+
 if __name__ == "__main__":
     sys.setrecursionlimit(3000)
 
-    level = 4
+    level = 5
     ai = AI(level, AIS.ASTAR)
 
     print(ai.moves)
     print(ai.state.time)
-
-'''

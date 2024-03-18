@@ -28,18 +28,18 @@ def depth_first_search(initial_state, goal_state_func, operators_func):
 def dfs(v, goal_state_func, operators_func, curr_depth):
 
     if goal_state_func(v.state): return v
-    
-    visited.add(v.state)
+    if curr_depth < v.state.max : 
+        visited.add(v.state)
 
-    for state, move in operators_func(v.state):
-        if not state in visited:
-            child_node = TreeNode(state, move)
+        for state, move in operators_func(v.state):
+            if not state in visited:
+                child_node = TreeNode(state, move)
 
-            v.add_child(child_node)
+                v.add_child(child_node)
 
-            node = dfs(child_node, goal_state_func, operators_func, curr_depth + 1)
+                node = dfs(child_node, goal_state_func, operators_func, curr_depth + 1)
 
-            if not node is None : return node
+                if not node is None : return node
 
 
 # IDS
@@ -106,16 +106,18 @@ def search(initial_state, goal_state_func, operators_func, h = lambda _ : 0, W =
         if goal_state_func(node.state):
             return node
         
-        for state, move in operators_func(node.state):
-            if not state in visited:
-                child_node = TreeNode(state, move, node.depth + 1)
+        if (not node.state.lost()):
+        
+            for state, move in operators_func(node.state):
+                if (not state in visited):
 
-                node.add_child(child_node)
+                    child_node = TreeNode(state, move, node.depth + 1)
 
-                heapq.heappush(states, child_node)
+                    node.add_child(child_node)
 
-                visited.add(state)
-            else : print("visited")
+                    heapq.heappush(states, child_node)
+
+                    visited.add(state)
         
     return None
 

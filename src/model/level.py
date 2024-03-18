@@ -17,6 +17,8 @@ class Level(State):
         self.current_block = self.__build_board(level_data['initial_block'])
         self.target_pattern = self.__build_board(level_data['target_pattern'])
         self.blank_color = level_data['blank_color']
+        self.max = level_data['max']
+        self.difficulty= level_data['difficulty']
         self.score = 0
         self.time = 0
         self.level = lvl
@@ -307,3 +309,20 @@ class Level(State):
         return associations
 
 
+    def is_valid_move(self, dir: str, indx: int) -> bool:
+        if dir == "right":
+            return not self.get_value_at(indx, -1) in self.get_main_colors()
+        elif dir == "left":
+            return not self.get_value_at(indx, 0) in self.get_main_colors()
+        elif dir == "up":
+            return not self.get_value_at(0, indx) in self.get_main_colors()
+        elif dir == "down":
+            return not self.get_value_at(-1, indx) in self.get_main_colors()
+        else:
+            print("[ERROR] Invalid move")
+            return False
+    
+    def lost(self):
+        return self.max - self.score <= 0
+
+        
