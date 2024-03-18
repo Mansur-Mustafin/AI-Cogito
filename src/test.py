@@ -52,7 +52,7 @@ def test_ai(algorithm , levels):
         curr_level =level
         start_time = time.time()
         ai: AI = AI(level, algorithm)
-        data.append( [level, round(ai.state.time, 4), ai.memory, len(ai.moves)])
+        data.append( [level.level, round(ai.state.time, 4), ai.memory, len(ai.moves)])
     return data
 
 
@@ -68,9 +68,9 @@ def main():
         if filename.startswith("level") and filename.endswith(".yaml"):
             level_number = filename[5:-5]
             level = Level(level_number)
-            if( level.difficulty == 1): easy_levels.append(level_number)
-            elif ( level.difficulty == 2): medium_levels.append(level_number)
-            else:  hard_levels.append(level_number)
+            if( level.difficulty == 1): easy_levels.append(level)
+            elif ( level.difficulty == 2): medium_levels.append(level)
+            else:  hard_levels.append(level)
 
     state = "BFS"
     data = test_ai(AIS.BFS, easy_levels + medium_levels)

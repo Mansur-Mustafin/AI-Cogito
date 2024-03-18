@@ -6,12 +6,14 @@ from .aiAlgorithms import *
 from .heuristics import *
 from enum import Enum, auto
 
+
 class AIS(Enum):
     BFS = auto()
     DFS = auto()
     IDS = auto()
     GREDDY = auto()
     ASTAR = auto()
+    ASTARW = auto()
 
 class AI:
 
@@ -20,12 +22,15 @@ class AI:
         AIS.DFS: lambda self: [depth_first_search, self.state, self.goal_state_func, self.child_states],
         AIS.IDS: lambda self: [iterative_deepening_search, self.state, self.goal_state_func, self.child_states, 1000],
         AIS.GREDDY : lambda self : [ greedy_search, self.state, self.goal_state_func, self.child_states, miss_match_heuristic],
-        AIS.ASTAR : lambda self : [ a_star_search, self.state, self.goal_state_func, self.child_states, manhattan_distance_v2]
+        AIS.ASTAR : lambda self : [ a_star_search, self.state, self.goal_state_func, self.child_states, row_collum_miss_match_heuristic],
+        AIS.ASTARW : lambda self : [ weighted_a_star_search, self.state, self.goal_state_func, self.child_states, row_collum_miss_match_heuristic, self.weight, self.steps]
     }
 
-    def __init__(self, lvl: int, algorithm) -> None:
+    def __init__(self, level : Level, algorithm, weight = 1, steps = -1) -> None:
 
-        self.state = Level(lvl)
+        self.state = level
+        self.weight = weight
+        self.steps = steps
         node, self.state.time, self.memory = measure_performance( *self.ALGORITHMS[algorithm](self) )
         self.moves = node.build_path(node)
 

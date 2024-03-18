@@ -1,6 +1,7 @@
 from AI.treeNode import TreeNode
 from collections import deque
 from model.level import Level
+from settings import *
 import heapq
 
 visited = set()
@@ -89,7 +90,7 @@ def dfs_depth(v, goal_state_func, operators_func, curr_depth, depth_limit):
 
 # Greedy
 
-def search(initial_state, goal_state_func, operators_func, h = lambda _ : 0, W = 1, g = lambda node : node.depth):
+def search(initial_state, goal_state_func, operators_func, h = lambda _ : 0, W = 1, g = lambda node : node.depth, steps:int = -1):
 
     f = lambda n: g(n) + h(n.state) * W
 
@@ -106,6 +107,9 @@ def search(initial_state, goal_state_func, operators_func, h = lambda _ : 0, W =
         if goal_state_func(node.state):
             return node
         
+        if steps == 0:
+            return node
+        
         if (not node.state.lost()):
         
             for state, move in operators_func(node.state):
@@ -116,8 +120,10 @@ def search(initial_state, goal_state_func, operators_func, h = lambda _ : 0, W =
                     node.add_child(child_node)
 
                     heapq.heappush(states, child_node)
-
+                    
                     visited.add(state)
+
+        steps -= 1
         
     return None
 
@@ -138,6 +144,6 @@ def a_star_search(initial_state, goal_state_func, operators_func, heuristic):
     return search(initial_state, goal_state_func, operators_func, h = heuristic)
 
 
-def weighted_a_star_search(initial_state, goal_state_func, operators_func, heuristic, weight):
+def weighted_a_star_search(initial_state, goal_state_func, operators_func, heuristic, weight, steps = -1):
 
-    return search(initial_state, goal_state_func, operators_func, h = heuristic, W = weight)
+    return search(initial_state, goal_state_func, operators_func, h = heuristic, W = weight, steps = steps)

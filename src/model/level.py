@@ -24,6 +24,8 @@ class Level(State):
         self.level = lvl
         self.associated_pieces = self.associate_pieces()
 
+        self.selected_button = None # no inicio nao tem butao selecionada 
+
         super().__init__()
 
     def __eq__(self, other):
@@ -99,6 +101,7 @@ class Level(State):
                                        f"right {i}"))
 
         self.buttons.append(Button(QUIT_X, QUIT_Y, W_BUTTON * 0.6, H_BUTTON, "Quit", BACKGROUND_COLOR, RED_COLOR, 20))
+        self.buttons.append(Button(QUIT_X, QUIT_Y - H_BUTTON - GAP*2, W_BUTTON * 0.6, H_BUTTON, "Help", BACKGROUND_COLOR, BLUE_COLOR, 20))
 
     def get_position(self) -> tuple[int, int]:
         """
@@ -325,4 +328,24 @@ class Level(State):
     def lost(self):
         return self.max - self.score <= 0
 
-        
+    def select_button(self, move):
+        if move is None:
+            return None
+
+        shift = {
+            "down" : 0,
+            "left" : 1,
+            "up" : 2,
+            "right" : 3
+        }
+        dir, indx = move.split()
+
+        idx_button = shift[dir] * self.dimension + int(indx)
+        self.buttons[idx_button].selected = True
+        self.selected_button = idx_button
+
+    def unselect_button(self):
+        if self.selected_button is not None:
+            self.buttons[self.selected_button].selected = False
+            self.selected_button = None
+
