@@ -101,9 +101,9 @@ def search(initial_state, goal_state_func, operators_func, h = lambda _ : 0, W =
     states = [root]
     visited = set() 
     visited.add(initial_state)
- 
     while states:
         node = heapq.heappop(states)
+            #print(node.move, node.depth)
         if goal_state_func(node.state):
             return node
         
@@ -120,8 +120,9 @@ def search(initial_state, goal_state_func, operators_func, h = lambda _ : 0, W =
                     node.add_child(child_node)
 
                     heapq.heappush(states, child_node)
+                    
+                    visited.add(state)
 
-                    visited.add(child_node)
         steps -= 1
         
     return None
