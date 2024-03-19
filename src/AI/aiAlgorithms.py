@@ -93,18 +93,18 @@ def dfs_depth(v, goal_state_func, operators_func, curr_depth, depth_limit):
 def search(initial_state, goal_state_func, operators_func, h = lambda _ : 0, W = 1, g = lambda node : node.depth, steps:int = -1):
 
     f = lambda n: g(n) + h(n.state) * W
-
+    it =0
     setattr(TreeNode, "__lt__", lambda self, other: f(self) < f(other))
 
     root = TreeNode(initial_state, depth=0)
-
     states = [root]
     visited = set() 
     visited.add(initial_state)
     while states:
         node = heapq.heappop(states)
-            #print(node.move, node.depth)
+        it +=1
         if goal_state_func(node.state):
+            print(it)
             return node
         
         if steps == 0:

@@ -1,7 +1,7 @@
 from model.level import Level
 
 def miss_match_heuristic(level:Level):
-    return level.count_mismatched_tiles()
+    return level.count_mismatched_tiles() + pattern(level)
 
 
 
@@ -56,7 +56,8 @@ def manhattan_distance_v3(level:Level):
                         associations[i]= cord2
             i+=1
             res += min_dist
-            res +=   miss_match_heuristic(level)
+            res -=  pattern(level)*100
+
         return res
 
 def manhattan_distance_v4(level:Level):
@@ -64,5 +65,35 @@ def manhattan_distance_v4(level:Level):
     for cord, (_, id) in level.current_block.items():
         dist += level.manhattan_distance(cord, level.associated_pieces[id])
     
-    return dist + miss_match_heuristic(level)
+    return dist - pattern(level) *2
+
+
+def pattern(level:Level):
+    count = 0
+    for l in range(level.dimension):
+        line_curr = ['y'] * level.dimension
+        line_targ = ['y'] * level.dimension
+        for (_, y), (color,_) in level.get_board_row(l):
+            line_curr [y] = color
+        for (_, y), (color,_) in level.get_board_row(l, False):
+            line_targ [y] = color
+        line_curr *=2
+        if ''.join(line_targ) in ''.join(line_curr):
+            count+=1
+
+    for l in range(level.dimension):
+        line_curr = ['y'] * level.dimension
+        line_targ = ['y'] * level.dimension
+        for (x, _), (color,_) in level.get_board_col(l):
+            line_curr [x] = color
+        for (x, _), (color,_) in level.get_board_col(l, False):
+            line_targ [x] = color
+        line_curr *=2
+        if ''.join(line_targ) in ''.join(line_curr):
+            count+=1
+    return count
+
+    
+
+
 
