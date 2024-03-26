@@ -1,5 +1,5 @@
 dimension: 9
-max: 23
+max: 230
 difficulty: 3
 main_color: ['r']
 blank_color : 'y'
