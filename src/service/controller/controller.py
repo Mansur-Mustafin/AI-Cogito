@@ -5,7 +5,7 @@ from typing import Optional
 import pygame
 
 from view.view import View
-
+from settings import *
 
 class Command(Enum):
     EXIT = auto()
@@ -20,6 +20,7 @@ class Controller(ABC):
     def __init__(self, state, view):
         self.state = state
         self.view = view
+        self.button_sound = pygame.mixer.Sound(BUTTON_SOUND)
 
     def handle_event(self) -> Optional[Command]:
         for event in pygame.event.get():
@@ -35,8 +36,8 @@ class Controller(ABC):
 
                 if button is None:
                     return None
-                else:
-                    return self.handle_pressed_button(button)
+                self.button_sound.play()
+                return self.handle_pressed_button(button)
 
     @abstractmethod
     def handle_pressed_button(self, button):

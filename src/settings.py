@@ -6,6 +6,8 @@ HEIGHT = 720
 FPS = 60
 LEVELS_DIR = "levels/"
 FONT_PATH = "assets/Comfortaa-Regular.ttf"
+MUSIC_PATH = "assets/background_music.mp3"
+BUTTON_SOUND = "assets/button_pressed.mp3"
 
 # define ai settings
 WAITTING_TIME = 1
