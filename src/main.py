@@ -56,13 +56,12 @@ class Game:
 if __name__ == "__main__":
      game = Game()
      game.run()
-'''
 
+'''
 if __name__ == "__main__":
     sys.setrecursionlimit(3000)
 
-    level = Level(5)
-    print(pattern(level))
+    level = Level(7)
     ai = AI(level, AIS.ASTAR)
 
     print(ai.moves)

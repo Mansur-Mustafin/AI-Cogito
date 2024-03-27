@@ -168,8 +168,8 @@ class Level(State):
         :rtype: Int
         """
         total = 0
-        for pos, piece in self.current_block.items():
-            if pos not in self.target_pattern or piece != self.target_pattern[pos]:
+        for pos, (color, _) in self.current_block.items():
+            if pos not in self.target_pattern or color != self.target_pattern[pos][0]:
                 total += 1
         return total
 

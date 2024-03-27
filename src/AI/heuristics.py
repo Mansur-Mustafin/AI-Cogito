@@ -1,7 +1,7 @@
 from model.level import Level
 
 def miss_match_heuristic(level:Level):
-    return level.count_mismatched_tiles() + pattern(level)
+    return level.count_mismatched_tiles() - pattern(level)*5
 
 
 
@@ -49,14 +49,14 @@ def manhattan_distance_v3(level:Level):
             associations.append((0,0))
             min_dist = 2* level.dimension
             for cord2, (color2, _) in level.target_pattern.items():
-                if( color == color2 and not (cord2 in associations)):
+                if( color == color2 ):#and not (cord2 in associations)):
                     dist = level.manhattan_distance(cord1,cord2)
                     if ( min_dist > dist):
                         min_dist = dist
                         associations[i]= cord2
             i+=1
             res += min_dist
-            res -=  pattern(level)*100
+        res -=  pattern(level)*5 + level.count_mismatched_tiles()
 
         return res
 
