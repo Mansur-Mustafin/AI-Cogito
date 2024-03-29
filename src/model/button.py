@@ -4,7 +4,7 @@ from settings import *
 
 class Button:
     def __init__(self, x, y, width, height, text='', color=(73, 73, 73), text_color=(255, 255, 255), font_size=13,
-                 border_radius=R_BUTTON, action=None):
+                 border_radius=R_BUTTON, action=None, image=None):
         self.x = x
         self.y = y
         self.width = width
@@ -15,6 +15,7 @@ class Button:
         self.border_radius = border_radius
         self.font_size = font_size
         self.action = action
+        self.image = image
 
         self.selected = False
 
@@ -50,6 +51,10 @@ class Button:
         # Draw the button rectangle
         rect = pygame.Rect(self.x, self.y, self.width, self.height)
         pygame.draw.rect(screen, button_color, rect, border_radius=self.border_radius)
+
+        if self.image is not None:
+            rendered_image = pygame.image.load("./images/" + self.image).convert()
+            screen.blit(rendered_image, rect)
 
         if self.selected:
             border_width = 3
