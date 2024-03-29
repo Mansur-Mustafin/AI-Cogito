@@ -22,8 +22,6 @@ class Level(State):
         self.score = 0
         self.time = 0
         self.level = lvl
-        self.associated_pieces = self.associate_pieces()
-
         self.selected_button = None # no inicio nao tem butao selecionada 
 
         self.ai_algorithm = ai_algorithm
@@ -35,7 +33,7 @@ class Level(State):
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
-            for key, (color,_) in self.current_block.items():
+            for key, color in self.current_block.items():
                 if( (not (key in self.target_pattern.keys())) or  color != self.target_pattern[key][0]): 
                     return False
             return True
@@ -53,13 +51,11 @@ class Level(State):
         :rtype: Dict[Tuple[Int, Int], Chr]
         """
         new_board = dict()
-        id = 0 
         for row in range(self.dimension):
             for col in range(self.dimension):
                 piece = board[row][col]
                 if piece in self.main_colors:
-                    new_board[(row, col)] = (piece, id)
-                    id +=1
+                    new_board[(row, col)] = piece
 
         return new_board
 
@@ -172,7 +168,7 @@ class Level(State):
         :return: True if the current board is equal to the target board, false otherwise
         :rtype: Bool
         """
-        for key, (color,_) in self.current_block.items():
+        for key, color in self.current_block.items():
                 if( (not (key in self.target_pattern.keys())) or  color != self.target_pattern[key][0]): 
                     return False
         return True
@@ -183,8 +179,8 @@ class Level(State):
         :rtype: Int
         """
         total = 0
-        for pos, piece in self.current_block.items():
-            if pos not in self.target_pattern or piece != self.target_pattern[pos]:
+        for pos, color in self.current_block.items():
+            if pos not in self.target_pattern or color != self.target_pattern[pos][0]:
                 total += 1
         return total
 
@@ -302,6 +298,7 @@ class Level(State):
         return colors_freq
     
     def manhattan_distance(self,pieceA, pieceB ):
+        #print(pieceA,pieceB)
         x1, y1 = pieceA
         x2, y2 = pieceB
         dx = min (abs(x2-x1),abs(self.dimension - (x2-x1)))
@@ -310,18 +307,15 @@ class Level(State):
 
 
     def associate_pieces(self):
-        i = 0 
-        associations = []
-        for cord1, (color, _) in self.current_block.items():
-            associations.append((0,0))
+        associations = dict()
+        for cord1, color in self.current_block.items():
             min_dist = 2* self.dimension
-            for cord2, (color2, _) in self.target_pattern.items():
-                if( color == color2 and not (cord2 in associations)):
+            for cord2, color2 in self.target_pattern.items():
+                if( color == color2 ):#and not (cord2 in associations)):
                     dist = self.manhattan_distance(cord1,cord2)
                     if ( min_dist > dist):
                         min_dist = dist
-                        associations[i]= cord2
-            i+=1
+                        associations[cord1] = cord2
                 
 
         return associations
