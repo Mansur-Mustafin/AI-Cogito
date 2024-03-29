@@ -8,7 +8,7 @@ class Level(State):
     # Para que temos isto se temos um field "main_color" no yaml?
     COLORS = {'r', 'b'}
 
-    def __init__(self, lvl, ai_algorithm = None):
+    def __init__(self, lvl, ai_algorithm = None, heuristic = None):
         with open(LEVELS_DIR + "level" + str(lvl) + ".yaml", 'r') as file:
             level_data = yaml.safe_load(file)
 
@@ -25,6 +25,7 @@ class Level(State):
         self.selected_button = None # no inicio nao tem butao selecionada 
 
         self.ai_algorithm = ai_algorithm
+        self.heuristic = heuristic
         self.is_ai = ai_algorithm != None
         self.is_paused = False # usado para controlar a vista de moves da IA. Há melhor maneira de fazer isto noutro sítio?
 

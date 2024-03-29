@@ -1,4 +1,5 @@
 from pygame import USEREVENT
+from enum import Enum, auto
 
 ASTAR_WEIGHT = 1
 
@@ -59,3 +60,12 @@ ACTIONS_SPACE = 50
 
 QUIT_X = 1075
 QUIT_Y = 620
+
+class Command(Enum):
+    EXIT = auto()
+    CHANGE_GAME_PLAYER = auto()
+    CHANGE_GAME_PC = auto()
+    CHANGE_MAIN = auto()
+    CHANGE_LEVEL = auto()
+    CHANGE_END = auto()
+    CHANGE_HUERISTIC = auto()
