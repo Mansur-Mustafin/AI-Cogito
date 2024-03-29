@@ -1,0 +1,21 @@
+dimension: 6
+max: 30
+difficulty: 2
+main_color: ['r']
+blank_color : 'y'
+move_type: 'normal'
+shift: 2
+initial_block:
+ - ['y', 'r', 'y', 'r', 'y', 'r']
+ - ['y', 'y', 'y', 'y', 'y', 'y']
+ - ['y', 'y', 'y', 'y', 'y', 'y']
+ - ['y', 'y', 'y', 'y', 'y', 'y']
+ - ['y', 'y', 'y', 'y', 'y', 'y']
+ - ['r', 'y', 'r', 'y', 'r', 'y']
+target_pattern:
+ - ['y', 'y', 'y', 'r', 'y', 'y']
+ - ['y', 'y', 'r', 'y', 'y', 'y']
+ - ['y', 'y', 'y', 'r', 'y', 'y']
+ - ['y', 'y', 'r', 'y', 'y', 'y']
+ - ['y', 'y', 'y', 'r', 'y', 'y']
+ - ['y', 'y', 'r', 'y', 'y', 'y']

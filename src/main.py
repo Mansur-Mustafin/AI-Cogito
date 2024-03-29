@@ -52,18 +52,17 @@ class Game:
         self.controller = controller_class(self.controller.get_state(), self.controller.get_view())
         return True
 
-
+'''
 if __name__ == "__main__":
      game = Game()
      game.run()
-
 '''
+
 if __name__ == "__main__":
     sys.setrecursionlimit(3000)
 
-    level = Level(5)
+    level = Level(12)
     ai = AI(level, AIS.ASTAR)
 
     print(ai.moves)
     print(ai.state.time)
-'''
