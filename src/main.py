@@ -61,7 +61,7 @@ if __name__ == "__main__":
 if __name__ == "__main__":
     sys.setrecursionlimit(3000)
 
-    level = Level(6)
+    level = Level(5)
     ai = AI(level, AIS.ASTAR)
 
     print(ai.moves)
