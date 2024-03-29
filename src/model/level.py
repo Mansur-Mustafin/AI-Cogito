@@ -27,7 +27,7 @@ class Level(State):
         self.selected_button = None # no inicio nao tem butao selecionada 
 
         self.ai_algorithm = ai_algorithm
-        self.is_pc_player = ai_algorithm != None
+        self.is_ai = ai_algorithm != None
 
         super().__init__()
 
@@ -71,7 +71,7 @@ class Level(State):
 
         offset_button = (W_SQUARE * scale - ARROW_W) / 2
 
-        if not self.is_pc_player:
+        if not self.is_ai:
             # top
             x = x_start + offset_button
             y = y_start - ARROW_H

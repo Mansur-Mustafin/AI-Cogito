@@ -16,7 +16,7 @@ class AIController (Controller):
         super().__init__(state, view)
         ai = AI(state, state.ai_algorithm)
         self.ai_moves = ai.moves
-        self.time = ai.state.time
+        state.time = ai.state.time
         self.curr_move = 0
         pygame.time.set_timer(TIMER_EVENT, WAITING_TIME)
 
