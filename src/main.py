@@ -5,7 +5,7 @@ from model.mainMenu import MainMenu
 from service.controller.controller import Command
 from service.controller.gameController import GameController
 from service.controller.menuController import LevelMenuController
-from service.controller.menuController import MainMenuController, EndMenuController
+from service.controller.menuController import MainMenuController, EndMenuController, HueristicMenuController
 from service.controller.aiController import AIController
 from view.viewMainMenu import ViewMainMenu
 from AI.heuristics import *
@@ -32,7 +32,8 @@ class Game:
             Command.CHANGE_GAME_PC: lambda: self.change_controller(AIController),
             Command.CHANGE_MAIN: lambda: self.change_controller(MainMenuController),
             Command.CHANGE_LEVEL: lambda: self.change_controller(LevelMenuController),
-            Command.CHANGE_END: lambda: self.change_controller(EndMenuController)
+            Command.CHANGE_END: lambda: self.change_controller(EndMenuController),
+            Command.CHANGE_HUERISTIC: lambda: self.change_controller(HueristicMenuController)
         }
 
     def run(self):
