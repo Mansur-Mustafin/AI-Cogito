@@ -6,6 +6,7 @@ from service.controller.controller import Command
 from service.controller.gameController import GameController
 from service.controller.menuController import LevelMenuController
 from service.controller.menuController import MainMenuController, EndMenuController
+from service.controller.aiController import AIController
 from view.viewMainMenu import ViewMainMenu
 from AI.heuristics import *
 
@@ -27,10 +28,11 @@ class Game:
         # actions to change controller
         self.command_actions = {
             Command.EXIT: lambda: False,
-            Command.CHANGE_GAME: lambda: self.change_controller(GameController),
+            Command.CHANGE_GAME_PLAYER: lambda: self.change_controller(GameController),
+            Command.CHANGE_GAME_PC: lambda: self.change_controller(AIController),
             Command.CHANGE_MAIN: lambda: self.change_controller(MainMenuController),
             Command.CHANGE_LEVEL: lambda: self.change_controller(LevelMenuController),
-            Command.CHANGE_END: lambda: self.change_controller( EndMenuController)
+            Command.CHANGE_END: lambda: self.change_controller(EndMenuController)
         }
 
     def run(self):
@@ -52,12 +54,11 @@ class Game:
         self.controller = controller_class(self.controller.get_state(), self.controller.get_view())
         return True
 
-'''
 if __name__ == "__main__":
      game = Game()
      game.run()
-'''
 
+'''
 if __name__ == "__main__":
     sys.setrecursionlimit(3000)
 
@@ -67,3 +68,5 @@ if __name__ == "__main__":
 
     print(ai.moves)
     print(ai.state.time)
+'''
+
