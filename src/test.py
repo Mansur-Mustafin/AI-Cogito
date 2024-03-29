@@ -14,7 +14,7 @@ global curr_level
 
 RESULST_DIR = 'analitics/'
 
-algorithms = [AIS.ASTAR, AIS.ASTARW]
+algorithms = [AIS.BFS, AIS.IDS, AIS.GREDDY, AIS.ASTAR, AIS.ASTARW]
 
 time_labels = {
     "file_name": "time_plot.png",
@@ -71,7 +71,7 @@ def test_ai(algorithm , levels, weight=1):
     data = []
 
     for level in levels:
-        curr_level =level
+        curr_level = level.level
         start_time = time.time()
         ai: AI = AI(level, algorithm, weight)
         data.append([level.level, round(ai.state.time, 4), ai.memory, len(ai.moves)])
@@ -105,7 +105,7 @@ def draw_plot(data, measure):
     ax.set_xticks(x + (0.5 * (n_levels - 1))*width, algorithms)
     ax.legend(loc='upper right', prop={'size': 9})
     ax.set_ylim(0, max_measure * 1.1)
-    ax.set_xlim(-0.3, len(algorithms) + 0.3)
+    ax.set_xlim(-0.3, len(algorithms) + 0.6)
     
     plt.savefig("./analitics/plots/" + labels[measure - 1]["file_name"])
 
