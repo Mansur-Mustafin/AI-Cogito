@@ -1,3 +1,5 @@
+from pygame import USEREVENT
+
 ASTAR_WEIGHT = 1
 
 # define display characteristics
@@ -8,7 +10,8 @@ LEVELS_DIR = "levels/"
 FONT_PATH = "assets/Comfortaa-Regular.ttf"
 
 # define ai settings
-WAITTING_TIME = 1
+WAITING_TIME = 1000
+TIMER_EVENT = USEREVENT + 1
 
 # define used colors in game:
 BACKGROUND_COLOR = (255, 255, 255)

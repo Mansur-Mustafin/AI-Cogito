@@ -8,7 +8,7 @@ class Level(State):
     # Para que temos isto se temos um field "main_color" no yaml?
     COLORS = {'r', 'b'}
 
-    def __init__(self, lvl):
+    def __init__(self, lvl, ai_algorithm = None):
         with open(LEVELS_DIR + "level" + str(lvl) + ".yaml", 'r') as file:
             level_data = yaml.safe_load(file)
 
@@ -25,6 +25,9 @@ class Level(State):
         self.associated_pieces = self.associate_pieces()
 
         self.selected_button = None # no inicio nao tem butao selecionada 
+
+        self.ai_algorithm = ai_algorithm
+        self.is_pc_player = ai_algorithm != None
 
         super().__init__()
 
@@ -68,40 +71,42 @@ class Level(State):
 
         offset_button = (W_SQUARE * scale - ARROW_W) / 2
 
-        # top
-        x = x_start + offset_button
-        y = y_start - ARROW_H
-        for i in range(self.dimension):
-            self.buttons.append(Button(x + i * x_gap, y,
-                                       ARROW_W, ARROW_H, "↓", WHITE_COLOR, BLACK_COLOR, ARROW_FONT_S, ARROW_R,
-                                       f"down {i}"))
+        if not self.is_pc_player:
+            # top
+            x = x_start + offset_button
+            y = y_start - ARROW_H
+            for i in range(self.dimension):
+                self.buttons.append(Button(x + i * x_gap, y,
+                                        ARROW_W, ARROW_H, "↓", WHITE_COLOR, BLACK_COLOR, ARROW_FONT_S, ARROW_R,
+                                        f"down {i}"))
 
-        # right
-        x = x_start + x_gap * self.dimension - GAP
-        y = y_start + offset_button
-        for i in range(self.dimension):
-            self.buttons.append(Button(x, y + i * y_gap,
-                                       ARROW_W, ARROW_H, "←", WHITE_COLOR, BLACK_COLOR, ARROW_FONT_S, ARROW_R,
-                                       f"left {i}"))
+            # right
+            x = x_start + x_gap * self.dimension - GAP
+            y = y_start + offset_button
+            for i in range(self.dimension):
+                self.buttons.append(Button(x, y + i * y_gap,
+                                        ARROW_W, ARROW_H, "←", WHITE_COLOR, BLACK_COLOR, ARROW_FONT_S, ARROW_R,
+                                        f"left {i}"))
 
-        # buttom
-        x = x_start + offset_button
-        y = y_start + self.dimension * y_gap - GAP
-        for i in range(self.dimension):
-            self.buttons.append(Button(x + i * x_gap, y,
-                                       ARROW_W, ARROW_H, "↑", WHITE_COLOR, BLACK_COLOR, ARROW_FONT_S, ARROW_R,
-                                       f"up {i}"))
+            # buttom
+            x = x_start + offset_button
+            y = y_start + self.dimension * y_gap - GAP
+            for i in range(self.dimension):
+                self.buttons.append(Button(x + i * x_gap, y,
+                                        ARROW_W, ARROW_H, "↑", WHITE_COLOR, BLACK_COLOR, ARROW_FONT_S, ARROW_R,
+                                        f"up {i}"))
 
-        # left
-        x = x_start - ARROW_W
-        y = y_start + offset_button
-        for i in range(self.dimension):
-            self.buttons.append(Button(x, y + i * y_gap,
-                                       ARROW_W, ARROW_H, "→", WHITE_COLOR, BLACK_COLOR, ARROW_FONT_S, ARROW_R,
-                                       f"right {i}"))
-
+            # left
+            x = x_start - ARROW_W
+            y = y_start + offset_button
+            for i in range(self.dimension):
+                self.buttons.append(Button(x, y + i * y_gap,
+                                        ARROW_W, ARROW_H, "→", WHITE_COLOR, BLACK_COLOR, ARROW_FONT_S, ARROW_R,
+                                        f"right {i}"))
+            
+            self.buttons.append(Button(QUIT_X, QUIT_Y - H_BUTTON - GAP*2, W_BUTTON * 0.6, H_BUTTON, "Help", BACKGROUND_COLOR, BLUE_COLOR, 20))
+            
         self.buttons.append(Button(QUIT_X, QUIT_Y, W_BUTTON * 0.6, H_BUTTON, "Quit", BACKGROUND_COLOR, RED_COLOR, 20))
-        self.buttons.append(Button(QUIT_X, QUIT_Y - H_BUTTON - GAP*2, W_BUTTON * 0.6, H_BUTTON, "Help", BACKGROUND_COLOR, BLUE_COLOR, 20))
 
     def get_position(self) -> tuple[int, int]:
         """

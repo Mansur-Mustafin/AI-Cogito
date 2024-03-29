@@ -6,7 +6,7 @@ from .aiAlgorithms import *
 from .heuristics import *
 from enum import Enum, auto
 
-
+# TODO: Should this enum be moved to setting.py?
 class AIS(Enum):
     BFS = auto()
     DFS = auto()

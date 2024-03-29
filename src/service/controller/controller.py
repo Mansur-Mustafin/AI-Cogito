@@ -9,7 +9,8 @@ from view.view import View
 
 class Command(Enum):
     EXIT = auto()
-    CHANGE_GAME = auto()
+    CHANGE_GAME_PLAYER = auto()
+    CHANGE_GAME_PC = auto()
     CHANGE_MAIN = auto()
     CHANGE_LEVEL = auto()
     CHANGE_END = auto()

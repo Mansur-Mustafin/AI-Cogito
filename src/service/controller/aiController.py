@@ -1,40 +1,60 @@
-from .controller import Controller
+from .controller import Controller, Command
 from model.button import Button
 from typing import Optional
-from controller.controller import Command
 import time
-from settings import WAITTING_TIME
+from settings import WAITING_TIME, TIMER_EVENT
 from AI.ai import AI
 from model.endMenu import EndMenu
 from view.viewEndMenu import ViewEndMenu
+from model.mainMenu import MainMenu
+from view.viewMainMenu import ViewMainMenu
+import pygame
 
 class AIController (Controller):
 
-    def __init__(self, state:AI, view):
+    def __init__(self, state, view):
         super().__init__(state, view)
+        ai = AI(state, state.ai_algorithm)
+        self.ai_moves = ai.moves
+        self.time = ai.state.time
+        self.curr_move = 0
+        pygame.time.set_timer(TIMER_EVENT, WAITING_TIME)
 
     def handle_event(self) -> Optional[Command]:
-        if(self.state.state.is_win_condition()):
-            self.state = EndMenu(self.get_state())
-            self.view = ViewEndMenu(self.view.get_screen())
-            return Command.CHANGE_END
-        move = self.state.getMove()
-        time.sleep(WAITTING_TIME)
-        self.process_move(move)
-        return None
+        if pygame.event.peek(TIMER_EVENT):
+            pygame.event.clear(TIMER_EVENT)
+            self.process_move(self.ai_moves[self.curr_move])
+            self.curr_move += 1
+            if self.curr_move == len(self.ai_moves):
+                pygame.time.set_timer(TIMER_EVENT, 0)
+                self.state = MainMenu()
+                self.view = ViewMainMenu(self.view.get_screen())
+                return Command.CHANGE_MAIN
+            return None
+
+        return super().handle_event
 
     def process_move(self, move: str) -> None:
         dir = move.split()[0]
         indx = int(move.split()[1])
 
-        if self.state.state.is_valid_move(dir, indx):
-            self.state.state.increment_score()
+        self.state.increment_score()
 
-            if dir == "right":
-                self.state.move_right(indx)
-            elif dir == "left":
-                self.state.move_left(indx)
-            elif dir == "up":
-                self.state.move_up(indx)
-            elif dir == "down":
-                self.state.move_down(indx)
+        if dir == "right":
+            self.state.move_row(indx, 1, False)
+        elif dir == "left":
+            self.state.move_row(indx, -1, False)
+        elif dir == "up":
+            self.state.move_col(indx, -1, False)
+        elif dir == "down":
+            self.state.move_col(indx, 1, False)
+    
+    def handle_pressed_button(self, button):
+        action = button.get_action()
+
+        if action == "Quit":
+            self.state = MainMenu()
+            self.view = ViewMainMenu(self.view.get_screen())
+            return Command.CHANGE_MAIN
+        
+        return None
