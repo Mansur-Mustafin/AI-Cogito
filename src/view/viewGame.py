@@ -2,6 +2,7 @@ from view.view import View
 from settings import *
 from model.level import Level
 import time
+import pygame
 
 class ViewGame(View):
     def __init__(self, screen):
@@ -85,3 +86,8 @@ class ViewGame(View):
     def draw_buttons(self, level: Level):
         for button in level.get_buttons():
             button.draw(self.screen, None, None, level.get_mouse_position())
+
+    def draw_waiting_for_ai(self):
+        self.screen.fill(WHITE_COLOR)
+        self.draw_text("Waiting for AI to compute moves...", (200 , HEIGHT/2 - 20), 50)
+        pygame.display.update()

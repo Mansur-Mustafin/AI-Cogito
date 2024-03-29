@@ -14,6 +14,7 @@ class AIController (Controller):
 
     def __init__(self, state, view):
         super().__init__(state, view)
+        self.view.draw_waiting_for_ai()
         ai = AI(state, state.ai_algorithm)
         self.ai_moves = ai.moves
         state.time = ai.state.time
