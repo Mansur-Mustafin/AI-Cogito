@@ -64,7 +64,8 @@ def print_time():
         print(f"Running: ({str(state)} - Level {curr_level}) {int(current_time - start_time)}s")
         time.sleep(1)
 
-def test_ai(algorithm , levels, weight=1):
+
+def test_ai(algorithm , levels, heuristic, weight=1):
     global start_time
     global curr_level
 
@@ -73,7 +74,8 @@ def test_ai(algorithm , levels, weight=1):
     for level in levels:
         curr_level = level.level
         start_time = time.time()
-        ai: AI = AI(level, algorithm, weight)
+
+        ai: AI = AI(level, algorithm, heuristic, weight)
         data.append([level.level, round(ai.state.time, 4), ai.memory, len(ai.moves)])
     return data
 
@@ -129,9 +131,9 @@ def main():
     for ai_algorithm in algorithms:
         state = ai_algorithm
         if (ai_algorithm == AIS.ASTARW):
-            data.append(test_ai(ai_algorithm, easy_levels + medium_levels + hard_levels, 3))
+            data.append(test_ai(ai_algorithm, easy_levels + medium_levels + hard_levels, H.MANHATTAN_PATTERN, 3))
         else:
-            data.append(test_ai(ai_algorithm, easy_levels + medium_levels + hard_levels))
+            data.append(test_ai(ai_algorithm, easy_levels + medium_levels + hard_levels, H.MANHATTAN_PATTERN))
         write_to_csv(RESULST_DIR + str(state) + '.csv', data[-1], headers)
     
     draw_plot(data, 1) # Time plot
