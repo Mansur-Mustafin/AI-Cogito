@@ -40,7 +40,7 @@ def print_time():
         print(f"Running: ({state} - Level {curr_level}) {int(current_time - start_time)}s")
         time.sleep(1)
 
-def test_ai(algorithm , levels):
+def test_ai(algorithm , levels, heuristic):
     global start_time
 
     global curr_level
@@ -51,7 +51,7 @@ def test_ai(algorithm , levels):
     for level in levels:
         curr_level =level
         start_time = time.time()
-        ai: AI = AI(level, algorithm)
+        ai: AI = AI(level, algorithm, heuristic)
         data.append( [level.level, round(ai.state.time, 4), ai.memory, len(ai.moves)])
     return data
 
@@ -73,7 +73,7 @@ def main():
             else:  hard_levels.append(level)
 
     state = "BFS"
-    data = test_ai(AIS.BFS, easy_levels + medium_levels)
+    data = test_ai(AIS.BFS, easy_levels + medium_levels, heuristic=None)
     write_to_csv(RESULST_DIR +'bfs.csv', data, headers)
 
 

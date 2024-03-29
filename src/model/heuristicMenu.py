@@ -19,5 +19,6 @@ class HeuristicMenu(State):
             Button(None, None, W_BUTTON, H_BUTTON, 'Piece Mismatches', WHITE_COLOR, BLUE_COLOR, 20, action=H.MISS),
             Button(None, None, W_BUTTON, H_BUTTON, 'Line and Columns Diff.', WHITE_COLOR, BLUE_COLOR, 20, action=H.LINECOLUMN),
             Button(None, None, W_BUTTON, H_BUTTON, 'Manhattan Distance', WHITE_COLOR, BLUE_COLOR, 20, action=H.MANHATTAN),
-            Button(None, None, W_BUTTON, H_BUTTON, 'Correct Row Pattern', WHITE_COLOR, BLUE_COLOR, 20, action=H.PATTERN)
+            Button(None, None, W_BUTTON, H_BUTTON, 'Correct Row Pattern', WHITE_COLOR, BLUE_COLOR, 20, action=H.PATTERN),
+            Button(None, None, W_BUTTON, H_BUTTON, 'Manhattan with Pattern', WHITE_COLOR, BLUE_COLOR, 20, action=H.MANHATTAN_PATTERN)
         ]

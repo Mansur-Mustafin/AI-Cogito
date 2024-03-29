@@ -20,6 +20,7 @@ class H(Enum):
     MANHATTAN = auto()
     PATTERN = auto()
     LINECOLUMN = auto()
+    MANHATTAN_PATTERN = auto()
 
 class AI:
 
@@ -75,8 +76,10 @@ class AI:
         elif heuristic == H.LINECOLUMN:
             return row_collum_miss_match_heuristic
         elif heuristic == H.MANHATTAN:
-            return manhattan_distance_v3
+            return manhattan_distance
         elif heuristic == H.PATTERN:
             return pattern
+        elif heuristic == H.MANHATTAN_PATTERN:
+            return manhattan_distance_with_pattern
         else:
             return None
