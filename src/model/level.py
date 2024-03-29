@@ -28,6 +28,7 @@ class Level(State):
 
         self.ai_algorithm = ai_algorithm
         self.is_ai = ai_algorithm != None
+        self.is_paused = False # usado para controlar a vista de moves da IA. Há melhor maneira de fazer isto noutro sítio?
 
         super().__init__()
 
@@ -71,6 +72,7 @@ class Level(State):
 
         offset_button = (W_SQUARE * scale - ARROW_W) / 2
 
+        self.buttons.append(Button(QUIT_X, QUIT_Y, W_BUTTON * 0.6, H_BUTTON, "Quit", BACKGROUND_COLOR, RED_COLOR, 20))
         if not self.is_ai:
             # top
             x = x_start + offset_button
@@ -105,8 +107,15 @@ class Level(State):
                                         f"right {i}"))
             
             self.buttons.append(Button(QUIT_X, QUIT_Y - H_BUTTON - GAP*2, W_BUTTON * 0.6, H_BUTTON, "Help", BACKGROUND_COLOR, BLUE_COLOR, 20))
-            
-        self.buttons.append(Button(QUIT_X, QUIT_Y, W_BUTTON * 0.6, H_BUTTON, "Quit", BACKGROUND_COLOR, RED_COLOR, 20))
+        else:
+            self.buttons.append(Button(VIEW_ACTIONS_X + 2*(ICONS_SIZE + ACTIONS_SPACE), VIEW_ACTIONS_Y, ICONS_SIZE, ICONS_SIZE, action='Next_right', image='next_right.png'))
+            self.buttons.append(Button(VIEW_ACTIONS_X, VIEW_ACTIONS_Y, ICONS_SIZE, ICONS_SIZE, action='Next_left', image='next_left.png'))
+            # It is important that these are the last buttons to be appended to ease pause/unpause update 
+            if self.is_paused:
+                self.buttons.append(Button(VIEW_ACTIONS_X + ICONS_SIZE + ACTIONS_SPACE, VIEW_ACTIONS_Y, ICONS_SIZE, ICONS_SIZE, action='Resume', image='play.png'))
+            else:
+                self.buttons.append(Button(VIEW_ACTIONS_X + ICONS_SIZE + ACTIONS_SPACE, VIEW_ACTIONS_Y, ICONS_SIZE, ICONS_SIZE, action='Pause', image='pause.png'))
+
 
     def get_position(self) -> tuple[int, int]:
         """
@@ -354,3 +363,12 @@ class Level(State):
             self.buttons[self.selected_button].selected = False
             self.selected_button = None
 
+    def pause(self):
+        self.is_paused = True
+        self.buttons.pop()
+        self.buttons.append(Button(VIEW_ACTIONS_X + ICONS_SIZE + ACTIONS_SPACE, VIEW_ACTIONS_Y, ICONS_SIZE, ICONS_SIZE, action='Resume', image='play.png'))
+    
+    def unpause(self):
+        self.is_paused = False
+        self.buttons.pop()
+        self.buttons.append(Button(VIEW_ACTIONS_X + ICONS_SIZE + ACTIONS_SPACE, VIEW_ACTIONS_Y, ICONS_SIZE, ICONS_SIZE, action='Pause', image='pause.png'))

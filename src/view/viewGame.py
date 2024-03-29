@@ -32,10 +32,10 @@ class ViewGame(View):
 
         # score
         self.draw_text(f"Score: {str(level.get_score())}", (X_3COLORS , Y_3COLORS), H_SQUARE)
-        self.draw_text(f"Remaning moves: {str(level.max - level.get_score())}", (X_3COLORS , Y_3COLORS +50), H_SQUARE)
         if level.is_ai:
             self.draw_text(f"Time Taken: {str(round(level.time, 2))}", (X_3COLORS , Y_3COLORS +100), H_SQUARE)
         else:
+            self.draw_text(f"Remaning moves: {str(level.max - level.get_score())}", (X_3COLORS , Y_3COLORS +50), H_SQUARE)
             self.draw_text(f"Time Elapsed: {str(round(time.time() - level.time, 2))}", (X_3COLORS , Y_3COLORS +100), H_SQUARE)
         # Missmatch ties
         number_in_line = int((W_LEFT_MENU - 40) / (W_MISS + GAP))
