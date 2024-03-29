@@ -2,7 +2,8 @@ dimension: 3
 max: 8
 difficulty: 1
 main_color: ['r']
-move_type: 'double'
+move_type: 'normal'
+shift: 2
 blank_color : 'y'
 initial_block:
  - ['y', 'y', 'y']

@@ -3,6 +3,7 @@ max: 10
 difficulty: 1
 main_color: ['r', 'b']
 move_type: 'normal'
+shift: 1
 blank_color : 'y'
 initial_block:
  - ['y', 'y', 'y']

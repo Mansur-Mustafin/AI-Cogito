@@ -19,6 +19,8 @@ class Level(State):
         self.blank_color = level_data['blank_color']
         self.max = level_data['max']
         self.difficulty= level_data['difficulty']
+        self.shift = level_data['shift']
+        self.move_type = level_data['move_type']
         self.score = 0
         self.time = 0
         self.level = lvl

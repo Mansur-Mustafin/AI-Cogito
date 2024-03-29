@@ -4,6 +4,7 @@ difficulty: 1
 main_color: ['r']
 blank_color : 'y'
 move_type: 'mirror'
+shift: 1
 initial_block:
  - ['y', 'y', 'y']
  - ['y', 'r', 'r']

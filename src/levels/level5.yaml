@@ -3,6 +3,7 @@ max: 12
 difficulty: 1
 main_color: ['r','b']
 move_type: 'mirror'
+shift: 2
 blank_color : 'y'
 initial_block:
  - ['y', 'y', 'y']

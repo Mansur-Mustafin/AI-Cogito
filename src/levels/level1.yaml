@@ -2,6 +2,7 @@ dimension: 3
 max: 6
 difficulty: 1
 move_type: 'normal'
+shift: 1
 main_color: ['r']
 blank_color : 'y'
 initial_block:
