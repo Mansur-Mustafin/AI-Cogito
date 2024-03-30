@@ -1,4 +1,4 @@
-# AI Cagado Project
+# AI Cogito Project
 
 Welcome to the AI Cogito Project!
 
