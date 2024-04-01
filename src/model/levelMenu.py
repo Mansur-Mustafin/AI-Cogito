@@ -5,8 +5,18 @@ from model.state import State
 
 
 class LevelMenu(State):
-
-    def __init__(self, ai_algorithm = None, heuristic = None):
+    """
+    Class that represents the model for the level selection menu
+    """
+    def __init__(self, ai_algorithm = None, heuristic = None) -> None:
+        """
+        LevelMenu constructor
+        :param ai_algorithm: algorithm that the AI uses
+        :type ai_algorithm: enum AIS
+        :param heuristic: heuristic that the AI uses
+        :type heuristic: enum H
+        :return: None
+        """
         super().__init__()
         self.ai_algorithm = ai_algorithm
         self.heuristic = heuristic
