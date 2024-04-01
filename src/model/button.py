@@ -3,8 +3,37 @@ from settings import *
 
 
 class Button:
-    def __init__(self, x, y, width, height, text='', color=(73, 73, 73), text_color=(255, 255, 255), font_size=13,
-                 border_radius=R_BUTTON, action=None, image=None):
+    """
+    Class that implements the model of the button
+    """
+    def __init__(self, x: int, y: int, width: int, height: int, text: str = '', color: tuple[int, int, int] = (73, 73, 73),
+                 text_color: tuple[int, int, int] = (255, 255, 255), font_size: int = 13,
+                 border_radius: int = R_BUTTON, action=None, image: str = None) -> None:
+        """
+        Button constructor
+        :param x: x coordinate of the button
+        :type x: int
+        :param y: y coordinate of the button
+        :type y: int
+        :param width: width of the button
+        :type width: int
+        :param height: height of the button
+        :type height: int
+        :param text: text written on the button
+        :type text: str
+        :param color: color of the button
+        :type color: tuple[int][int][int]
+        :param text_color: color of the text on the button
+        :type text_color: tuple[int][int][int]
+        :param font_size: font size of the button
+        :type font_size: int
+        :param border_radius: border radius of the button
+        :type border_radius: int
+        :param action: action bound to the button
+        :param image: image of the button
+        :type image: str
+        :return: None
+        """
         self.x = x
         self.y = y
         self.width = width
@@ -20,9 +49,18 @@ class Button:
         self.selected = False
 
     def __str__(self) -> str:
+        """
+        Button str dunder method
+        :return: The text on the button
+        :rtype: str
+        """
         return self.text
 
-    def get_action(self):
+    def get_action(self) -> str:
+        """
+        :return: The action of the button
+        :rtype: str
+        """
         if self.action is None:
             return self.text
         else:
@@ -33,11 +71,11 @@ class Button:
         Draws the button
         :param screen: the screen where the button is going to be drawn
         :param x_pos: the horizontal position of the button
-        :type x_pos: Int
+        :type x_pos: int
         :param y_pos: the vertical position of the button
         :type y_pos: int
         :param mouse_pos: the position of the mouse
-        :type mouse_pos: Tuple[Int,Int]
+        :type mouse_pos: tuple[int,int]
         :return: None
         """
         if x_pos is not None:
@@ -53,7 +91,7 @@ class Button:
         pygame.draw.rect(screen, button_color, rect, border_radius=self.border_radius)
 
         if self.image is not None:
-            rendered_image = pygame.image.load("./images/" + self.image).convert()
+            rendered_image = pygame.image.load("./assets/images/" + self.image).convert()
             screen.blit(rendered_image, rect)
 
         if self.selected:

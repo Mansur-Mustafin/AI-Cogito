@@ -5,8 +5,13 @@ from AI.ai import AIS
 
 
 class MainMenu(State):
-
-    def __init__(self):
+    """
+    Class that represents the model for the main menu
+    """
+    def __init__(self) -> None:
+        """
+        MainMenu constructor
+        """
         super().__init__()
 
     def _create_buttons(self) -> None:

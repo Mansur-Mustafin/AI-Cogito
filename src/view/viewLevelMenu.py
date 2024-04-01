@@ -3,12 +3,22 @@ from model.levelMenu import *
 
 
 class ViewLevelMenu(View):
+    """
+    This class is responsible for drawing the level choosing menu screen in the game.
+    """
     def __init__(self, screen):
+        """
+        Initializes the ViewLevelMenu with the specified Pygame screen.
+
+        :param screen: The Pygame screen to render elements on.
+        :type screen: pygame.Surface
+        """
         super().__init__(screen)
 
     def draw_screen(self, menu: LevelMenu) -> None:
         """
         Draws the level Menu
+
         :param menu: Menu to draw
         :type menu: LevelMenu
         :return: None

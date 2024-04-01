@@ -1,21 +1,32 @@
 from typing import Optional
-from model.mainMenu import MainMenu
-from model.endMenu import EndMenu
+
+from AI.ai import AIS
 from model.button import Button
+from model.endMenu import EndMenu
+from model.heuristicMenu import HeuristicMenu
 from model.level import Level
 from model.levelMenu import LevelMenu
-from model.heuristicMenu import HeuristicMenu
+from model.mainMenu import MainMenu
 from view.viewGame import ViewGame
-from view.viewMainMenu import ViewMainMenu
-from view.viewLevelMenu import ViewLevelMenu
 from view.viewHeuristicMenu import ViewHeuristicMenu
+from view.viewLevelMenu import ViewLevelMenu
+from view.viewMainMenu import ViewMainMenu
 from .controller import Controller, Command
-from AI.ai import AIS
-from settings import *
+
 
 class MainMenuController(Controller):
-
+    """
+    Controller for the Main Menu of the game. It handles the main menu's button interactions
+    and transitions to other menus.
+    Inherits from Controller.
+    """
     def __init__(self, state, view):
+        """
+        Initializes the MainMenuController with the game state and view.
+
+        :param state: The state of the menu.
+        :param view: The menu's view.
+        """
         super().__init__(state, view)
 
     def handle_pressed_button(self, button: Button) -> Optional[Command]:
@@ -42,8 +53,17 @@ class MainMenuController(Controller):
 
 
 class LevelMenuController(Controller):
-
+    """
+    Controller for the Level Menu in the game. It facilitates the selection of a game level.
+    Inherits from Controller.
+    """
     def __init__(self, state, view):
+        """
+        Initializes the LevelMenuController with the game state and view.
+
+        :param state: The state of the menu.
+        :param view: The menu's view.
+        """
         super().__init__(state, view)
 
     def handle_pressed_button(self, button: Button) -> Command:
@@ -52,7 +72,7 @@ class LevelMenuController(Controller):
         :param button: Button that was pressed
         :type button: Button
         :return: a command to be executed
-        :rtype: Command]
+        :rtype: Command
         """
         lvl = str(button).split(' ')[1]
         ai_algorithm = self.state.ai_algorithm
@@ -66,8 +86,17 @@ class LevelMenuController(Controller):
 
 
 class HueristicMenuController(Controller):
-
+    """
+    Controller for the Heuristic Selection Menu. It facilitates the selection of a heuristic algorithm for AI gameplay.
+    Inherits from Controller.
+    """
     def __init__(self, state, view):
+        """
+        Initializes the HueristicMenuController with the game state and view.
+
+        :param state: The state of the menu.
+        :param view: The menu's view.
+        """
         super().__init__(state, view)
 
     def handle_pressed_button(self, button: Button) -> Command:
@@ -76,7 +105,7 @@ class HueristicMenuController(Controller):
         :param button: Button that was pressed
         :type button: Button
         :return: a command to be executed
-        :rtype: Command]
+        :rtype: Command
         """
         heuristic = button.get_action()
         self.state = LevelMenu(self.state.ai_algorithm, heuristic)
@@ -85,8 +114,16 @@ class HueristicMenuController(Controller):
 
 
 class EndMenuController (Controller):
-        
+    """
+    Controller for the End Menu of the game. Manages the interactions on the end game screen,
+    such as playing again or returning to the main menu.
+    """
     def __init__(self, state: EndMenu, view):
+        """
+        Initializes the EndMenuController with the game's end state and view.
+        :param state: The state of the menu.
+        :param view: The menu's view.
+        """
         super().__init__(state, view)
 
     def handle_pressed_button(self, button: Button) -> Command | None:
@@ -95,11 +132,11 @@ class EndMenuController (Controller):
         :param button: Button that was pressed
         :type button: Button
         :return: a command to be executed
-        :rtype: Command]
+        :rtype: Command
         """
         assert type(self.state) is EndMenu
         if button.get_action() == "Play Again":
-            self.state = Level(self.state.level.level)
+            self.state = Level(self.state.level.level, self.state.level.heuristic, self.state.level.ai_algorithm)
             self.view = ViewGame(self.view.get_screen())
             return Command.CHANGE_GAME_PLAYER
         elif button.get_action() == "Go back to menu":

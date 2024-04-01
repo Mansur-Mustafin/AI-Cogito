@@ -1,14 +1,33 @@
 import yaml
+
 from settings import *
 from model.state import State
 from model.button import Button
 
 
 class Level(State):
-    # Para que temos isto se temos um field "main_color" no yaml?
+    """
+    The Level class represents the model of a level. It holds informations
+    about the current and target board and other important information as the time it has passed
+    the number of moves the player or AI has taken, etc.. It also defines some helper functions
+    to retrieve or change information of the board.
+    """
+
     COLORS = {'r', 'b'}
 
-    def __init__(self, lvl, ai_algorithm = None, heuristic = None):
+    def __init__(self, lvl: int, ai_algorithm, heuristic) -> None:
+        """
+        Level constructor
+        :param lvl: Number of the level
+        :type lvl: int
+        :param ai_algorithm: Algorithm to be used by the AI
+        :type ai_algorithm: enum AIS
+        :param heuristic: Heuristic to be used by the AI
+        :type heuristic: enum H
+        :return: None
+        :rtype: None
+        """
+
         with open(LEVELS_DIR + "level" + str(lvl) + ".yaml", 'r') as file:
             level_data = yaml.safe_load(file)
 
@@ -24,30 +43,43 @@ class Level(State):
         self.score = 0
         self.time = 0
         self.level = lvl
-        self.selected_button = None # no inicio nao tem butao selecionada 
+        self.selected_button = None # No button is selected at the beginning
 
         self.ai_algorithm = ai_algorithm
         self.heuristic = heuristic
         self.is_ai = ai_algorithm != None
-        self.is_paused = False # usado para controlar a vista de moves da IA. Há melhor maneira de fazer isto noutro sítio?
+        self.is_paused = False
 
         super().__init__()
 
-    def __eq__(self, other):
+    def __eq__(self, other: dict[tuple[int, int], chr]) -> bool: 
+        """
+        Level equality dunder method. Determines if a level is the same as another by comparing
+        their current boards
+        :param other: The other current board
+        :type other: dict[tuple[int, int], chr]
+        :return: True if the two levels are equal, false otherwise.
+        :rtype: bool
+        """
         if isinstance(other, self.__class__):
             return self.current_block == other.current_block and self.level == other.level
         else:
             return False
 
-    def __hash__(self):
+    def __hash__(self) -> int:
+        """
+        Level hash dunder method. Calculates the hash of a Level
+        """
         current_block_tuple = tuple(tuple(row) for row in self.current_block)
         return hash((current_block_tuple , self.level)) 
 
-    def __build_board(self, board) -> dict[tuple[int, int], str]:
+    def __build_board(self, board: list[list[int]]) -> dict[tuple[int, int], chr]:
         """
         Builds a dictionary representing the board as a sparse matrix (the empty spaces aren't stored).
+        :param board: 2D matrix representing the color of each tile in the board
+        :type board: list[list[int]]
         :return: The board representation in a dictionary
-        :rtype: Dict[Tuple[Int, Int], Chr]
+        :rtype: dict[tuple[int, int], chr]
         """
         new_board = dict()
         for row in range(self.dimension):
@@ -59,6 +91,10 @@ class Level(State):
         return new_board
 
     def _create_buttons(self) -> None:
+        """
+        Creates the buttons necessary to interact with the game.
+        """
+
         # copy from view
         scale = ((min(HEIGHT, WIDTH) - 5 * OFFSET) / ((H_SQUARE + GAP) * self.dimension))
         x_gap = scale * W_SQUARE + GAP
@@ -112,60 +148,52 @@ class Level(State):
             else:
                 self.buttons.append(Button(VIEW_ACTIONS_X + ICONS_SIZE + ACTIONS_SPACE, VIEW_ACTIONS_Y, ICONS_SIZE, ICONS_SIZE, action='Pause', image='pause.png'))
 
-
-    def get_position(self) -> tuple[int, int]:
-        """
-        :return: The position of the player in the board
-        :rtype: Tuple[Int, Int]
-        """
-        return self.cur_pos
-
     def get_dimension(self) -> int:
         """
         :return: The dimension of the board
-        :rtype: Int
+        :rtype: int
         """
         return self.dimension
 
     def get_level(self) -> int:
         """
-        :return: The level number
-        :rtype: Int
+        :return: The level's number
+        :rtype: int
         """
         return self.level
 
     def get_score(self) -> int:
         """
-        :return: The current score
-        :rtype: Int
+        :return: The current number of moves played
+        :rtype: int
         """
         return self.score
 
     def increment_score(self) -> None:
         """
-        Increment the score
+        Increment the number of moves taken
         :return: None
         """
         self.score += 1
 
-    def get_current_board(self):
+    def get_current_board(self) -> dict[tuple[int, int], chr]:
         """
         :return: The current board
-        :rtype: List[List[String]]
+        :rtype: dict[tuple[int, int], chr]
         """
         return self.current_block
 
-    def get_target_board(self):
+    def get_target_board(self) -> dict[tuple[int, int], chr]:
         """
-        :return: The current board
-        :rtype: List[List[String]]
+        :return: The target board
+        :rtype: dict[tuple[int, int], chr]
         """
         return self.target_pattern
 
     def is_win_condition(self) -> bool:
         """
         :return: True if the current board is equal to the target board, false otherwise
-        :rtype: Bool
+        :rtype: bool
         """
         for key, color in self.current_block.items():
                 if( (not (key in self.target_pattern.keys())) or  color != self.target_pattern[key][0]): 
@@ -174,8 +202,8 @@ class Level(State):
 
     def count_mismatched_tiles(self) -> int:
         """
-        :return: The number of blocks that differ from the current board to the target board
-        :rtype: Int
+        :return: The number of tiles that differ from the current board to the target board
+        :rtype: int
         """
         total = 0
         for pos, color in self.current_block.items():
@@ -183,28 +211,37 @@ class Level(State):
                 total += 1
         return total
 
-    def set_current_board(self, board) -> None:
+    def set_current_board(self, board: dict[tuple[int, int], chr]) -> None:
         """
+        Updates the current board
         :param board: New board
         :return: None
         """
         self.current_block = board
 
-    def get_value_at(self, row, col) -> str:
+    def get_value_at(self, row: int, col: int) -> str:
         """
-        :param row:
-        :param col:
-        :return: Color value of the current block at the given row and column
+        :param row: index of the row
+        :param col: index of the column
+        :return: Color of tile in the current board at the given row and column
         """
         return self.current_block.get((row, col), self.blank_color)
 
     def get_main_colors(self) -> list[str]:
         """
-        :return: Main colors
+        :return: Main colors used in the boards
         """
         return self.main_colors
 
-    def get_board_row(self, row, is_curr_board=True):
+    def get_board_row(self, row: int, is_curr_board: bool = True) -> list[tuple[tuple[int, int]], [chr]]:
+        """
+        :param row: index of the row
+        :type row: int
+        :param is_curr_board: True to fetch row in the current board, false to fetch row in the target board
+        :type is_curr_board: bool
+        :return: List of tuples with position and color of non-empty tiles desired row
+        :rtype: list[tuple[tuple[int, int]][chr]]
+        """
         res = []
         board = self.current_block if is_curr_board else self.target_pattern
         for y in range(self.dimension):
@@ -212,7 +249,15 @@ class Level(State):
                 res.append(((row, y), board[(row, y)]))
         return res
 
-    def get_board_col(self, col, is_curr_board=True):
+    def get_board_col(self, col: int, is_curr_board: bool = True):
+        """
+        :param col: index of the column
+        :type col: int
+        :param is_curr_board: True to fetch column in the current board, false to fetch column in the target board
+        :type is_curr_board: bool
+        :return: List of tuples with position and color of non-empty tiles in desired column
+        :rtype: list[tuple[tuple[int, int]][chr]]
+        """
         res = []
         board = self.current_block if is_curr_board else self.target_pattern
         for x in range(self.dimension):
@@ -220,12 +265,16 @@ class Level(State):
                 res.append(((x, col), board[(x, col)]))
         return res
 
-    def move_row(self, idx, shift, move_mirrored=False):
+    def move_row(self, idx: int, shift: int, move_mirrored: bool = False) -> dict[tuple[int, int], chr]:
         """
         :param idx: Index of selected row
-        :param shift: Distance to shift each piece
+        :type idx: int
+        :param shift: Distance to shift each tile
+        :type shift: int
         :param move_mirrored: True if the mirrored row should be moved
-        :return: The updated level
+        :type move_mirrored: bool
+        :return: The updated level after moving the row
+        :rtype: dict[tuple[int, int], chr]
         """
         row = self.get_board_row(idx)
         for (x, y), piece in row:
@@ -248,12 +297,16 @@ class Level(State):
 
         return self
 
-    def move_col(self, idx, shift, move_mirrored=False):
+    def move_col(self, idx: int, shift: int, move_mirrored: bool = False) -> dict[tuple[int, int], chr]:
         """
         :param idx: Index of selected column
-        :param shift: Distance to shift each piece
-        :param move_mirrored: True if the mirrored row should be moved
-        :return: The updated level
+        :type idx: int
+        :param shift: Distance to shift each tile
+        :type shift: int
+        :param move_mirrored: True if the mirrored column should be moved
+        :type move_mirrored: bool
+        :return: The updated level after moving the column
+        :rtype: dict[tuple[int, int], chr]
         """
         col = self.get_board_col(idx)
         for (x, y), piece in col:
@@ -276,7 +329,16 @@ class Level(State):
 
         return self
     
-    def get_row_pieces(self, idx, is_curr_board= True) -> dict:
+    def get_row_pieces(self, idx: int, is_curr_board: bool = True) -> dict[str, int]:
+        """
+        Get the frequency of each tile in a specific row
+        :param idx: Index of selected row
+        :type idx: int
+        :param is_curr_board: True to fetch from row in the current board, false to fetch from row in the target board
+        :type is_curr_board: bool
+        :return: A dictionary with the frequency of each tile color in the row
+        :rtype: dict[str][int]
+        """
         row = self.get_board_row(idx, is_curr_board)
         colors_freq = {color: 0 for color in self.COLORS}
 
@@ -286,7 +348,16 @@ class Level(State):
         
         return colors_freq
 
-    def get_col_pieces(self, idx, is_curr_board = True) -> dict:
+    def get_col_pieces(self, idx: int, is_curr_board: bool = True) -> dict[str, int]:
+        """
+        Get the frequency of each tile in a specific column
+        :param idx: Index of selected column
+        :type idx: int
+        :param is_curr_board: True to fetch from column in the current board, false to fetch from column in the target board
+        :type is_curr_board: bool
+        :return: A dictionary with the frequency of each tile color in the column
+        :rtype: dict[str][int]
+        """
         col = self.get_board_col(idx, is_curr_board)
         colors_freq = {color: 0 for color in self.COLORS}
 
@@ -296,47 +367,38 @@ class Level(State):
 
         return colors_freq
     
-    def manhattan_distance(self,pieceA, pieceB ):
-        #print(pieceA,pieceB)
+    def manhattan_distance(self, pieceA: tuple[int, int], pieceB: tuple[int, int]) -> int:
+        """
+        :param pieceA: position of piece A
+        :type pieceA: tuple[int][int]
+        :param pieceB: position of piece B
+        :type pieceB: tuple[int][int]
+        :return: Manhattan distance between the positions of the two pieces
+        :rtype: int
+        """
         x1, y1 = pieceA
         x2, y2 = pieceB
         dx = min (abs(x2-x1),abs(self.dimension - (x2-x1)))
         dy = min (abs(y2-y1),abs(self.dimension - (y2-y1)))
         return dx + dy
 
-
-    def associate_pieces(self):
-        associations = dict()
-        for cord1, color in self.current_block.items():
-            min_dist = 2* self.dimension
-            for cord2, color2 in self.target_pattern.items():
-                if( color == color2 ):#and not (cord2 in associations)):
-                    dist = self.manhattan_distance(cord1,cord2)
-                    if ( min_dist > dist):
-                        min_dist = dist
-                        associations[cord1] = cord2
-                
-
-        return associations
-
-
-    def is_valid_move(self, dir: str, indx: int) -> bool:
-        if dir == "right":
-            return not self.get_value_at(indx, -1) in self.get_main_colors()
-        elif dir == "left":
-            return not self.get_value_at(indx, 0) in self.get_main_colors()
-        elif dir == "up":
-            return not self.get_value_at(0, indx) in self.get_main_colors()
-        elif dir == "down":
-            return not self.get_value_at(-1, indx) in self.get_main_colors()
-        else:
-            print("[ERROR] Invalid move")
-            return False
-    
-    def lost(self):
+    def lost(self) -> bool:
+        """
+        Checks if player has lost the game. A player loses the game if the amount of moves he has played
+        surpasses the limit established by the level
+        :return: True if the player has lost the game, false otherwise
+        :rtype: bool
+        """
         return self.max - self.score <= 0
 
-    def select_button(self, move):
+    def select_button(self, move: str) -> None:
+        """
+        Selects a button depending on the move, updating the Level state
+        :param move: Identifies the button that was pressed. Holds the direction and index of the button
+        :type move: str
+        :return: None
+        :rtype: None
+        """
         if move is None:
             return None
 
@@ -352,17 +414,32 @@ class Level(State):
         self.buttons[idx_button].selected = True
         self.selected_button = idx_button
 
-    def unselect_button(self):
+    def unselect_button(self) -> None:
+        """
+        Unselects a button that was pressed, updating the Level state
+        :return: None
+        :rtype: None
+        """
         if self.selected_button is not None:
             self.buttons[self.selected_button].selected = False
             self.selected_button = None
 
-    def pause(self):
+    def pause(self) -> None:
+        """
+        Pauses the view used to watch the moves player by the AI
+        :return: None
+        :rtype: None
+        """
         self.is_paused = True
         self.buttons.pop()
         self.buttons.append(Button(VIEW_ACTIONS_X + ICONS_SIZE + ACTIONS_SPACE, VIEW_ACTIONS_Y, ICONS_SIZE, ICONS_SIZE, action='Resume', image='play.png'))
     
-    def unpause(self):
+    def unpause(self) -> None:
+        """
+        Pauses the view used to watch the moves player by the AI
+        :return: None
+        :rtype: None
+        """
         self.is_paused = False
         self.buttons.pop()
         self.buttons.append(Button(VIEW_ACTIONS_X + ICONS_SIZE + ACTIONS_SPACE, VIEW_ACTIONS_Y, ICONS_SIZE, ICONS_SIZE, action='Pause', image='pause.png'))

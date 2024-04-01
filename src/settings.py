@@ -1,3 +1,8 @@
+"""
+File: settings.py
+Description: This module defines various constants and settings used throughout the game.
+"""
+
 from pygame import USEREVENT
 from enum import Enum, auto
 
@@ -9,6 +14,8 @@ HEIGHT = 720
 FPS = 60
 LEVELS_DIR = "levels/"
 FONT_PATH = "assets/Comfortaa-Regular.ttf"
+MUSIC_PATH = "assets/background_music.mp3"
+BUTTON_SOUND = "assets/button_pressed.mp3"
 
 # define ai settings
 WAITING_TIME = 1000
@@ -60,6 +67,7 @@ ACTIONS_SPACE = 50
 
 QUIT_X = 1075
 QUIT_Y = 620
+
 
 class Command(Enum):
     EXIT = auto()
