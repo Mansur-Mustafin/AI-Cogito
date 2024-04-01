@@ -6,8 +6,8 @@ class Button:
     """
     Class that implements the model of the button
     """
-    def __init__(self, x: int, y: int, width: int, height: int, text: str = '', color: tuple[int][int][int] = (73, 73, 73),
-                 text_color: tuple[int][int][int] = (255, 255, 255), font_size: int = 13,
+    def __init__(self, x: int, y: int, width: int, height: int, text: str = '', color: tuple[int, int, int] = (73, 73, 73),
+                 text_color: tuple[int, int, int] = (255, 255, 255), font_size: int = 13,
                  border_radius: int = R_BUTTON, action=None, image: str = None) -> None:
         """
         Button constructor
