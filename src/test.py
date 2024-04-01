@@ -16,7 +16,7 @@ global curr_level
 
 RESULST_DIR = 'analitics/'
 
-algorithms = [ AIS.DFS, AIS.BFS,AIS.IDS,AIS.GREDDY, AIS.ASTAR,AIS.ASTARW]
+algorithms = [ AIS.DFS, AIS.BFS,AIS.IDS]
 heuristics = [ H.MISS, H.LINECOLUMN,H.PATTERN,H.MANHATTAN,H.MANHATTAN_PATTERN]
 
 x_labels = ['DFS','BFS','IDS']
@@ -92,7 +92,7 @@ def test_ai(algorithm , levels, heuristic, weight=1):
 
     data = []
     def run_test(algorithm, heuristic, weight):
-        ai: AI = AI(level, algorithm, heuristic, weight)
+        ai: AI = AI(Level(level.level, algorithm,heuristic), algorithm, heuristic, weight)
         return [level.level, round(ai.state.time, 4), ai.memory, len(ai.moves)]
 
     for level in levels:
@@ -166,7 +166,7 @@ def main():
             if( ai_algorithm == AIS.DFS):
                 data.append(test_ai( ai_algorithm,  levels[0:2], None))
             elif (ai_algorithm == AIS.BFS):
-                data.append(test_ai( ai_algorithm,  levels[0:3], None))
+                data.append(test_ai( ai_algorithm,  levels[0:4], None))
             else:
                 data.append(test_ai( ai_algorithm,  levels[0:4], None))
             write_to_csv(RESULST_DIR + state + '.csv', data[-1], headers)
