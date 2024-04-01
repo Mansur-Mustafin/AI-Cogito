@@ -3,7 +3,6 @@ from AI.ai import *
 
 from game import Game
 
-'''
 if __name__ == "__main__":
     game = Game()
     game.run()
@@ -17,3 +16,4 @@ if __name__ == "__main__":
 
     print(ai.moves)
     print(ai.state.time)
+'''
