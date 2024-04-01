@@ -22,7 +22,9 @@ class Controller(ABC):
 
         :param state: The state of the game or application.
         :param view: The view of the game or application.
+        :param button_sound: The sound of pressing a button.
         """
+        self.button_sound = pygame.mixer.Sound(BUTTON_SOUND)
         self.state = state
         self.view = view
 
@@ -45,8 +47,8 @@ class Controller(ABC):
 
                 if button is None:
                     return None
-                else:
-                    return self.handle_pressed_button(button)
+                self.button_sound.play()
+                return self.handle_pressed_button(button)
 
     @abstractmethod
     def handle_pressed_button(self, button) -> Optional[Command]:

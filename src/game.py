@@ -1,6 +1,7 @@
 import sys
 
 import pygame
+from pygame import mixer
 
 from AI.ai import *
 from model.mainMenu import MainMenu
@@ -29,6 +30,7 @@ class Game:
         """
         # general setup
         pygame.init()
+        mixer.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
         pygame.display.set_caption('Cogito Game')
         self.clock = pygame.time.Clock()
@@ -53,6 +55,9 @@ class Game:
 
         :return: None
         """
+        mixer.music.load(MUSIC_PATH)
+        mixer.music.play(-1)
+        mixer.music.set_volume(0.05)
         run = True
         while run:
             command = self.controller.handle_event()
