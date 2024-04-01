@@ -1,16 +1,30 @@
+import time
+
+import pygame
+
 from view.view import View
 from settings import *
 from model.level import Level
-import time
-import pygame
+
 
 class ViewGame(View):
+    """
+    This class is responsible for drawing the game screen during gameplay.
+    """
+
     def __init__(self, screen):
+        """
+        Initializes the ViewGame with the specified Pygame screen.
+
+        :param screen: The Pygame screen to render elements on.
+        :type screen: pygame.Surface
+        """
         super().__init__(screen)
 
     def draw_screen(self, level: Level) -> None:
         """
-        Draws the game screen
+        Renders the entire game screen
+
         :param level: The level to draw
         :type level: Level
         :return: None
@@ -23,21 +37,23 @@ class ViewGame(View):
     def draw_right_menu(self, level: Level) -> None:
         """
         Draws the right menu of the game screen
+
         :param level: The level to draw
         :type level: Level
         :return: None
         """
-
         # background of right menu
         self.draw_rectangle(X_LEFT_MENU, Y_LEFT_MENU, W_LEFT_MENU, H_LEFT_MENU, R_LEFT_MENU, WHITE_COLOR)
 
         # score
-        self.draw_text(f"Score: {str(level.get_score())}", (X_3COLORS , Y_3COLORS), H_SQUARE)
+        self.draw_text(f"Score: {str(level.get_score())}", (X_3COLORS, Y_3COLORS), H_SQUARE)
         if level.is_ai:
-            self.draw_text(f"Time Taken: {str(round(level.time, 2))}", (X_3COLORS , Y_3COLORS +100), H_SQUARE)
+            self.draw_text(f"Time Taken: {str(round(level.time, 2))}", (X_3COLORS, Y_3COLORS + 100), H_SQUARE)
         else:
-            self.draw_text(f"Remaning moves: {str(level.max - level.get_score())}", (X_3COLORS , Y_3COLORS +50), H_SQUARE)
-            self.draw_text(f"Time Elapsed: {str(round(time.time() - level.time, 2))}", (X_3COLORS , Y_3COLORS +100), H_SQUARE)
+            self.draw_text(f"Remaning moves: {str(level.max - level.get_score())}", (X_3COLORS, Y_3COLORS + 50),
+                           H_SQUARE)
+            self.draw_text(f"Time Elapsed: {str(round(time.time() - level.time, 2))}", (X_3COLORS, Y_3COLORS + 100),
+                           H_SQUARE)
         # Missmatch ties
         number_in_line = int((W_LEFT_MENU - 40) / (W_MISS + GAP))
         number_misses = level.count_mismatched_tiles()
@@ -56,7 +72,8 @@ class ViewGame(View):
     def draw_target_board(self, level: Level) -> None:
         """
         Draws the target board
-        :param level: The level to draw
+
+        :param level: The game level with the target board state.
         :type level: Level
         :return: None
         """
@@ -70,7 +87,8 @@ class ViewGame(View):
     def draw_current_board(self, level: Level) -> None:
         """
         Draws the current board
-        :param level: The level to draw
+
+        :param level: The game level with the current board state.
         :type level: Level
         :return: None
         """
@@ -84,10 +102,19 @@ class ViewGame(View):
         self.draw_square_board(x_start, y_start, level.get_current_board(), level.dimension, scale)
 
     def draw_buttons(self, level: Level):
+        """
+        Draws the game buttons on the screen.
+
+        :param level: The level containing the button information.
+        :type level: Level
+        """
         for button in level.get_buttons():
             button.draw(self.screen, None, None, level.get_mouse_position())
 
     def draw_waiting_for_ai(self):
+        """
+        Displays a message on the screen indicating that the game is waiting for AI computation.
+        """
         self.screen.fill(WHITE_COLOR)
-        self.draw_text("Waiting for AI to compute moves...", (200 , HEIGHT/2 - 20), 50)
-        pygame.display.update()
+        self.draw_text("Waiting for AI to compute moves...", (200, HEIGHT / 2 - 20), 50)
+        pygame.display.update()  # TODO

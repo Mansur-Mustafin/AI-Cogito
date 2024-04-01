@@ -61,6 +61,7 @@ ACTIONS_SPACE = 50
 QUIT_X = 1075
 QUIT_Y = 620
 
+
 class Command(Enum):
     EXIT = auto()
     CHANGE_GAME_PLAYER = auto()

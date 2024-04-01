@@ -4,12 +4,22 @@ from model.mainMenu import MainMenu
 
 
 class ViewMainMenu(View):
+    """
+    This class is responsible for drawing the main menu screen in the game.
+    """
     def __init__(self, screen):
+        """
+        Initializes the ViewMainMenu with the specified Pygame screen.
+
+        :param screen: The Pygame screen to render elements on.
+        :type screen: pygame.Surface
+        """
         super().__init__(screen)
 
     def draw_screen(self, menu: MainMenu) -> None:
         """
         Draws the Main Menu
+
         :param menu: Menu to draw
         :type menu: MainMenu
         :return: None

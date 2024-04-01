@@ -1,10 +1,20 @@
 from abc import ABC, abstractmethod
+
 import pygame
 
 from settings import *
 
 
 class View(ABC):
+    """
+    An abstract base class representing the view in a game.
+
+    Attributes:
+        ----------
+        screen (pygame.Surface): The main display surface where elements are rendered.
+        map_Color (dict): A mapping of color codes to their corresponding RGB values.
+    """
+
     map_Color = {
         'r': RED_COLOR,
         'b': BLUE_COLOR,
@@ -12,16 +22,29 @@ class View(ABC):
     }
 
     def __init__(self, screen):
+        """
+        Initializes the View with the specified Pygame screen.
+
+        :param screen: The Pygame screen to render elements on.
+        :type screen: pygame.Surface
+        """
         self.screen = screen
 
     @abstractmethod
     def draw_screen(self, state):
+        """
+        Abstract method to draw the screen. Must be implemented by subclasses.
+
+        :param state: The state of the game to be represented on the screen.
+        :return: None
+        """
         pass
 
     def draw_rectangle(self, x: int, y: int, width: int, height: int, border_radius: int,
                        color: tuple[int, int, int]) -> None:
         """
         Draws a rectangle
+
         :param x: Horizontal position of the top left vertex
         :type x: Int
         :param y: Vertical position of the top left vertex
@@ -43,6 +66,7 @@ class View(ABC):
                   font_path: str = FONT_PATH) -> None:
         """
         Draws text
+
         :param text: String text to draw
         :type text : String
         :param position: Position of the text in the screen
@@ -64,15 +88,18 @@ class View(ABC):
         text_surface = font.render(text, True, color)
         self.screen.blit(text_surface, position)
 
-    def draw_square_board(self, x: int, y: int, square, dimension: int, scale: float = 1) -> None:
+    def draw_square_board(self, x: int, y: int, square: dict[tuple[int, int], chr], dimension: int, scale: float = 1) -> None:
         """
         Draws a square board
+
         :param x: Horizontal position in the screen
         :type x: Int
         :param y: Vertical of the text in the screen
         :type y: Int
         :param square: Board to draw
-        :type square: List[List[Int]]
+        :type square: dict[tuple[int, int], chr]
+        :param dimension: The dimension of the board (e.g., 8 for 8x8 board).
+        :type dimension: Int
         :param scale: Adjust the size of pieces for available space
         :type scale: Float
         :return: void
@@ -93,4 +120,10 @@ class View(ABC):
                                     tile_color)
 
     def get_screen(self):
+        """
+        Returns the Pygame screen.
+
+        :return: The current Pygame screen.
+        :rtype: pygame.Surface
+        """
         return self.screen
