@@ -49,12 +49,12 @@ class Level(State):
 
         super().__init__()
 
-    def __eq__(self, other) -> bool: 
+    def __eq__(self, other: dict[tuple[int, int], chr]) -> bool: 
         """
         Level equality dunder method. Determines if a level is the same as another by comparing
         their current boards
-        :param lvl: Number of the level
-        :type lvl: int
+        :param other: The other current board
+        :type other: dict[tuple[int, int], chr]
         :return: True if the two levels are equal, false otherwise.
         :rtype: bool
         """
