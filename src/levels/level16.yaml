@@ -1,0 +1,16 @@
+dimension: 3
+max: 6
+difficulty: 0
+move_type: 'normal'
+shift: 1
+main_color: ['r']
+blank_color : 'y'
+initial_block:
+ - ['y', 'y', 'y']
+ - ['y', 'r', 'r']
+ - ['r', 'y', 'r']
+
+target_pattern:
+ - ['y', 'y', 'y']
+ - ['y', 'r', 'r']
+ - ['y', 'r', 'r']
