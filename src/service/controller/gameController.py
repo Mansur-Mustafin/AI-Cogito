@@ -7,7 +7,7 @@ from view.viewMainMenu import ViewMainMenu
 from .controller import Controller, Command
 from model.button import Button
 from view.viewEndMenu import ViewEndMenu
-from AI.ai import AI, AIS
+from AI.ai import AI, AIS, H
 
 class GameController(Controller):
 
@@ -28,7 +28,7 @@ class GameController(Controller):
                 return None
             
             level_copy = deepcopy(self.state)
-            ai = AI(level_copy, AIS.ASTARW, 1, 2000)
+            ai = AI(level_copy, AIS.ASTARW, H.MANHATTAN_PATTERN, 1, 2000)
             move = ai.moves[0]
             self.state.select_button(move)
             return None

@@ -1,3 +1,6 @@
+from pygame import USEREVENT
+from enum import Enum, auto
+
 ASTAR_WEIGHT = 1
 
 # define display characteristics
@@ -8,7 +11,8 @@ LEVELS_DIR = "levels/"
 FONT_PATH = "assets/Comfortaa-Regular.ttf"
 
 # define ai settings
-WAITTING_TIME = 1
+WAITING_TIME = 1000
+TIMER_EVENT = USEREVENT + 1
 
 # define used colors in game:
 BACKGROUND_COLOR = (255, 255, 255)
@@ -49,5 +53,19 @@ ARROW_H = 40
 ARROW_R = 20
 ARROW_FONT_S = 30
 
+ICONS_SIZE = 50
+VIEW_ACTIONS_X = 270
+VIEW_ACTIONS_Y = 15
+ACTIONS_SPACE = 50
+
 QUIT_X = 1075
 QUIT_Y = 620
+
+class Command(Enum):
+    EXIT = auto()
+    CHANGE_GAME_PLAYER = auto()
+    CHANGE_GAME_PC = auto()
+    CHANGE_MAIN = auto()
+    CHANGE_LEVEL = auto()
+    CHANGE_END = auto()
+    CHANGE_HUERISTIC = auto()

@@ -1,19 +1,10 @@
 from abc import ABC, abstractmethod
-from enum import Enum, auto
 from typing import Optional
 
 import pygame
 
 from view.view import View
-
-
-class Command(Enum):
-    EXIT = auto()
-    CHANGE_GAME = auto()
-    CHANGE_MAIN = auto()
-    CHANGE_LEVEL = auto()
-    CHANGE_END = auto()
-    # AQUI
+from settings import *
 
 class Controller(ABC):
 

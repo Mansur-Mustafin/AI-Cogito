@@ -6,8 +6,10 @@ from model.state import State
 
 class LevelMenu(State):
 
-    def __init__(self):
+    def __init__(self, ai_algorithm = None, heuristic = None):
         super().__init__()
+        self.ai_algorithm = ai_algorithm
+        self.heuristic = heuristic
 
     def _create_buttons(self) -> None:
         """

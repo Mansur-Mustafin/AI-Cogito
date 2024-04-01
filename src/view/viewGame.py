@@ -2,6 +2,7 @@ from view.view import View
 from settings import *
 from model.level import Level
 import time
+import pygame
 
 class ViewGame(View):
     def __init__(self, screen):
@@ -32,8 +33,11 @@ class ViewGame(View):
 
         # score
         self.draw_text(f"Score: {str(level.get_score())}", (X_3COLORS , Y_3COLORS), H_SQUARE)
-        self.draw_text(f"Remaning moves: {str(level.max - level.get_score())}", (X_3COLORS , Y_3COLORS +50), H_SQUARE)
-        self.draw_text(f"Time Elapsed: {str(round(time.time() - level.time, 2))}", (X_3COLORS , Y_3COLORS +100), H_SQUARE)
+        if level.is_ai:
+            self.draw_text(f"Time Taken: {str(round(level.time, 2))}", (X_3COLORS , Y_3COLORS +100), H_SQUARE)
+        else:
+            self.draw_text(f"Remaning moves: {str(level.max - level.get_score())}", (X_3COLORS , Y_3COLORS +50), H_SQUARE)
+            self.draw_text(f"Time Elapsed: {str(round(time.time() - level.time, 2))}", (X_3COLORS , Y_3COLORS +100), H_SQUARE)
         # Missmatch ties
         number_in_line = int((W_LEFT_MENU - 40) / (W_MISS + GAP))
         number_misses = level.count_mismatched_tiles()
@@ -82,3 +86,8 @@ class ViewGame(View):
     def draw_buttons(self, level: Level):
         for button in level.get_buttons():
             button.draw(self.screen, None, None, level.get_mouse_position())
+
+    def draw_waiting_for_ai(self):
+        self.screen.fill(WHITE_COLOR)
+        self.draw_text("Waiting for AI to compute moves...", (200 , HEIGHT/2 - 20), 50)
+        pygame.display.update()

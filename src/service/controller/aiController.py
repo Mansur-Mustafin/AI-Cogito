@@ -1,40 +1,86 @@
-from .controller import Controller
+from .controller import Controller, Command
 from model.button import Button
 from typing import Optional
-from controller.controller import Command
 import time
-from settings import WAITTING_TIME
+from settings import WAITING_TIME, TIMER_EVENT
 from AI.ai import AI
 from model.endMenu import EndMenu
 from view.viewEndMenu import ViewEndMenu
+from model.mainMenu import MainMenu
+from view.viewMainMenu import ViewMainMenu
+import pygame
 
 class AIController (Controller):
 
-    def __init__(self, state:AI, view):
+    def __init__(self, state, view):
         super().__init__(state, view)
+        self.view.draw_waiting_for_ai()
+        ai = AI(state, state.ai_algorithm, state.heuristic)
+        self.ai_moves = ai.moves
+        state.time = ai.state.time
+        self.curr_move = 0
+        pygame.time.set_timer(TIMER_EVENT, WAITING_TIME)
 
     def handle_event(self) -> Optional[Command]:
-        if(self.state.state.is_win_condition()):
-            self.state = EndMenu(self.get_state())
-            self.view = ViewEndMenu(self.view.get_screen())
-            return Command.CHANGE_END
-        move = self.state.getMove()
-        time.sleep(WAITTING_TIME)
-        self.process_move(move)
-        return None
+        if pygame.event.peek(TIMER_EVENT) and self.curr_move < len(self.ai_moves):
+            pygame.event.clear(TIMER_EVENT)
+            self.process_move(self.ai_moves[self.curr_move])
+            self.curr_move += 1
 
-    def process_move(self, move: str) -> None:
+        return super().handle_event()
+
+    def process_move(self, move: str, opposite=False) -> None:
         dir = move.split()[0]
         indx = int(move.split()[1])
 
-        if self.state.state.is_valid_move(dir, indx):
-            self.state.state.increment_score()
+        self.state.increment_score()
+        opposite_weight = -1 if opposite else 1
+        if dir == "right":
+            self.state.move_row(indx, opposite_weight * 1, False)
+        elif dir == "left":
+            self.state.move_row(indx, opposite_weight * -1, False)
+        elif dir == "up":
+            self.state.move_col(indx, opposite_weight * -1, False)
+        elif dir == "down":
+            self.state.move_col(indx, opposite_weight * 1, False)
+    
+    def handle_pressed_button(self, button):
+        action = button.get_action()
 
-            if dir == "right":
-                self.state.move_right(indx)
-            elif dir == "left":
-                self.state.move_left(indx)
-            elif dir == "up":
-                self.state.move_up(indx)
-            elif dir == "down":
-                self.state.move_down(indx)
+        if action == "Quit":
+            if not self.state.is_paused:
+                pygame.time.set_timer(TIMER_EVENT, 0)
+            self.state = MainMenu()
+            self.view = ViewMainMenu(self.view.get_screen())
+            return Command.CHANGE_MAIN
+        elif action == "Next_left":
+            if not self.state.is_paused:
+                self.pause()
+            if self.curr_move > 0:
+                self.curr_move -= 1
+                self.process_move(self.ai_moves[self.curr_move], True)
+                self.state.score -= 2
+        elif action == "Next_right":
+            if not self.state.is_paused:
+                self.pause()
+            if self.curr_move < len(self.ai_moves):
+                self.process_move(self.ai_moves[self.curr_move])
+                self.curr_move += 1
+        elif action == "Resume":
+            if self.state.is_paused:
+                self.unpause()
+        elif action == "Pause":
+            if not self.state.is_paused:
+                self.pause()
+
+        return None
+
+    def pause(self):
+        pygame.time.set_timer(TIMER_EVENT, 0)
+        pygame.event.clear(TIMER_EVENT)
+        self.state.pause()
+    
+    def unpause(self):
+        pygame.time.set_timer(TIMER_EVENT, WAITING_TIME)
+        self.state.unpause()
+
