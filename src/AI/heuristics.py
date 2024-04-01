@@ -1,20 +1,20 @@
 from model.level import Level
 
-def miss_match_heuristic(level:Level):
+def miss_match_heuristic(level:Level) -> int:
     """
-        :param level: state of the level to evaluate
-        :type level: Level
-        :return: The number of tiles that aren't in the correct place in regards to the target board
-        :rtype: int
+    :param level: state of the level to evaluate
+    :type level: Level
+    :return: The number of tiles that aren't in the correct place in regards to the target board
+    :rtype: int
     """
     return level.count_mismatched_tiles()
 
-def row_collum_miss_match_heuristic(level: Level):
+def row_collum_miss_match_heuristic(level: Level) -> int:
     """
-        :param level: state of the level to evaluate
-        :type level: Level
-        :return: The sum of missmatched tiles of every row and column of the board
-        :rtype: int
+    :param level: state of the level to evaluate
+    :type level: Level
+    :return: The sum of missmatched tiles of every row and column of the board
+    :rtype: int
     """
     dim = level.get_dimension()
     res = 0
@@ -28,13 +28,13 @@ def row_collum_miss_match_heuristic(level: Level):
             res += abs(target_col[color] - curr_col[color])
     return res
 
-def manhattan_distance(level:Level):
+def manhattan_distance(level:Level) -> int:
     """
-        :param level: state of the level to evaluate
-        :type level: Level
-        :return: The sum of the manhattan distances of every tile in the current board
-          to the closest valid tile in the target board
-        :rtype: int
+    :param level: state of the level to evaluate
+    :type level: Level
+    :return: The sum of the manhattan distances of every tile in the current board
+        to the closest valid tile in the target board
+    :rtype: int
     """
     res = 0
     
@@ -48,15 +48,15 @@ def manhattan_distance(level:Level):
         res += min_dist
     return res
 
-def pattern(level:Level):
+def pattern(level:Level) -> int:
     """
-        A row (or column) in the correct pattern is a row that only needs to be shifted right/left
-        (up/down if it is a column) to be in the correct position.
-        :param level: state of the level to evaluate
-        :type level: Level
-        :return: The sum of the missmatch heuristic with the negative value of the number
-            of rows and columns that have the correct pattern in comparison to the target board.
-        :rtype: int
+    A row (or column) in the correct pattern is a row that only needs to be shifted right/left
+    (up/down if it is a column) to be in the correct position.
+    :param level: state of the level to evaluate
+    :type level: Level
+    :return: The sum of the missmatch heuristic with the negative value of the number
+        of rows and columns that have the correct pattern in comparison to the target board.
+    :rtype: int
     """
 
     count = 0
@@ -83,14 +83,14 @@ def pattern(level:Level):
             count+=1
     return -count*5 + level.count_mismatched_tiles()
 
-def manhattan_distance_with_pattern(level:Level):
+def manhattan_distance_with_pattern(level:Level) -> int:
     """
-        This particular heuristic mixes the pattern and manhattan distance heuristics to 
-        achieve better results
-        :param level: state of the level to evaluate
-        :type level: Level
-        :return: The sum between the manhattan and pattern heuristics
-        :rtype: int
+    This particular heuristic mixes the pattern and manhattan distance heuristics to 
+    achieve better results
+    :param level: state of the level to evaluate
+    :type level: Level
+    :return: The sum between the manhattan and pattern heuristics
+    :rtype: int
     """
     res = 0
     for cord1, color in level.current_block.items():
