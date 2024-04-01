@@ -38,7 +38,7 @@ class ViewLevelMenu(View):
             buttons[i+10].draw( self.screen, 2*OFFSET + 2* col_width, 10 * OFFSET + i*(H_BUTTON + OFFSET), menu.get_mouse_position())
         
         self.draw_rectangle( OFFSET + 3* col_width, 6 * OFFSET, col_width- 2*OFFSET, col_height, 10, WHITE_COLOR)
-        self.draw_text("For test", ( 2*OFFSET + 3* col_width , 7 * OFFSET), 35)
+        self.draw_text("For AI", ( 2*OFFSET + 3* col_width , 7 * OFFSET), 35)
         for i in range(6):
             buttons[i+15].draw( self.screen, 2*OFFSET + 3 *col_width, 10 * OFFSET + i*(H_BUTTON + OFFSET), menu.get_mouse_position())
         

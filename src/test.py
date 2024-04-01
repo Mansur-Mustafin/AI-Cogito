@@ -14,7 +14,8 @@ global curr_level
 
 RESULST_DIR = 'analitics/'
 
-algorithms = [AIS.BFS, AIS.IDS, AIS.GREDDY, AIS.ASTAR, AIS.ASTARW]
+algorithms = [AIS.DFS,AIS.BFS, AIS.IDS, AIS.GREDDY, AIS.ASTAR, AIS.ASTARW]
+heuristics = [H.MISS, H.LINECOLUMN, H.PATTERN, H.MANHATTAN, H.MANHATTAN_PATTERN]
 
 time_labels = {
     "file_name": "time_plot.png",
@@ -114,9 +115,7 @@ def draw_plot(data, measure):
 def main():     
 
     global state
-    easy_levels= []
-    medium_levels= []
-    hard_levels= []
+    levels =[]
     headers = ['Level', 'Time', 'Memory', 'Moves']
     data = []
 
@@ -124,17 +123,15 @@ def main():
         if filename.startswith("level") and filename.endswith(".yaml"):
             level_number = filename[5:-5]
             level = Level(level_number)
-            if( level.difficulty == 1): easy_levels.append(level)
-            elif ( level.difficulty == 2): medium_levels.append(level)
-            else:  hard_levels.append(level)
+            if( level.difficulty == 0): levels.append(level)
 
     for ai_algorithm in algorithms:
         state = ai_algorithm
         if (ai_algorithm == AIS.ASTARW):
-            data.append(test_ai(ai_algorithm, easy_levels + medium_levels + hard_levels, H.MANHATTAN_PATTERN, 3))
-        else:
-            data.append(test_ai(ai_algorithm, easy_levels + medium_levels + hard_levels, H.MANHATTAN_PATTERN))
-        write_to_csv(RESULST_DIR + str(state) + '.csv', data[-1], headers)
+            data.append(test_ai(ai_algorithm,  levels, H.MANHATTAN_PATTERN, 1))
+        elif(ai_algorithm == AIS.ASTAR):
+            data.append(test_ai(ai_algorithm, levels, H.MANHATTAN_PATTERN))
+            write_to_csv(RESULST_DIR + str(state) + '.csv', data[-1], headers)
     
     draw_plot(data, 1) # Time plot
     draw_plot(data, 2) # Space plot
