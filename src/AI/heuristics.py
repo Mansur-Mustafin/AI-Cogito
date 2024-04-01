@@ -16,7 +16,7 @@ def row_collum_miss_match_heuristic(level: Level):
         for color in level.get_main_colors():
             res += abs(target_line[color] - curr_line[color])
             res += abs(target_col[color] - curr_col[color])
-    return res
+    return res + miss_match_heuristic(level)
 
 
 
@@ -70,7 +70,7 @@ def pattern(level:Level):
         line_curr *=2
         if ''.join(line_targ) in ''.join(line_curr):
             count+=1
-    return -count*5 + level.count_mismatched_tiles()
+    return -count * 5 + miss_match_heuristic(level)
 
     
 

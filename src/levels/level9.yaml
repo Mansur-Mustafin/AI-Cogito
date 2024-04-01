@@ -1,21 +1,21 @@
 dimension: 6
-max: 15
+max: 30
 difficulty: 2
 main_color: ['r']
 blank_color : 'y'
-move_type: 'normal'
+move_type: 'mirror'
 shift: 1
 initial_block:
+ - ['y', 'y', 'y', 'y', 'r', 'r']
+ - ['y', 'y', 'y', 'y', 'y', 'r']
  - ['y', 'y', 'y', 'y', 'y', 'y']
  - ['y', 'y', 'y', 'y', 'y', 'y']
- - ['y', 'y', 'r', 'r', 'y', 'y']
- - ['y', 'r', 'r', 'r', 'y', 'y']
- - ['y', 'y', 'r', 'r', 'r', 'y']
- - ['y', 'y', 'r', 'y', 'y', 'y']
+ - ['r', 'y', 'y', 'y', 'y', 'y']
+ - ['r', 'r', 'y', 'y', 'y', 'y']
 target_pattern:
  - ['y', 'y', 'y', 'y', 'y', 'y']
  - ['y', 'y', 'y', 'y', 'y', 'y']
- - ['y', 'y', 'r', 'r', 'r', 'y']
- - ['y', 'y', 'r', 'r', 'r', 'y']
- - ['y', 'y', 'r', 'r', 'r', 'y']
  - ['y', 'y', 'y', 'y', 'y', 'y']
+ - ['y', 'y', 'y', 'y', 'r', 'r']
+ - ['y', 'y', 'y', 'y', 'r', 'r']
+ - ['y', 'y', 'y', 'y', 'r', 'r']

@@ -46,22 +46,23 @@ class AI:
     def child_states(self,state:Level) -> list[str]:
         child_states = []
 
-        
+        is_mirror = state.move_type=='mirror'
+        shift = state.shift
         for idx in range(state.get_dimension()):
             # The repetition of the definition of the variable new_state is necessary!
 
             if(sum(state.get_col_pieces(idx).values())>0):
                 new_state = copy.deepcopy(state)
-                child_states.append((new_state.move_col(idx, -1), f"up {idx}"))
+                child_states.append((new_state.move_col(idx, -shift, is_mirror), f"up {idx}"))
                 new_state = copy.deepcopy(state)
-                child_states.append((new_state.move_col(idx, 1), f"down {idx}"))
+                child_states.append((new_state.move_col(idx, shift, is_mirror), f"down {idx}"))
 
             if(sum(state.get_row_pieces(idx).values())>0):
                 new_state = copy.deepcopy(state)
-                child_states.append((new_state.move_row(idx, 1), f"right {idx}"))
+                child_states.append((new_state.move_row(idx, shift, is_mirror), f"right {idx}"))
 
                 new_state = copy.deepcopy(state)
-                child_states.append((new_state.move_row(idx, -1), f"left {idx}"))
+                child_states.append((new_state.move_row(idx, -shift, is_mirror), f"left {idx}"))
 
             
         return child_states
