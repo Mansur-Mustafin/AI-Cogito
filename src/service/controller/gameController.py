@@ -49,7 +49,6 @@ class GameController(Controller):
         self.state.unselect_button()    # o bolinho deseparece
         self.state.increment_score()
 
-        move = 1
         is_mirrored= False
 
         if(self.state.move_type == 'mirror'):

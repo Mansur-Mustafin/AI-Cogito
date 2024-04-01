@@ -70,7 +70,7 @@ def pattern(level:Level):
         line_curr *=2
         if ''.join(line_targ) in ''.join(line_curr):
             count+=1
-    return -count
+    return -count * 5 + miss_match_heuristic(level)
 
     
 
