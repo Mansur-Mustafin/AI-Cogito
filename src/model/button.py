@@ -91,7 +91,7 @@ class Button:
         pygame.draw.rect(screen, button_color, rect, border_radius=self.border_radius)
 
         if self.image is not None:
-            rendered_image = pygame.image.load("./images/" + self.image).convert()
+            rendered_image = pygame.image.load("./assets/images/" + self.image).convert()
             screen.blit(rendered_image, rect)
 
         if self.selected:
