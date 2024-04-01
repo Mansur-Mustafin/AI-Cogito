@@ -6,8 +6,14 @@ from typing import Optional
 
 
 class State(ABC):
-
-    def __init__(self):
+    """
+    Class for an abstract state model
+    """
+    def __init__(self) -> None:
+        """
+        State constructor
+        :return: None
+        """
         self.mouse_pos = (WIDTH / 2, HEIGHT / 2)
         self.buttons = []
         self._create_buttons()
@@ -27,7 +33,7 @@ class State(ABC):
         """
         Updates the mouse position
         :param new_pos: new mouse position
-        :type new_pos: Tuple[Int,Int]
+        :type new_pos: tuple[int,int]
         :return: None
         """
         if self.__is_valid_position(new_pos[0], new_pos[1]):
@@ -36,7 +42,7 @@ class State(ABC):
     def get_pressed_button(self) -> Optional[Button]:
         """
         :return: The button that has been pressed
-        :rtype: Option[Button]
+        :rtype: Optional[Button]
         """
         for button in self.buttons:
             if button.is_over(self.mouse_pos):
@@ -46,7 +52,7 @@ class State(ABC):
     def get_mouse_position(self) -> tuple[int, int]:
         """
         :return: The current mouse position
-        :rtype: Tuple [Int,Int]
+        :rtype: tuple[int, int]
         """
         return self.mouse_pos
 
@@ -55,10 +61,10 @@ class State(ABC):
         """
         Verifies if the mouse position is valid
         :param x: horizontal position
-        :type x: Int
+        :type x: int
         :param y: vertical position
-        :type y: Int
+        :type y: int
         :return: True if the position is valid, False otherwise
-        :rtype: Bool
+        :rtype: bool
         """
         return 0 <= x < WIDTH and 0 <= y < HEIGHT
