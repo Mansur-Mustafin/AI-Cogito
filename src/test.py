@@ -16,7 +16,7 @@ global curr_level
 
 RESULST_DIR = 'analitics/'
 
-algorithms = [ AIS.DFS, AIS.BFS,AIS.IDS]
+algorithms = [AIS.GREDDY, AIS.ASTAR, AIS.ASTARW, AIS.DFS, AIS.BFS,AIS.IDS]
 heuristics = [ H.MISS, H.LINECOLUMN,H.PATTERN,H.MANHATTAN,H.MANHATTAN_PATTERN]
 
 x_labels = ['DFS','BFS','IDS']
