@@ -1,6 +1,6 @@
 dimension: 6
 max: 15
-difficulty: 2
+difficulty: 0
 main_color: ['r']
 blank_color : 'y'
 move_type: 'normal'

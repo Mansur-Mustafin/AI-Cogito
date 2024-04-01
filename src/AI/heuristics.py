@@ -28,7 +28,7 @@ def row_column_miss_match_heuristic(level: Level) -> int:
         for color in level.get_main_colors():
             res += abs(target_line[color] - curr_line[color])
             res += abs(target_col[color] - curr_col[color])
-    return res
+    return res + miss_match_heuristic(level)
 
 
 def manhattan_distance(level: Level) -> int:

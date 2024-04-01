@@ -1,16 +1,16 @@
-dimension: 4
-max: 6
+dimension: 3
+max: 10
 difficulty: 1
-main_color: ['r']
+main_color: ['r', 'b']
+move_type: 'normal'
+shift: 1
 blank_color : 'y'
 initial_block:
- - ['y', 'y', 'y', 'y']
- - ['r', 'r', 'r', 'y']
- - ['r', 'y', 'r', 'r']
- - ['y', 'y', 'y', 'y']
+ - ['y', 'y', 'y']
+ - ['r', 'r', 'r']
+ - ['r', 'y', 'b']
 
 target_pattern:
- - ['r', 'y', 'y', 'y']
- - ['r', 'r', 'r', 'y']
- - ['y', 'r', 'r', 'y']
- - ['y', 'y', 'y', 'y']
+ - ['r', 'y', 'y']
+ - ['r', 'r', 'r']
+ - ['y', 'b', 'y']

@@ -38,6 +38,8 @@ class Level(State):
         self.blank_color = level_data['blank_color']
         self.max = level_data['max']
         self.difficulty= level_data['difficulty']
+        self.shift = level_data['shift']
+        self.move_type = level_data['move_type']
         self.score = 0
         self.time = 0
         self.level = lvl
@@ -60,10 +62,7 @@ class Level(State):
         :rtype: bool
         """
         if isinstance(other, self.__class__):
-            for key, color in self.current_block.items():
-                if( (not (key in self.target_pattern.keys())) or color != self.target_pattern[key][0]): 
-                    return False
-            return True
+            return self.current_block == other.current_block and self.level == other.level
         else:
             return False
 

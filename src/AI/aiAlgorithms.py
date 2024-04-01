@@ -205,7 +205,8 @@ def search(initial_state: Level, goal_state_func: Callable[Level, bool], operato
         
             for state, move in operators_func(node.state):
                 if (not state in visited):
-
+                    
+                    state.increment_score()
                     child_node = TreeNode(state, move, node.depth + 1)
 
                     node.add_child(child_node)
