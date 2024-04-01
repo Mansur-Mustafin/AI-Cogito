@@ -134,7 +134,7 @@ class AI:
         if heuristic == H.MISS:
             return miss_match_heuristic
         elif heuristic == H.LINECOLUMN:
-            return row_collum_miss_match_heuristic
+            return row_column_miss_match_heuristic
         elif heuristic == H.MANHATTAN:
             return manhattan_distance
         elif heuristic == H.PATTERN:
