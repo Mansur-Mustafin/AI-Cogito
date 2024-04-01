@@ -2,7 +2,6 @@ import yaml
 from settings import *
 from model.state import State
 from model.button import Button
-from AI.ai import AIS, H
 
 
 class Level(State):
@@ -15,7 +14,7 @@ class Level(State):
 
     COLORS = {'r', 'b'}
 
-    def __init__(self, lvl: int, ai_algorithm : AIS = None, heuristic : H = None) -> None:
+    def __init__(self, lvl: int, ai_algorithm, heuristic) -> None:
         """
         Level constructor
         :param lvl: Number of the level
@@ -234,7 +233,7 @@ class Level(State):
         """
         return self.main_colors
 
-    def get_board_row(self, row: int, is_curr_board: bool = True) -> list[tuple[tuple[int, int]][chr]]:
+    def get_board_row(self, row: int, is_curr_board: bool = True) -> list[tuple[tuple[int, int]], [chr]]:
         """
         :param row: index of the row
         :type row: int
@@ -330,7 +329,7 @@ class Level(State):
 
         return self
     
-    def get_row_pieces(self, idx: int, is_curr_board: bool = True) -> dict[str][int]:
+    def get_row_pieces(self, idx: int, is_curr_board: bool = True) -> dict[str, int]:
         """
         Get the frequency of each tile in a specific row
         :param idx: Index of selected row
@@ -349,7 +348,7 @@ class Level(State):
         
         return colors_freq
 
-    def get_col_pieces(self, idx: int, is_curr_board: bool = True) -> dict[str][int]:
+    def get_col_pieces(self, idx: int, is_curr_board: bool = True) -> dict[str, int]:
         """
         Get the frequency of each tile in a specific column
         :param idx: Index of selected column
@@ -368,7 +367,7 @@ class Level(State):
 
         return colors_freq
     
-    def manhattan_distance(self, pieceA: tuple[int][int], pieceB: tuple[int][int]) -> int:
+    def manhattan_distance(self, pieceA: tuple[int, int], pieceB: tuple[int, int]) -> int:
         """
         :param pieceA: position of piece A
         :type pieceA: tuple[int][int]

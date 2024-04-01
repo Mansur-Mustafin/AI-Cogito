@@ -1,19 +1,22 @@
-from .controller import Controller, Command
-from model.button import Button
 from typing import Optional
-import time
-from settings import WAITING_TIME, TIMER_EVENT
-from AI.ai import AI
-from model.endMenu import EndMenu
-from view.viewEndMenu import ViewEndMenu
-from model.mainMenu import MainMenu
-from view.viewMainMenu import ViewMainMenu
+
 import pygame
 
-class AIController (Controller):
+from service.controller.controller import Controller
+from AI.ai import AI
+from model.mainMenu import MainMenu
+from view.viewMainMenu import ViewMainMenu
+from view.viewGame import ViewGame
+from settings import *
+
+
+class AIController(Controller):
 
     def __init__(self, state, view):
         super().__init__(state, view)
+
+        assert isinstance(view, ViewGame), "view must be an instance of ViewGame"
+
         self.view.draw_waiting_for_ai()
         ai = AI(state, state.ai_algorithm, state.heuristic)
         self.ai_moves = ai.moves
@@ -43,7 +46,7 @@ class AIController (Controller):
             self.state.move_col(indx, opposite_weight * -1, False)
         elif dir == "down":
             self.state.move_col(indx, opposite_weight * 1, False)
-    
+
     def handle_pressed_button(self, button):
         action = button.get_action()
 
@@ -79,8 +82,7 @@ class AIController (Controller):
         pygame.time.set_timer(TIMER_EVENT, 0)
         pygame.event.clear(TIMER_EVENT)
         self.state.pause()
-    
+
     def unpause(self):
         pygame.time.set_timer(TIMER_EVENT, WAITING_TIME)
         self.state.unpause()
-
