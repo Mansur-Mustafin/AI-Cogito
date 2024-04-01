@@ -81,6 +81,8 @@ class AI:
         :param steps: The limit number of steps, in cases when user use 'Help' button.
         """
         self.state = level
+        self.state.ai_algorithm = algorithm
+        self.state.heuristic = heuristic
         self.weight = weight
         self.steps = steps
         self.heuristic = self._map_heuristic(heuristic)
