@@ -76,11 +76,11 @@ class GameController(Controller):
 
         move = self.state.shift
 
-        if dir == "right":
-            self.state.move_row(indx, move, is_mirrored)
-        elif dir == "left":
-            self.state.move_row(indx, -move, is_mirrored)
-        elif dir == "up":
-            self.state.move_col(indx, -move, is_mirrored)
-        elif dir == "down":
-            self.state.move_col(indx, move, is_mirrored)
+        if direction == "right":
+            self.state.move_row(index, move, is_mirrored)
+        elif direction == "left":
+            self.state.move_row(index, -move, is_mirrored)
+        elif direction == "up":
+            self.state.move_col(index, -move, is_mirrored)
+        elif direction == "down":
+            self.state.move_col(index, move, is_mirrored)
