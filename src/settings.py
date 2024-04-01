@@ -1,3 +1,8 @@
+"""
+File: settings.py
+Description: This module defines various constants and settings used throughout the game.
+"""
+
 from pygame import USEREVENT
 from enum import Enum, auto
 
