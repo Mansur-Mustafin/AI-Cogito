@@ -16,8 +16,13 @@ global curr_level
 
 RESULST_DIR = 'analitics/'
 
-algorithms = [ AIS.ASTAR, AIS.ASTARW]
-heuristics = [H.MISS, H.LINECOLUMN, H.PATTERN, H.MANHATTAN, H.MANHATTAN_PATTERN]
+algorithms = [ AIS.GREDDY]
+heuristics = [ H.MISS, H.LINECOLUMN,H.PATTERN,H.MANHATTAN,H.MANHATTAN_PATTERN]
+
+x_labels = []
+for alg in ['A*']:
+    for heu in ['Miss','Row_collum','Pattern','Manhattam','Manhattma_Pattern']:
+        x_labels.append(alg + '_'+ heu)
 
 time_labels = {
     "file_name": "time_plot.png",
@@ -46,8 +51,7 @@ def run_with_timeout(fn, timeout_seconds, *args, **kwargs):
     signal.alarm(timeout_seconds)
     try:
         result = fn(*args, **kwargs)
-    except TimeoutError as e:
-        print(e)
+    except :
         result = []
     finally:
         signal.alarm(0)  
@@ -94,7 +98,7 @@ def test_ai(algorithm , levels, heuristic, weight=1):
     for level in levels:
         curr_level = level.level
         start_time = time.time()
-        data.append(run_with_timeout(run_test, 2,algorithm, heuristic, weight))
+        data.append(run_with_timeout(run_test, 120,algorithm, heuristic, weight))
     return data
 
 def draw_plot(data, measure):
@@ -121,10 +125,13 @@ def draw_plot(data, measure):
         rects = ax.bar(x + offset, measurement, width, label=attribute)
         multiplier += 1
 
+
     # Add some text for labels, title and custom x-axis tick labels, etc.
     ax.set_ylabel(labels[measure - 1]["y_label"])
     ax.set_title(labels[measure - 1]["title"])
-    ax.set_xticks(x + (0.5 * (n_levels - 1))*width, algorithms)
+    print(bars)
+    print(x_labels)
+    ax.set_xticks(x + (0.5 * (n_levels - 1))*width,x_labels)
     ax.legend(loc='upper right', prop={'size': 9})
     ax.set_ylim(0, max_measure * 1.1)
     ax.set_xlim(-0.3, len(algorithms) + 0.6)
@@ -145,12 +152,24 @@ def main():
             if( level.difficulty == 0): levels.append(level)
 
     for ai_algorithm in algorithms:
-        state = ai_algorithm
-        if (ai_algorithm == AIS.ASTARW):
-            data.append(test_ai( ai_algorithm,  levels, H.MANHATTAN_PATTERN, 1))
+        
+        if (ai_algorithm in [AIS.GREDDY, AIS.ASTAR,AIS.ASTARW] ):
+            for ai_heuristic in heuristics:
+                state = str(ai_algorithm) + '_'+ str(ai_heuristic)
+                if(ai_algorithm == AIS.ASTARW):
+                    data.append(test_ai( ai_algorithm,  levels, ai_heuristic, 3))
+                else:
+                    data.append(test_ai( ai_algorithm,  levels, ai_heuristic))
+                write_to_csv(RESULST_DIR + state + '.csv', data[-1], headers)
         else:
-             data.append(test_ai( ai_algorithm,  levels, H.MANHATTAN_PATTERN))
-        write_to_csv(RESULST_DIR + str(state) + '.csv', data[-1], headers)
+            state = str(ai_algorithm)
+            if( ai_algorithm == AIS.DFS):
+                data.append(test_ai( ai_algorithm,  levels[0:2], None))
+            elif (ai_algorithm == AIS.BFS):
+                data.append(test_ai( ai_algorithm,  levels[0:3], None))
+            else:
+                data.append(test_ai( ai_algorithm,  levels[0:4], None))
+            write_to_csv(RESULST_DIR + state + '.csv', data[-1], headers)
     draw_plot(data, 1) # Time plot
     draw_plot(data, 2) # Space plot
     draw_plot(data, 3) # Moves plot

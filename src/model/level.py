@@ -35,10 +35,7 @@ class Level(State):
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
-            for key, color in self.current_block.items():
-                if( (not (key in self.target_pattern.keys())) or  color != self.target_pattern[key][0]): 
-                    return False
-            return True
+            return self.current_block == other.current_block and self.level == other.level
         else:
             return False
 
