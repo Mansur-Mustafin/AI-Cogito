@@ -16,11 +16,11 @@ global curr_level
 
 RESULST_DIR = 'analitics/'
 
-algorithms = [ AIS.GREDDY]
+algorithms = [ AIS.DFS, AIS.BFS,AIS.IDS,AIS.GREDDY, AIS.ASTAR,AIS.ASTARW]
 heuristics = [ H.MISS, H.LINECOLUMN,H.PATTERN,H.MANHATTAN,H.MANHATTAN_PATTERN]
 
-x_labels = []
-for alg in ['A*']:
+x_labels = ['DFS','BFS','IDS']
+for alg in ['Greddy','A*','WA*']:
     for heu in ['Miss','Row_collum','Pattern','Manhattam','Manhattma_Pattern']:
         x_labels.append(alg + '_'+ heu)
 
