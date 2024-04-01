@@ -15,7 +15,7 @@ class Level(State):
 
     COLORS = {'r', 'b'}
 
-    def __init__(self, lvl: int, ai_algorithm, heuristic) -> None:
+    def __init__(self, lvl: int, ai_algorithm=None, heuristic=None) -> None:
         """
         Level constructor
         :param lvl: Number of the level
