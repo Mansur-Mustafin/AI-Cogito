@@ -136,7 +136,7 @@ class EndMenuController (Controller):
         """
         assert type(self.state) is EndMenu
         if button.get_action() == "Play Again":
-            self.state = Level(self.state.level.level)
+            self.state = Level(self.state.level.level, self.state.level.heuristic, self.state.level.ai_algorithm)
             self.view = ViewGame(self.view.get_screen())
             return Command.CHANGE_GAME_PLAYER
         elif button.get_action() == "Go back to menu":
