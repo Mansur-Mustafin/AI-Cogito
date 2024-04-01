@@ -1,4 +1,5 @@
 import yaml
+
 from settings import *
 from model.state import State
 from model.button import Button

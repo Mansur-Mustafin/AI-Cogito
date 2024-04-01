@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 import pygame
+
 from settings import *
 from model.button import Button
 from typing import Optional

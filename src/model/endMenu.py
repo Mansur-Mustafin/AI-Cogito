@@ -6,6 +6,7 @@ class EndMenu(State):
     """
     Class that represents the model fo the end menu
     """
+
     def __init__(self, level) -> None:
         """
         EndMenu constructor
