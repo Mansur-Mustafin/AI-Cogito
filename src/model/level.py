@@ -410,7 +410,7 @@ class Level(State):
         }
         dir, indx = move.split()
 
-        idx_button = shift[dir] * self.dimension + int(indx)
+        idx_button = shift[dir] * self.dimension + int(indx) + 1
         self.buttons[idx_button].selected = True
         self.selected_button = idx_button
 
